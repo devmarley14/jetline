@@ -28,7 +28,7 @@
 {%- endstyle -%}
 
 <section id="DevBenefits-{{ section.id }}" class="dev-benefits">
-  <div class="dev-benefits__inner{% if section.settings.full_width %} dev-benefits__inner--full-width{% endif %}">
+  <div class="dev-benefits__inner">
     <ul class="dev-benefits__grid" role="list">
       {%- for block in section.blocks -%}
         <li class="dev-benefits__item" {{ block.shopify_attributes }}>
@@ -57,25 +57,18 @@
 
 {% style %}
   #DevBenefits-{{ section.id }}.dev-benefits {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
     overflow: hidden;
     background: var(--dev-benefits-bg);
     padding: var(--dev-benefits-padding-top) 0 var(--dev-benefits-padding-bottom);
   }
 
   #DevBenefits-{{ section.id }} .dev-benefits__inner {
-    width: min(
-      calc(100% - (var(--dev-benefits-padding-inline-mobile) * 2)),
-      var(--dev-benefits-max-width)
-    );
+    width: calc(100% - (var(--dev-benefits-padding-inline-mobile) * 2));
     max-width: var(--dev-benefits-max-width);
     margin: 0 auto;
-  }
-
-  #DevBenefits-{{ section.id }} .dev-benefits__inner--full-width {
-    width: 100%;
-    max-width: none;
-    padding-right: var(--dev-benefits-padding-inline-mobile);
-    padding-left: var(--dev-benefits-padding-inline-mobile);
     box-sizing: border-box;
   }
 
@@ -138,16 +131,7 @@
 
   @media screen and (min-width: 750px) {
     #DevBenefits-{{ section.id }} .dev-benefits__inner {
-      width: min(
-        calc(100% - (var(--dev-benefits-padding-inline-desktop) * 2)),
-        var(--dev-benefits-max-width)
-      );
-    }
-
-    #DevBenefits-{{ section.id }} .dev-benefits__inner--full-width {
-      width: 100%;
-      padding-right: var(--dev-benefits-padding-inline-desktop);
-      padding-left: var(--dev-benefits-padding-inline-desktop);
+      width: calc(100% - (var(--dev-benefits-padding-inline-desktop) * 2));
     }
 
     #DevBenefits-{{ section.id }} .dev-benefits__grid {
@@ -233,12 +217,6 @@
       "step": 20,
       "unit": "px",
       "default": 1440
-    },
-    {
-      "type": "checkbox",
-      "id": "full_width",
-      "label": "Ancho completo",
-      "default": true
     },
     {
       "type": "range",

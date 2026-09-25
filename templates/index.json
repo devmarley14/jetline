@@ -405,7 +405,6 @@
       "name": "Dev - Benefits",
       "settings": {
         "columns_desktop": "4",
-        "full_width": true,
         "column_gap": 24,
         "card_radius": 0,
         "background_color": "#ffffff",
