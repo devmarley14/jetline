@@ -292,6 +292,78 @@
         "padding_bottom": 0
       }
     },
+    "dev_benefits_NPA6eK": {
+      "type": "dev-benefits",
+      "blocks": {
+        "benefit_gRVxmD": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Performance",
+            "description": "<p>Engineered for all-day comfort.</p>"
+          }
+        },
+        "benefit_7cdzKX": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Premium materials",
+            "description": "<p>High quality fabrics designed to last.</p>"
+          }
+        },
+        "benefit_PyM7nh": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Modern design",
+            "description": "<p>Professional aviation styling and fit.</p>"
+          }
+        },
+        "benefit_Up9pgx": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Trusted worldwide",
+            "description": "<p>Used by aviation professionals globally.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_gRVxmD",
+        "benefit_7cdzKX",
+        "benefit_PyM7nh",
+        "benefit_Up9pgx"
+      ],
+      "name": "Dev - Benefits",
+      "settings": {
+        "columns_desktop": "4",
+        "columns_mobile": "2",
+        "max_width": 1600,
+        "icon_size_desktop": 48,
+        "icon_size_mobile": 40,
+        "title_size_desktop": 15,
+        "title_size_mobile": 12,
+        "description_size_desktop": 13,
+        "description_size_mobile": 11,
+        "column_gap": 24,
+        "item_gap_desktop": 16,
+        "item_gap_mobile": 12,
+        "card_padding_desktop": 16,
+        "card_padding_mobile": 12,
+        "card_radius": 0,
+        "background_color": "#f9f9f9",
+        "text_color": "#102443",
+        "accent_color": "#102443",
+        "divider_color": "#e5e7eb",
+        "divider_width": 1,
+        "title_weight": "600",
+        "description_weight": "400",
+        "padding_inline_desktop": 40,
+        "padding_inline_mobile": 16,
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
+    },
     "dev_locations_4BDAE7": {
       "type": "dev-locations",
       "blocks": {
@@ -437,6 +509,7 @@
     "dev_banner_7hEdde",
     "dev_collection_carousel_6Y6pVV",
     "dev_product_feature_QFUWUE",
+    "dev_benefits_NPA6eK",
     "dev_locations_4BDAE7",
     "dev_benefits_cFadiU"
   ]

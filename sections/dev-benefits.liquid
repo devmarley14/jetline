@@ -17,6 +17,10 @@
     --dev-benefits-padding-bottom: {{ section.settings.padding_bottom }}px;
     --dev-benefits-padding-inline-desktop: {{ section.settings.padding_inline_desktop }}px;
     --dev-benefits-padding-inline-mobile: {{ section.settings.padding_inline_mobile }}px;
+    --dev-benefits-margin-top-desktop: {{ section.settings.margin_top_desktop }}px;
+    --dev-benefits-margin-bottom-desktop: {{ section.settings.margin_bottom_desktop }}px;
+    --dev-benefits-margin-top-mobile: {{ section.settings.margin_top_mobile }}px;
+    --dev-benefits-margin-bottom-mobile: {{ section.settings.margin_bottom_mobile }}px;
     --dev-benefits-card-padding-desktop: {{ section.settings.card_padding_desktop }}px;
     --dev-benefits-card-padding-mobile: {{ section.settings.card_padding_mobile }}px;
     --dev-benefits-radius: {{ section.settings.card_radius }}px;
@@ -62,6 +66,8 @@
     box-sizing: border-box;
     overflow: hidden;
     background: var(--dev-benefits-bg);
+    margin-top: var(--dev-benefits-margin-top-mobile);
+    margin-bottom: var(--dev-benefits-margin-bottom-mobile);
     padding: var(--dev-benefits-padding-top) 0 var(--dev-benefits-padding-bottom);
   }
 
@@ -130,6 +136,11 @@
   }
 
   @media screen and (min-width: 750px) {
+    #DevBenefits-{{ section.id }}.dev-benefits {
+      margin-top: var(--dev-benefits-margin-top-desktop);
+      margin-bottom: var(--dev-benefits-margin-bottom-desktop);
+    }
+
     #DevBenefits-{{ section.id }} .dev-benefits__inner {
       width: calc(100% - (var(--dev-benefits-padding-inline-desktop) * 2));
     }
@@ -435,6 +446,46 @@
       "step": 4,
       "unit": "px",
       "default": 16
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "label": "Margen superior Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "label": "Margen inferior Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Margen superior Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Margen inferior Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
     }
   ],
   "blocks": [
