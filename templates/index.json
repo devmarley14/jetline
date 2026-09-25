@@ -406,7 +406,7 @@
       "settings": {
         "columns_desktop": "4",
         "columns_mobile": "2",
-        "max_width": 1440,
+        "max_width": 1600,
         "icon_size_desktop": 48,
         "icon_size_mobile": 40,
         "title_size_desktop": 15,
@@ -419,7 +419,7 @@
         "card_padding_desktop": 16,
         "card_padding_mobile": 12,
         "card_radius": 0,
-        "background_color": "#F9F9F9",
+        "background_color": "#f9f9f9",
         "text_color": "#102443",
         "accent_color": "#102443",
         "divider_color": "#e5e7eb",
