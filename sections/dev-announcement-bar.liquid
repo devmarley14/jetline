@@ -26,6 +26,15 @@
     --announcement-text-color: {{ section.settings.text_color }};
     --announcement-divider-color: {{ section.settings.divider_color }};
     --announcement-background: {{ section.settings.background_color }};
+    --announcement-max-width: {{ section.settings.max_width }}px;
+  }
+
+  #AnnouncementBar-{{ section.id }} .utility-bar__grid {
+    width: calc(100% - 3rem);
+    max-width: var(--announcement-max-width);
+    margin-right: auto;
+    margin-left: auto;
+    box-sizing: border-box;
   }
 
   #AnnouncementBar-{{ section.id }} .announcement-bar__message {
@@ -308,6 +317,16 @@
       "step": 1,
       "unit": "px",
       "default": 16
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo del contenido",
+      "min": 320,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1600
     },
     {
       "type": "color",
