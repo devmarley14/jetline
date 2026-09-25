@@ -1,0 +1,439 @@
+{%- style -%}
+  #DevTrustBar-{{ section.id }} {
+    --dtb-background: {{ section.settings.background_color }};
+    --dtb-text: {{ section.settings.text_color }};
+    --dtb-divider: {{ section.settings.divider_color }};
+    --dtb-max-width: {{ section.settings.max_width }}px;
+    --dtb-padding-top: {{ section.settings.padding_top_mobile }}px;
+    --dtb-padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    --dtb-padding-inline: {{ section.settings.padding_inline_mobile }}px;
+    --dtb-gap: {{ section.settings.gap_mobile }}px;
+    --dtb-text-size: {{ section.settings.text_size_mobile }}px;
+    --dtb-star-size: {{ section.settings.star_size_mobile }}px;
+    --dtb-text-weight: {{ section.settings.text_weight }};
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+    background: var(--dtb-background);
+    color: var(--dtb-text);
+  }
+
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__inner {
+    width: calc(100% - (var(--dtb-padding-inline) * 2));
+    max-width: var(--dtb-max-width);
+    margin: 0 auto;
+    padding: var(--dtb-padding-top) 0 var(--dtb-padding-bottom);
+  }
+
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--dtb-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    color: var(--dtb-text);
+    font-size: var(--dtb-text-size);
+    font-weight: var(--dtb-text-weight);
+    line-height: 1.2;
+    letter-spacing: {{ section.settings.letter_spacing }}px;
+    text-align: center;
+    text-transform: {% if section.settings.uppercase %}uppercase{% else %}none{% endif %};
+  }
+
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__link:hover,
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__link:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__star {
+    flex: 0 0 auto;
+    margin: 0 {{ section.settings.star_spacing }}px;
+    color: var(--dtb-text);
+    font-size: var(--dtb-star-size);
+    line-height: 1;
+  }
+
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__divider {
+    display: inline-block;
+    width: 1px;
+    height: {{ section.settings.divider_height_mobile }}px;
+    margin: 0 {{ section.settings.divider_spacing }}px;
+    background: var(--dtb-divider);
+  }
+
+  @media screen and (max-width: 749px) {
+    #DevTrustBar-{{ section.id }} .dev-trust-bar__list {
+      flex-wrap: wrap;
+      row-gap: calc(var(--dtb-gap) * 0.7);
+    }
+
+    #DevTrustBar-{{ section.id }} .dev-trust-bar__item {
+      max-width: 100%;
+    }
+
+    #DevTrustBar-{{ section.id }} .dev-trust-bar__divider {
+      height: {{ section.settings.divider_height_mobile }}px;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #DevTrustBar-{{ section.id }} {
+      --dtb-padding-top: {{ section.settings.padding_top_desktop }}px;
+      --dtb-padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+      --dtb-padding-inline: {{ section.settings.padding_inline_desktop }}px;
+      --dtb-gap: {{ section.settings.gap_desktop }}px;
+      --dtb-text-size: {{ section.settings.text_size_desktop }}px;
+      --dtb-star-size: {{ section.settings.star_size_desktop }}px;
+    }
+
+    #DevTrustBar-{{ section.id }} .dev-trust-bar__divider {
+      height: {{ section.settings.divider_height_desktop }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section id="DevTrustBar-{{ section.id }}" class="dev-trust-bar" aria-label="{{ section.settings.accessibility_label | escape }}">
+  <div class="dev-trust-bar__inner">
+    {%- if section.blocks.size > 0 -%}
+      <ul class="dev-trust-bar__list" role="list">
+        {%- for block in section.blocks -%}
+          <li class="dev-trust-bar__item" {{ block.shopify_attributes }}>
+            {%- if section.settings.show_stars and forloop.first -%}
+              <span class="dev-trust-bar__star" aria-hidden="true">{{ section.settings.star_character }}</span>
+            {%- endif -%}
+            {%- if block.settings.link != blank -%}
+              <a class="dev-trust-bar__link" href="{{ block.settings.link }}">{{ block.settings.text | escape }}</a>
+            {%- else -%}
+              <span>{{ block.settings.text | escape }}</span>
+            {%- endif -%}
+            {%- if section.settings.show_stars and forloop.last -%}
+              <span class="dev-trust-bar__star" aria-hidden="true">{{ section.settings.star_character }}</span>
+            {%- endif -%}
+          </li>
+          {%- unless forloop.last or section.settings.show_dividers == false -%}
+            <li class="dev-trust-bar__divider" aria-hidden="true"></li>
+          {%- endunless -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Dev - Trust bar",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Etiqueta de accesibilidad",
+      "default": "Confianza de nuestros clientes"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto y estrellas",
+      "default": "#071a38"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color de separadores",
+      "default": "#071a38"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo",
+      "min": 320,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "text_size_desktop",
+      "label": "Tamaño texto Desktop",
+      "min": 9,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Tamaño texto Mobile",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "star_size_desktop",
+      "label": "Tamaño estrella Desktop",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "star_size_mobile",
+      "label": "Tamaño estrella Mobile",
+      "min": 10,
+      "max": 26,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase",
+      "label": "Texto en mayúsculas",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Mostrar estrellas",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "star_character",
+      "label": "Carácter de estrella",
+      "default": "★"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dividers",
+      "label": "Mostrar separadores",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "Separación Desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Separación Mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Espaciado de letras",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "star_spacing",
+      "label": "Separación de estrellas",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "divider_height_desktop",
+      "label": "Altura separadores Desktop",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "divider_height_mobile",
+      "label": "Altura separadores Mobile",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "divider_spacing",
+      "label": "Espacio lateral de separadores",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding superior Desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding inferior Desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_inline_desktop",
+      "label": "Padding lateral Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding superior Mobile",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding inferior Mobile",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_inline_mobile",
+      "label": "Padding lateral Mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margen superior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margen inferior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Mensaje",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Trusted by pilots worldwide"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace opcional"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dev - Trust bar",
+      "blocks": [
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" }
+      ],
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#071a38",
+        "divider_color": "#071a38"
+      }
+    }
+  ]
+}
+{% endschema %}
