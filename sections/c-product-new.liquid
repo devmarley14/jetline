@@ -24,6 +24,9 @@
     --cpn-muted: {{ section.settings.muted_text_color }};
     --cpn-accent: {{ section.settings.accent_color }};
     --cpn-border: {{ section.settings.border_color }};
+    --cpn-button-background: {{ section.settings.button_background_color }};
+    --cpn-button-text: {{ section.settings.button_text_color }};
+    --cpn-button-transform: {% if section.settings.button_uppercase %}uppercase{% else %}none{% endif %};
     --cpn-title-size-desktop: {{ section.settings.title_size_desktop }}px;
     --cpn-title-size-mobile: {{ section.settings.title_size_mobile }}px;
     --cpn-body-size-desktop: {{ section.settings.body_size_desktop }}px;
@@ -104,11 +107,37 @@
   }
 
   #CProductNew-{{ section.id }} .cpn__media {
+    position: relative;
     aspect-ratio: 1 / 1;
     min-width: 0;
     border-radius: var(--cpn-media-radius);
     background: var(--cpn-panel-background);
     overflow: hidden;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__media-button {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-label {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1;
+    padding: 0.6rem 0.8rem;
+    background: var(--cpn-button-background);
+    color: var(--cpn-button-text);
+    font-size: var(--cpn-label-size-mobile);
+    font-weight: var(--cpn-label-weight);
+    line-height: 1;
+    pointer-events: none;
+    text-transform: uppercase;
   }
 
   #CProductNew-{{ section.id }} .cpn__media-item {
@@ -211,6 +240,27 @@
     font-weight: var(--cpn-label-weight);
   }
 
+  #CProductNew-{{ section.id }} .product-form__input--pill input + label {
+    min-width: 3.2rem;
+    min-height: 3rem;
+    margin: 0 0.35rem 0.5rem 0;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--cpn-border);
+    border-radius: 0.25rem;
+    background: var(--cpn-panel-background);
+    color: var(--cpn-text);
+    font-size: var(--cpn-label-size-mobile);
+    font-weight: var(--cpn-label-weight);
+    line-height: 1;
+    text-align: center;
+  }
+
+  #CProductNew-{{ section.id }} .product-form__input--pill input:checked + label {
+    border-color: var(--cpn-button-background);
+    background: var(--cpn-button-background);
+    color: var(--cpn-button-text);
+  }
+
   #CProductNew-{{ section.id }} .cpn__size-guide {
     display: inline-flex;
     margin: 0.2rem 0 1rem;
@@ -228,8 +278,51 @@
   #CProductNew-{{ section.id }} .cpn__buy-buttons .shopify-payment-button__button {
     min-height: 4.2rem;
     border-radius: var(--cpn-button-radius);
+    background: var(--cpn-button-background);
+    color: var(--cpn-button-text);
     font-size: var(--cpn-body-size-mobile);
     font-weight: var(--cpn-label-weight);
+    text-transform: var(--cpn-button-transform);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__buy-buttons .shopify-payment-button__button {
+    border: 1px solid var(--cpn-button-background);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(7, 26, 56, 0.92);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-modal.is-open {
+    display: flex;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-image {
+    max-width: min(92vw, 1200px);
+    max-height: 92vh;
+    object-fit: contain;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    background: transparent;
+    color: #fff;
+    font-size: 2.4rem;
+    line-height: 1;
+    cursor: pointer;
   }
 
   @media screen and (min-width: 750px) {
@@ -264,6 +357,11 @@
       font-size: var(--cpn-body-size-desktop);
     }
 
+    #CProductNew-{{ section.id }} .cpn__zoom-label,
+    #CProductNew-{{ section.id }} .product-form__input--pill input + label {
+      font-size: var(--cpn-label-size-desktop);
+    }
+
     #CProductNew-{{ section.id }} .cpn__price {
       font-size: var(--cpn-price-size-desktop);
     }
@@ -295,10 +393,18 @@
             {%- for media in current_product.media -%}
               {%- if media.media_type == 'image' -%}
                 <div class="cpn__media-item{% if forloop.first %} is-active{% endif %}" data-cpn-media="{{ media.id }}">
-                  {{ media | image_url: width: 1600 | image_tag: loading: 'lazy', alt: media.alt | default: current_product.title }}
+                  <button
+                    class="cpn__media-button"
+                    type="button"
+                    data-cpn-zoom="{{ media | image_url: width: 2400 }}"
+                    aria-label="Zoom {{ media.alt | default: current_product.title | escape }}"
+                  >
+                    {{ media | image_url: width: 1600 | image_tag: loading: 'lazy', alt: media.alt | default: current_product.title }}
+                  </button>
                 </div>
               {%- endif -%}
             {%- endfor -%}
+            <span class="cpn__zoom-label" aria-hidden="true">+</span>
           </div>
         </div>
 
@@ -374,6 +480,11 @@
   </div>
 </section>
 
+<div class="cpn__zoom-modal" data-cpn-zoom-modal aria-hidden="true">
+  <button class="cpn__zoom-close" type="button" data-cpn-zoom-close aria-label="Cerrar zoom">&times;</button>
+  <img class="cpn__zoom-image" data-cpn-zoom-image alt="">
+</div>
+
 <script>
   (() => {
     const root = document.querySelector('#CProductNew-{{ section.id }}');
@@ -386,6 +497,30 @@
         thumbs.forEach((item) => item.setAttribute('aria-current', item === thumb ? 'true' : 'false'));
         media.forEach((item) => item.classList.toggle('is-active', item.dataset.cpnMedia === id));
       });
+    });
+    const modal = root.nextElementSibling;
+    const modalImage = modal.querySelector('[data-cpn-zoom-image]');
+    const closeModal = () => {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      modalImage.removeAttribute('src');
+      document.body.classList.remove('overflow-hidden');
+    };
+    root.querySelectorAll('[data-cpn-zoom]').forEach((button) => {
+      button.addEventListener('click', () => {
+        modalImage.src = button.dataset.cpnZoom;
+        modalImage.alt = button.getAttribute('aria-label') || '';
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('overflow-hidden');
+      });
+    });
+    modal.querySelector('[data-cpn-zoom-close]').addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
     });
   })();
 </script>
@@ -415,37 +550,55 @@
       "type": "color",
       "id": "background_color",
       "label": "Fondo de la sección",
-      "default": "#ffffff"
+      "default": "#f7f9fc"
     },
     {
       "type": "color",
       "id": "panel_background_color",
       "label": "Fondo de imágenes",
-      "default": "#f8f8f8"
+      "default": "#f2f5f9"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Color principal",
-      "default": "#0c1834"
+      "default": "#071a38"
     },
     {
       "type": "color",
       "id": "muted_text_color",
       "label": "Color secundario",
-      "default": "#26334d"
+      "default": "#243553"
     },
     {
       "type": "color",
       "id": "accent_color",
       "label": "Color de acento",
-      "default": "#0c1834"
+      "default": "#071a38"
     },
     {
       "type": "color",
       "id": "border_color",
       "label": "Color de bordes",
       "default": "#d8dde5"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Color de botones de compra",
+      "default": "#071a38"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Color de texto de botones",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_uppercase",
+      "label": "Botones en mayúsculas",
+      "default": true
     },
     {
       "type": "range",
