@@ -1,335 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
-      "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
-    },
-    "dev_collection_carousel": {
-      "type": "dev-collection-carousel",
-      "blocks": {
-        "category_1": {
-          "type": "category",
-          "settings": {
-            "title": "Pilot shirts"
-          }
-        },
-        "category_2": {
-          "type": "category",
-          "settings": {
-            "title": "Outerwear"
-          }
-        },
-        "category_3": {
-          "type": "category",
-          "settings": {
-            "title": "Flight attendant"
-          }
-        },
-        "category_4": {
-          "type": "category",
-          "settings": {
-            "title": "Accessories"
-          }
-        },
-        "category_5": {
-          "type": "category",
-          "settings": {
-            "title": "Aviation apparel"
-          }
-        },
-        "category_6": {
-          "type": "category",
-          "settings": {
-            "title": "Corporate uniforms"
-          }
-        }
-      },
-      "block_order": [
-        "category_1",
-        "category_2",
-        "category_3",
-        "category_4",
-        "category_5",
-        "category_6"
-      ],
-      "settings": {
-        "heading": "Shop by category",
-        "columns_desktop": "6",
-        "columns_mobile": "1",
-        "enable_mobile_slider": true,
-        "full_width": false,
-        "image_ratio": "4 / 5",
-        "card_gap": 18,
-        "card_radius": 4,
-        "title_size_desktop": 18,
-        "title_size_mobile": 15,
-        "button_label": "View collection",
-        "background_color": "#ffffff",
-        "title_color": "#102443",
-        "button_background": "#102443",
-        "button_text_color": "#ffffff",
-        "button_border_color": "#102443",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "dev_benefits": {
-      "type": "dev-benefits",
-      "blocks": {
-        "benefit_1": {
-          "type": "benefit",
-          "settings": {
-            "title": "Performance",
-            "description": "<p>Engineered for all-day comfort.</p>"
-          }
-        },
-        "benefit_2": {
-          "type": "benefit",
-          "settings": {
-            "title": "Premium materials",
-            "description": "<p>High quality fabrics designed to last.</p>"
-          }
-        },
-        "benefit_3": {
-          "type": "benefit",
-          "settings": {
-            "title": "Modern design",
-            "description": "<p>Professional aviation styling and fit.</p>"
-          }
-        },
-        "benefit_4": {
-          "type": "benefit",
-          "settings": {
-            "title": "Trusted worldwide",
-            "description": "<p>Used by aviation professionals globally.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_1",
-        "benefit_2",
-        "benefit_3",
-        "benefit_4"
-      ],
-      "settings": {
-        "heading": "",
-        "columns_desktop": "4",
-        "full_width": true,
-        "icon_size": 64,
-        "title_size": 16,
-        "description_size": 14,
-        "column_gap": 24,
-        "card_padding": 12,
-        "card_radius": 0,
-        "background_color": "#ffffff",
-        "text_color": "#102443",
-        "accent_color": "#102443",
-        "padding_top": 24,
-        "padding_bottom": 24
-      }
-    },
-    "dev_product_feature": {
-      "type": "dev-product-feature",
-      "blocks": {
-        "benefit_1": {
-          "type": "benefit",
-          "settings": {
-            "title": "Ultra light fabric",
-            "description": "<p>Engineered for comfort.</p>"
-          }
-        },
-        "benefit_2": {
-          "type": "benefit",
-          "settings": {
-            "title": "Laser cut ventilation",
-            "description": "<p>Built for performance.</p>"
-          }
-        },
-        "benefit_3": {
-          "type": "benefit",
-          "settings": {
-            "title": "Stain release technology",
-            "description": "<p>Made for every journey.</p>"
-          }
-        },
-        "benefit_4": {
-          "type": "benefit",
-          "settings": {
-            "title": "UPF 40 protection",
-            "description": "<p>Protection all day.</p>"
-          }
-        },
-        "benefit_5": {
-          "type": "benefit",
-          "settings": {
-            "title": "Wrinkle resistant",
-            "description": "<p>Always ready to fly.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_1",
-        "benefit_2",
-        "benefit_3",
-        "benefit_4",
-        "benefit_5"
-      ],
-      "settings": {
-        "product_image": "",
-        "image_alt": "Producto destacado",
-        "image_position": "left",
-        "eyebrow": "Best seller",
-        "heading": "Performance pilot shirt",
-        "description": "<p>The lightest pilot shirt ever created.<br>Engineered for comfort. Built for performance.</p>",
-        "button_label": "Shop now",
-        "button_link": "shopify://collections/all",
-        "full_width": false,
-        "columns_desktop": "5",
-        "heading_size_desktop": 36,
-        "heading_size_mobile": 28,
-        "body_size_desktop": 16,
-        "body_size_mobile": 14,
-        "benefit_title_size_desktop": 14,
-        "benefit_title_size_mobile": 11,
-        "benefit_text_size_desktop": 12,
-        "benefit_text_size_mobile": 10,
-        "icon_size_desktop": 42,
-        "icon_size_mobile": 32,
-        "benefit_gap": 12,
-        "image_radius": 0,
-        "background_color": "#ffffff",
-        "text_color": "#102443",
-        "description_color": "#102443",
-        "accent_color": "#102443",
-        "button_background": "#102443",
-        "button_text_color": "#ffffff",
-        "button_border_color": "#102443",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "dev_locations": {
-      "type": "dev-locations",
-      "blocks": {
-        "location_1": {
-          "type": "location",
-          "settings": {
-            "title": "Jetline Apparel Headquarters",
-            "address": "<p>West Building<br>6355 NW 36th Street, Suite 506<br>Miami, Florida 33166<br>United States</p>",
-            "hours": "<p>Monday - Friday<br>9:00 AM - 5:00 PM</p>",
-            "button_label": ""
-          }
-        },
-        "location_2": {
-          "type": "location",
-          "settings": {
-            "title": "Pan Am Apparel & Accessories Showroom",
-            "address": "<p>Located inside the Pan Am Building<br>5000 NW 36th Street<br>Miami, Florida 33166<br>United States</p>",
-            "hours": "<p>Monday - Friday<br>9:00 AM - 5:00 PM</p>",
-            "button_label": "Get directions",
-            "button_link": "https://www.google.com/maps"
-          }
-        }
-      },
-      "block_order": [
-        "location_1",
-        "location_2"
-      ],
-      "settings": {
-        "heading": "Our locations",
-        "columns_desktop": "2",
-        "full_width": false,
-        "heading_size_desktop": 28,
-        "heading_size_mobile": 24,
-        "title_size_desktop": 18,
-        "title_size_mobile": 16,
-        "body_size_desktop": 14,
-        "body_size_mobile": 13,
-        "icon_size_desktop": 48,
-        "icon_size_mobile": 40,
-        "card_gap": 20,
-        "card_padding": 28,
-        "card_radius": 4,
-        "background_color": "#ffffff",
-        "card_background_color": "#fafafa",
-        "text_color": "#102443",
-        "muted_text_color": "#102443",
-        "accent_color": "#102443",
-        "button_background": "#ffffff",
-        "button_text_color": "#102443",
-        "button_border_color": "#102443",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "dev_banner": {
+    "dev_banner_7hEdde": {
       "type": "dev-banner",
       "blocks": {
-        "heading": {
+        "heading_3jfaCK": {
           "type": "heading",
           "settings": {
             "heading": "Built for those who fly higher."
           }
         },
-        "text": {
+        "text_F67jzG": {
           "type": "text",
           "settings": {
             "text": "<p>Performance aviation apparel engineered for pilots, crew and aviation professionals around the world.</p>"
           }
         },
-        "button": {
+        "buttons_mmWeLi": {
           "type": "buttons",
           "settings": {
             "button_label_1": "Shop pilot shirts",
-            "button_link_1": "shopify://collections/all",
+            "button_link_1": "",
             "button_style_secondary_1": false,
             "button_label_2": "Explore collection",
-            "button_link_2": "shopify://collections/all",
+            "button_link_2": "",
             "button_style_secondary_2": true
           }
         }
       },
-      "block_order": ["heading", "text", "button"],
+      "block_order": [
+        "heading_3jfaCK",
+        "text_F67jzG",
+        "buttons_mmWeLi"
+      ],
+      "name": "Dev - Banner responsive",
       "settings": {
         "accessibility_label": "Banner principal",
-        "desktop_image": "",
-        "mobile_image": "",
-        "image_alt": "Built for those who fly higher",
+        "desktop_image": "shopify://shop_images/Gemini_Generated_Image_8lx4sq8lx4sq8lx4.jpg",
+        "mobile_image": "shopify://shop_images/Gemini_Generated_Image_el4znwel4znwel4z.jpg",
+        "image_alt": "Banner promocional",
         "full_width": true,
         "desktop_height": 560,
         "mobile_height": 560,
@@ -347,7 +64,7 @@
         "mobile_image_position": "center center",
         "overlay_color": "#000000",
         "overlay_opacity": 0,
-        "heading_color": "#ffffff",
+        "heading_color": "#000000",
         "text_color": "#ffffff",
         "button_background": "#13294b",
         "button_text_color": "#ffffff",
@@ -356,43 +73,9 @@
         "margin_top": 0,
         "margin_bottom": 0
       }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
-      }
     }
   },
   "order": [
-    "image_banner",
-    "dev_banner",
-    "dev_collection_carousel",
-    "dev_benefits",
-    "dev_product_feature",
-    "dev_locations",
-    "featured_collection"
+    "dev_banner_7hEdde"
   ]
 }
