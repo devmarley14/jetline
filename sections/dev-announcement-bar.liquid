@@ -125,23 +125,31 @@
     }
 
     #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping {
-      width: max-content;
-      max-width: none;
-      animation: announcement-bar-loop-{{ section.id }} {{ section.settings.change_slides_speed | times: 2 }}s linear infinite;
-      -webkit-animation: announcement-bar-loop-{{ section.id }} {{ section.settings.change_slides_speed | times: 2 }}s linear infinite;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 100%;
+      min-height: var(--announcement-height);
+      overflow: hidden;
     }
 
     #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .slider {
       display: flex;
       width: max-content;
       min-width: 0;
+      align-items: center;
       overflow: visible;
+      animation: announcement-bar-loop-{{ section.id }} {{ section.settings.change_slides_speed | times: 2 }}s linear infinite;
+      -webkit-animation: announcement-bar-loop-{{ section.id }} {{ section.settings.change_slides_speed | times: 2 }}s linear infinite;
     }
 
     #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .slider__slide {
+      display: flex;
+      align-items: center;
       flex: 0 0 auto;
       width: max-content;
       min-width: 0;
+      min-height: var(--announcement-height);
     }
 
     #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .announcement-bar__slide-clone {
@@ -150,8 +158,12 @@
 
     #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .announcement-bar__announcement,
     #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .announcement-bar__message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: max-content;
       max-width: none;
+      min-height: var(--announcement-height);
       white-space: nowrap;
     }
 
@@ -184,6 +196,10 @@
 
     @media (prefers-reduced-motion: reduce) {
       #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping {
+        overflow-x: auto;
+      }
+
+      #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .slider {
         animation: none;
         -webkit-animation: none;
         transform: none;
