@@ -326,17 +326,27 @@
       "settings": {
         "heading": "Our locations",
         "columns_desktop": "2",
+        "columns_mobile": "1",
         "full_width": false,
+        "section_max_width": 1440,
+        "padding_inline_desktop": 80,
+        "padding_inline_mobile": 24,
         "heading_size_desktop": 28,
         "heading_size_mobile": 24,
         "title_size_desktop": 18,
         "title_size_mobile": 16,
         "body_size_desktop": 14,
         "body_size_mobile": 13,
+        "heading_weight": "700",
+        "title_weight": "700",
+        "body_weight": "400",
+        "button_weight": "700",
         "icon_size_desktop": 48,
         "icon_size_mobile": 40,
         "card_gap": 20,
         "card_padding": 28,
+        "card_padding_desktop": 28,
+        "card_padding_mobile": 20,
         "card_radius": 4,
         "background_color": "#ffffff",
         "card_background_color": "#fafafa",
@@ -349,12 +359,68 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "dev_benefits_cFadiU": {
+      "type": "dev-benefits",
+      "blocks": {
+        "benefit_FbKxRf": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Performance",
+            "description": "<p>Engineered for all-day comfort.</p>"
+          }
+        },
+        "benefit_WPNCqd": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Premium materials",
+            "description": "<p>High quality fabrics designed to last.</p>"
+          }
+        },
+        "benefit_t8kedP": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Modern design",
+            "description": "<p>Professional aviation styling and fit.</p>"
+          }
+        },
+        "benefit_7FETM9": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Trusted worldwide",
+            "description": "<p>Used by aviation professionals globally.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_FbKxRf",
+        "benefit_WPNCqd",
+        "benefit_t8kedP",
+        "benefit_7FETM9"
+      ],
+      "name": "Dev - Benefits",
+      "settings": {
+        "columns_desktop": "4",
+        "full_width": true,
+        "column_gap": 24,
+        "card_radius": 0,
+        "background_color": "#ffffff",
+        "text_color": "#102443",
+        "accent_color": "#102443",
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
     }
   },
   "order": [
     "dev_banner_7hEdde",
     "dev_collection_carousel_6Y6pVV",
     "dev_product_feature_QFUWUE",
-    "dev_locations_4BDAE7"
+    "dev_locations_4BDAE7",
+    "dev_benefits_cFadiU"
   ]
 }

@@ -1,24 +1,34 @@
 {%- style -%}
   #DevBenefits-{{ section.id }} {
     --dev-benefits-bg: {{ section.settings.background_color }};
+    --dev-benefits-max-width: {{ section.settings.max_width }}px;
     --dev-benefits-text: {{ section.settings.text_color }};
     --dev-benefits-accent: {{ section.settings.accent_color }};
-    --dev-benefits-icon-size: {{ section.settings.icon_size }}px;
-    --dev-benefits-title-size: {{ section.settings.title_size }}px;
-    --dev-benefits-description-size: {{ section.settings.description_size }}px;
+    --dev-benefits-icon-size-desktop: {{ section.settings.icon_size_desktop }}px;
+    --dev-benefits-icon-size-mobile: {{ section.settings.icon_size_mobile }}px;
+    --dev-benefits-title-size-desktop: {{ section.settings.title_size_desktop }}px;
+    --dev-benefits-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --dev-benefits-description-size-desktop: {{ section.settings.description_size_desktop }}px;
+    --dev-benefits-description-size-mobile: {{ section.settings.description_size_mobile }}px;
     --dev-benefits-gap: {{ section.settings.column_gap }}px;
+    --dev-benefits-item-gap-desktop: {{ section.settings.item_gap_desktop }}px;
+    --dev-benefits-item-gap-mobile: {{ section.settings.item_gap_mobile }}px;
     --dev-benefits-padding-top: {{ section.settings.padding_top }}px;
     --dev-benefits-padding-bottom: {{ section.settings.padding_bottom }}px;
-    --dev-benefits-card-padding: {{ section.settings.card_padding }}px;
+    --dev-benefits-padding-inline-desktop: {{ section.settings.padding_inline_desktop }}px;
+    --dev-benefits-padding-inline-mobile: {{ section.settings.padding_inline_mobile }}px;
+    --dev-benefits-card-padding-desktop: {{ section.settings.card_padding_desktop }}px;
+    --dev-benefits-card-padding-mobile: {{ section.settings.card_padding_mobile }}px;
     --dev-benefits-radius: {{ section.settings.card_radius }}px;
+    --dev-benefits-divider-color: {{ section.settings.divider_color }};
+    --dev-benefits-divider-width: {{ section.settings.divider_width }}px;
+    --dev-benefits-title-weight: {{ section.settings.title_weight }};
+    --dev-benefits-description-weight: {{ section.settings.description_weight }};
   }
 {%- endstyle -%}
 
-<section id="DevBenefits-{{ section.id }}" class="dev-benefits" aria-labelledby="DevBenefitsHeading-{{ section.id }}">
+<section id="DevBenefits-{{ section.id }}" class="dev-benefits">
   <div class="dev-benefits__inner{% if section.settings.full_width %} dev-benefits__inner--full-width{% endif %}">
-    {%- if section.settings.heading != blank -%}
-      <h2 id="DevBenefitsHeading-{{ section.id }}" class="dev-benefits__heading">{{ section.settings.heading }}</h2>
-    {%- endif -%}
     <ul class="dev-benefits__grid" role="list">
       {%- for block in section.blocks -%}
         <li class="dev-benefits__item" {{ block.shopify_attributes }}>
@@ -45,32 +55,31 @@
   </div>
 </section>
 
-{% stylesheet %}
+{% style %}
   #DevBenefits-{{ section.id }}.dev-benefits {
     overflow: hidden;
     background: var(--dev-benefits-bg);
     padding: var(--dev-benefits-padding-top) 0 var(--dev-benefits-padding-bottom);
   }
 
-  #DevBenefits-{{ section.id }}.dev-benefits__inner {
-    width: min(100% - 3rem, var(--page-width));
+  #DevBenefits-{{ section.id }} .dev-benefits__inner {
+    width: min(
+      calc(100% - (var(--dev-benefits-padding-inline-mobile) * 2)),
+      var(--dev-benefits-max-width)
+    );
+    max-width: var(--dev-benefits-max-width);
     margin: 0 auto;
   }
 
-  #DevBenefits-{{ section.id }}.dev-benefits__inner--full-width {
+  #DevBenefits-{{ section.id }} .dev-benefits__inner--full-width {
     width: 100%;
+    max-width: none;
+    padding-right: var(--dev-benefits-padding-inline-mobile);
+    padding-left: var(--dev-benefits-padding-inline-mobile);
+    box-sizing: border-box;
   }
 
-  #DevBenefits-{{ section.id }}.dev-benefits__heading {
-    margin: 0 0 2.8rem;
-    color: var(--dev-benefits-text);
-    font-size: var(--dev-benefits-title-size);
-    line-height: 1.2;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  #DevBenefits-{{ section.id }}.dev-benefits__grid {
+  #DevBenefits-{{ section.id }} .dev-benefits__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--dev-benefits-gap);
@@ -79,79 +88,113 @@
     list-style: none;
   }
 
-  #DevBenefits-{{ section.id }}.dev-benefits__item {
+  #DevBenefits-{{ section.id }} .dev-benefits__item {
     display: flex;
     min-width: 0;
     align-items: flex-start;
-    gap: 1.2rem;
-    padding: var(--dev-benefits-card-padding);
+    gap: var(--dev-benefits-item-gap-mobile);
+    padding: var(--dev-benefits-card-padding-mobile);
     border-radius: var(--dev-benefits-radius);
   }
 
-  #DevBenefits-{{ section.id }}.dev-benefits__icon {
+  #DevBenefits-{{ section.id }} .dev-benefits__icon {
     display: flex;
-    width: var(--dev-benefits-icon-size);
-    min-width: var(--dev-benefits-icon-size);
-    height: var(--dev-benefits-icon-size);
+    width: var(--dev-benefits-icon-size-mobile);
+    min-width: var(--dev-benefits-icon-size-mobile);
+    height: var(--dev-benefits-icon-size-mobile);
     align-items: center;
     justify-content: center;
     color: var(--dev-benefits-accent);
   }
 
-  #DevBenefits-{{ section.id }}.dev-benefits__icon svg,
-  #DevBenefits-{{ section.id }}.dev-benefits__icon img {
+  #DevBenefits-{{ section.id }} .dev-benefits__icon svg,
+  #DevBenefits-{{ section.id }} .dev-benefits__icon img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
 
-  #DevBenefits-{{ section.id }}.dev-benefits__title {
+  #DevBenefits-{{ section.id }} .dev-benefits__title {
     margin: 0;
     color: var(--dev-benefits-text);
-    font-size: var(--dev-benefits-title-size);
+    font-size: var(--dev-benefits-title-size-mobile);
+    font-weight: var(--dev-benefits-title-weight);
     line-height: 1.15;
     text-transform: uppercase;
   }
 
-  #DevBenefits-{{ section.id }}.dev-benefits__description {
-    margin-top: 0.8rem;
+  #DevBenefits-{{ section.id }} .dev-benefits__description {
+    margin-top: 0.6rem;
     color: var(--dev-benefits-text);
-    font-size: var(--dev-benefits-description-size);
+    font-size: var(--dev-benefits-description-size-mobile);
+    font-weight: var(--dev-benefits-description-weight);
     line-height: 1.5;
   }
 
-  #DevBenefits-{{ section.id }}.dev-benefits__description p {
+  #DevBenefits-{{ section.id }} .dev-benefits__description p {
     margin: 0;
   }
 
   @media screen and (min-width: 750px) {
-    #DevBenefits-{{ section.id }}.dev-benefits__inner {
-      width: min(100% - 10rem, var(--page-width));
+    #DevBenefits-{{ section.id }} .dev-benefits__inner {
+      width: min(
+        calc(100% - (var(--dev-benefits-padding-inline-desktop) * 2)),
+        var(--dev-benefits-max-width)
+      );
     }
 
-    #DevBenefits-{{ section.id }}.dev-benefits__inner--full-width {
+    #DevBenefits-{{ section.id }} .dev-benefits__inner--full-width {
       width: 100%;
+      padding-right: var(--dev-benefits-padding-inline-desktop);
+      padding-left: var(--dev-benefits-padding-inline-desktop);
     }
 
-    #DevBenefits-{{ section.id }}.dev-benefits__grid {
+    #DevBenefits-{{ section.id }} .dev-benefits__grid {
       grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    }
+
+    #DevBenefits-{{ section.id }} .dev-benefits__item {
+      gap: var(--dev-benefits-item-gap-desktop);
+      padding: var(--dev-benefits-card-padding-desktop);
+    }
+
+    #DevBenefits-{{ section.id }} .dev-benefits__item + .dev-benefits__item {
+      border-left: var(--dev-benefits-divider-width) solid var(--dev-benefits-divider-color);
+    }
+
+    #DevBenefits-{{ section.id }} .dev-benefits__icon {
+      width: var(--dev-benefits-icon-size-desktop);
+      min-width: var(--dev-benefits-icon-size-desktop);
+      height: var(--dev-benefits-icon-size-desktop);
+    }
+
+    #DevBenefits-{{ section.id }} .dev-benefits__title {
+      font-size: var(--dev-benefits-title-size-desktop);
+    }
+
+    #DevBenefits-{{ section.id }} .dev-benefits__description {
+      font-size: var(--dev-benefits-description-size-desktop);
     }
   }
 
   @media screen and (max-width: 749px) {
-    #DevBenefits-{{ section.id }}.dev-benefits__item {
+    #DevBenefits-{{ section.id }} .dev-benefits__grid {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, minmax(0, 1fr));
+    }
+
+    #DevBenefits-{{ section.id }} .dev-benefits__item {
       flex-direction: column;
       align-items: center;
       gap: 1rem;
       text-align: center;
     }
 
-    #DevBenefits-{{ section.id }}.dev-benefits__description {
-      font-size: calc(var(--dev-benefits-description-size) - 1px);
+    #DevBenefits-{{ section.id }} .dev-benefits__description {
+      font-size: var(--dev-benefits-description-size-mobile);
     }
   }
-{% endstylesheet %}
+{% endstyle %}
 
 {% schema %}
 {
@@ -160,12 +203,6 @@
   "class": "section",
   "max_blocks": 8,
   "settings": [
-    {
-      "type": "inline_richtext",
-      "id": "heading",
-      "label": "Título",
-      "default": "Why choose us"
-    },
     {
       "type": "select",
       "id": "columns_desktop",
@@ -178,6 +215,26 @@
       "default": "4"
     },
     {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columnas Mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo de la sección",
+      "min": 320,
+      "max": 1440,
+      "step": 20,
+      "unit": "px",
+      "default": 1440
+    },
+    {
       "type": "checkbox",
       "id": "full_width",
       "label": "Ancho completo",
@@ -185,33 +242,63 @@
     },
     {
       "type": "range",
-      "id": "icon_size",
-      "label": "Tamaño de iconos",
+      "id": "icon_size_desktop",
+      "label": "Tamaño de iconos Desktop",
       "min": 24,
       "max": 120,
       "step": 2,
       "unit": "px",
-      "default": 64
+      "default": 48
     },
     {
       "type": "range",
-      "id": "title_size",
-      "label": "Tamaño de títulos",
+      "id": "icon_size_mobile",
+      "label": "Tamaño de iconos Mobile",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Tamaño de títulos Desktop",
       "min": 10,
       "max": 36,
       "step": 1,
       "unit": "px",
-      "default": 16
+      "default": 12
     },
     {
       "type": "range",
-      "id": "description_size",
-      "label": "Tamaño de descripciones",
+      "id": "title_size_mobile",
+      "label": "Tamaño de títulos Mobile",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "description_size_desktop",
+      "label": "Tamaño de descripciones Desktop",
       "min": 10,
       "max": 28,
       "step": 1,
       "unit": "px",
-      "default": 14
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "label": "Tamaño de descripciones Mobile",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 11
     },
     {
       "type": "range",
@@ -225,8 +312,38 @@
     },
     {
       "type": "range",
-      "id": "card_padding",
-      "label": "Padding de tarjetas",
+      "id": "item_gap_desktop",
+      "label": "Separación icono/texto Desktop",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_gap_mobile",
+      "label": "Separación icono/texto Mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_padding_desktop",
+      "label": "Padding de tarjetas Desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Padding de tarjetas Mobile",
       "min": 0,
       "max": 60,
       "step": 2,
@@ -247,7 +364,7 @@
       "type": "color",
       "id": "background_color",
       "label": "Color de fondo",
-      "default": "#ffffff"
+      "default": "#f8f8f8"
     },
     {
       "type": "color",
@@ -262,6 +379,66 @@
       "default": "#102443"
     },
     {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color de separadores",
+      "default": "#e5e7eb"
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "label": "Grosor de separadores",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Peso de títulos",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "description_weight",
+      "label": "Peso de descripciones",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "padding_inline_desktop",
+      "label": "Padding lateral Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_inline_mobile",
+      "label": "Padding lateral Mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
       "type": "range",
       "id": "padding_top",
       "label": "Padding superior",
@@ -269,7 +446,7 @@
       "max": 160,
       "step": 4,
       "unit": "px",
-      "default": 24
+      "default": 16
     },
     {
       "type": "range",
@@ -279,7 +456,7 @@
       "max": 160,
       "step": 4,
       "unit": "px",
-      "default": 24
+      "default": 16
     }
   ],
   "blocks": [
