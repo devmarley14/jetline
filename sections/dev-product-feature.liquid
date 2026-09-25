@@ -24,8 +24,6 @@
     --dev-feature-section-max-width: {{ section.settings.section_max_width }}px;
     --dev-feature-padding-inline-desktop: {{ section.settings.padding_inline_desktop }}px;
     --dev-feature-padding-inline-mobile: {{ section.settings.padding_inline_mobile }}px;
-    --dev-feature-image-max-width-desktop: {{ section.settings.image_max_width_desktop }}px;
-    --dev-feature-image-max-width-mobile: {{ section.settings.image_max_width_mobile }}px;
     --dev-feature-radius: {{ section.settings.image_radius }}px;
   }
 {%- endstyle -%}
@@ -121,8 +119,8 @@
 
   #DevProductFeature-{{ section.id }} .dev-product-feature__media {
     width: 100%;
-    max-width: var(--dev-feature-image-max-width-mobile);
-    margin: 0 auto;
+    max-width: none;
+    margin: 0;
     overflow: hidden;
     border-radius: var(--dev-feature-radius);
     line-height: 0;
@@ -274,7 +272,9 @@
     }
 
     #DevProductFeature-{{ section.id }} .dev-product-feature__media {
-      max-width: var(--dev-feature-image-max-width-desktop);
+      width: 100%;
+      max-width: none;
+      margin: 0;
     }
 
     #DevProductFeature-{{ section.id }} .dev-product-feature__media--right {
@@ -425,26 +425,6 @@
       "step": 2,
       "unit": "px",
       "default": 24
-    },
-    {
-      "type": "range",
-      "id": "image_max_width_desktop",
-      "label": "Ancho máximo de imagen Desktop",
-      "min": 280,
-      "max": 900,
-      "step": 20,
-      "unit": "px",
-      "default": 680
-    },
-    {
-      "type": "range",
-      "id": "image_max_width_mobile",
-      "label": "Ancho máximo de imagen Mobile",
-      "min": 180,
-      "max": 700,
-      "step": 10,
-      "unit": "px",
-      "default": 640
     },
     {
       "type": "select",
