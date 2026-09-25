@@ -35,10 +35,6 @@
     list-style: none;
   }
 
-  #DevTrustBar-{{ section.id }} .dev-trust-bar__list.is-looping {
-    width: max-content;
-  }
-
   #DevTrustBar-{{ section.id }} .dev-trust-bar__item.is-clone,
   #DevTrustBar-{{ section.id }} .dev-trust-bar__divider.is-clone {
     display: none;
@@ -94,7 +90,7 @@
       justify-content: flex-start;
       flex-wrap: nowrap;
       gap: 0;
-      width: 100%;
+      width: max-content;
       overflow-x: auto;
       overflow-y: hidden;
       overscroll-behavior: none;
@@ -162,6 +158,15 @@
 
     #DevTrustBar-{{ section.id }} .dev-trust-bar__divider {
       height: {{ section.settings.divider_height_desktop }}px;
+    }
+
+    #DevTrustBar-{{ section.id }} .dev-trust-bar__list {
+      width: 100%;
+      justify-content: center;
+      flex-wrap: nowrap;
+      overflow: visible;
+      animation: none;
+      transform: none;
     }
   }
 {%- endstyle -%}
