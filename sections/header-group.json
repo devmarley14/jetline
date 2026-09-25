@@ -13,28 +13,12 @@
   "sections": {
     "announcement-bar": {
       "type": "dev-announcement-bar",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "show_line_separator": true,
-        "show_social": false,
-        "auto_rotate": true,
-        "change_slides_speed": 5,
-        "bar_height": 42,
-        "text_size": 13,
-        "icon_size": 16,
-        "background_color": "#021329",
-        "text_color": "#ffffff",
-        "divider_color": "#29415e",
-        "enable_country_selector": false,
-        "enable_language_selector": false
-      },
       "blocks": {
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
             "text": "The lightest pilot shirt in the world",
             "svg_code": "",
-            "icon_image": "",
             "link": ""
           }
         },
@@ -43,7 +27,6 @@
           "settings": {
             "text": "Free shipping on orders $150+",
             "svg_code": "",
-            "icon_image": "",
             "link": ""
           }
         },
@@ -52,7 +35,6 @@
           "settings": {
             "text": "Trusted by pilots worldwide",
             "svg_code": "",
-            "icon_image": "",
             "link": ""
           }
         }
@@ -61,27 +43,42 @@
         "announcement-bar-0",
         "announcement-bar-1",
         "announcement-bar-2"
-      ]
+      ],
+      "settings": {
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "bar_height": 42,
+        "text_size": 13,
+        "icon_size": 16,
+        "background_color": "#021329",
+        "text_color": "#ffffff",
+        "divider_color": "#29415e",
+        "color_scheme": "scheme-1",
+        "show_line_separator": true,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      }
     },
     "header": {
       "type": "dev-header",
       "settings": {
-        "color_scheme": "scheme-1",
-        "menu_color_scheme": "scheme-1",
         "logo_position": "middle-left",
+        "mobile_logo_position": "center",
         "menu": "main-menu",
         "menu_type_desktop": "dropdown",
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "mobile_logo_position": "center",
         "header_background": "#ffffff",
         "header_foreground": "#102443",
         "header_border": "#e5e8ed",
         "header_icon_size": 24,
         "header_menu_size": 13,
         "header_logo_width": 180,
+        "color_scheme": "scheme-1",
+        "menu_color_scheme": "scheme-1",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
         "margin_bottom": 0,
         "padding_top": 20,
         "padding_bottom": 20
