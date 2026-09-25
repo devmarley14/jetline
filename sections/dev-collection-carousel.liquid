@@ -83,16 +83,16 @@
                 {%- assign placeholder_image = 'collection-apparel-' | append: placeholder_index -%}
                 {{ placeholder_image | placeholder_svg_tag: 'dev-category-card__placeholder' }}
               {%- endif -%}
-            </div>
-            <div class="dev-category-card__footer">
-              {%- if block.settings.title != blank -%}
-                <h3 class="dev-category-card__title">{{ block.settings.title }}</h3>
-              {%- endif -%}
               {%- if block.settings.collection_link != blank -%}
                 <a class="dev-category-card__button" href="{{ block.settings.collection_link }}">
                   {{ block.settings.button_label | default: section.settings.button_label | escape }}
                   <span aria-hidden="true">→</span>
                 </a>
+              {%- endif -%}
+            </div>
+            <div class="dev-category-card__footer">
+              {%- if block.settings.title != blank -%}
+                <h3 class="dev-category-card__title">{{ block.settings.title }}</h3>
               {%- endif -%}
             </div>
           </li>
