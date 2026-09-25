@@ -15,6 +15,12 @@
     --dev-feature-benefit-title-mobile: {{ section.settings.benefit_title_size_mobile }}px;
     --dev-feature-benefit-text-desktop: {{ section.settings.benefit_text_size_desktop }}px;
     --dev-feature-benefit-text-mobile: {{ section.settings.benefit_text_size_mobile }}px;
+    --dev-feature-eyebrow-weight: {{ section.settings.eyebrow_weight }};
+    --dev-feature-heading-weight: {{ section.settings.heading_weight }};
+    --dev-feature-body-weight: {{ section.settings.body_weight }};
+    --dev-feature-benefit-title-weight: {{ section.settings.benefit_title_weight }};
+    --dev-feature-benefit-text-weight: {{ section.settings.benefit_text_weight }};
+    --dev-feature-button-weight: {{ section.settings.button_weight }};
     --dev-feature-button-margin-top: {{ section.settings.button_margin_top }}px;
     --dev-feature-icon-desktop: {{ section.settings.icon_size_desktop }}px;
     --dev-feature-icon-mobile: {{ section.settings.icon_size_mobile }}px;
@@ -144,7 +150,7 @@
     margin: 0 0 1rem;
     color: var(--dev-feature-text);
     font-size: var(--dev-feature-body-mobile);
-    font-weight: 700;
+    font-weight: var(--dev-feature-eyebrow-weight);
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -153,6 +159,7 @@
     margin: 0;
     color: var(--dev-feature-text);
     font-size: var(--dev-feature-heading-mobile);
+    font-weight: var(--dev-feature-heading-weight);
     line-height: 1.1;
     text-transform: uppercase;
   }
@@ -161,6 +168,7 @@
     margin-top: 1.6rem;
     color: var(--dev-feature-muted);
     font-size: var(--dev-feature-body-mobile);
+    font-weight: var(--dev-feature-body-weight);
     line-height: 1.5;
   }
 
@@ -212,6 +220,7 @@
     margin: 0;
     color: var(--dev-feature-text);
     font-size: var(--dev-feature-benefit-title-mobile);
+    font-weight: var(--dev-feature-benefit-title-weight);
     line-height: 1.2;
     text-transform: uppercase;
   }
@@ -220,6 +229,7 @@
     margin-top: 0.5rem;
     color: var(--dev-feature-muted);
     font-size: var(--dev-feature-benefit-text-mobile);
+    font-weight: var(--dev-feature-benefit-text-weight);
     line-height: 1.35;
   }
 
@@ -239,7 +249,7 @@
     background: var(--dev-feature-button-background);
     color: var(--dev-feature-button-text);
     font-size: var(--dev-feature-body-mobile);
-    font-weight: 700;
+    font-weight: var(--dev-feature-button-weight);
     text-decoration: none;
     text-transform: uppercase;
   }
@@ -478,6 +488,86 @@
       "step": 1,
       "unit": "px",
       "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Peso tipográfico"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_weight",
+      "label": "Peso etiqueta superior",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Peso título principal",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "Peso descripción principal",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "benefit_title_weight",
+      "label": "Peso títulos de beneficios",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "benefit_text_weight",
+      "label": "Peso textos de beneficios",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "button_weight",
+      "label": "Peso del botón",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
     },
     {
       "type": "range",
