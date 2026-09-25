@@ -312,6 +312,113 @@
     cursor: zoom-out;
   }
 
+  #CProductNew-{{ section.id }} .cpn__zoom-navigation {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    pointer-events: none;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.4rem;
+    height: 4.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    background: rgba(7, 26, 56, 0.72);
+    color: #fff;
+    font-size: 2.4rem;
+    line-height: 1;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-arrow:hover,
+  #CProductNew-{{ section.id }} .cpn__zoom-arrow:focus-visible {
+    background: #fff;
+    color: var(--cpn-accent);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-thumbs {
+    position: absolute;
+    right: 50%;
+    bottom: 1.5rem;
+    display: flex;
+    gap: 0.6rem;
+    max-width: calc(100% - 12rem);
+    padding: 0.5rem;
+    overflow-x: auto;
+    transform: translateX(50%);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-thumb {
+    flex: 0 0 5.6rem;
+    width: 5.6rem;
+    height: 5.6rem;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 0.3rem;
+    background: var(--cpn-panel-background);
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.72;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-thumb.is-active,
+  #CProductNew-{{ section.id }} .cpn__zoom-thumb:hover,
+  #CProductNew-{{ section.id }} .cpn__zoom-thumb:focus-visible {
+    border-color: #fff;
+    opacity: 1;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__zoom-counter {
+    position: absolute;
+    top: 1.8rem;
+    left: 50%;
+    color: #fff;
+    font-size: var(--cpn-label-size-mobile);
+    font-weight: var(--cpn-label-weight);
+    transform: translateX(-50%);
+  }
+
+  @media screen and (max-width: 749px) {
+    #CProductNew-{{ section.id }} .cpn__zoom-modal {
+      padding: 1rem;
+    }
+
+    #CProductNew-{{ section.id }} .cpn__zoom-navigation {
+      padding: 0 0.5rem;
+    }
+
+    #CProductNew-{{ section.id }} .cpn__zoom-arrow {
+      width: 3.6rem;
+      height: 3.6rem;
+    }
+
+    #CProductNew-{{ section.id }} .cpn__zoom-thumbs {
+      bottom: 1rem;
+      max-width: calc(100% - 8rem);
+    }
+
+    #CProductNew-{{ section.id }} .cpn__zoom-thumb {
+      flex-basis: 4.8rem;
+      width: 4.8rem;
+      height: 4.8rem;
+    }
+  }
+
   #CProductNew-{{ section.id }} .cpn__zoom-close {
     position: absolute;
     top: 1.5rem;
@@ -497,7 +604,13 @@
       {{ current_product.title | escape }}
     </h2>
     <button class="cpn__zoom-close" type="button" data-cpn-zoom-close aria-label="Cerrar zoom">&times;</button>
+    <span class="cpn__zoom-counter" data-cpn-zoom-counter aria-live="polite"></span>
+    <div class="cpn__zoom-navigation" aria-label="Navegación de galería">
+      <button class="cpn__zoom-arrow" type="button" data-cpn-zoom-prev aria-label="Imagen anterior">&#8249;</button>
+      <button class="cpn__zoom-arrow" type="button" data-cpn-zoom-next aria-label="Imagen siguiente">&#8250;</button>
+    </div>
     <img class="cpn__zoom-image" data-cpn-zoom-image alt="">
+    <div class="cpn__zoom-thumbs" data-cpn-zoom-thumbs role="tablist" aria-label="Imágenes del producto"></div>
   </div>
 </section>
 </product-info>
@@ -518,7 +631,46 @@
     const modal = root.querySelector('[data-cpn-zoom-modal]');
     if (!modal) return;
     const modalImage = modal.querySelector('[data-cpn-zoom-image]');
+    const modalCounter = modal.querySelector('[data-cpn-zoom-counter]');
+    const modalThumbs = modal.querySelector('[data-cpn-zoom-thumbs]');
+    const previousButton = modal.querySelector('[data-cpn-zoom-prev]');
+    const nextButton = modal.querySelector('[data-cpn-zoom-next]');
+    const zoomButtons = Array.from(root.querySelectorAll('[data-cpn-zoom]'));
+    let activeIndex = 0;
     let lastFocusedElement;
+    const galleryImages = zoomButtons.map((button) => ({
+      src: button.dataset.cpnZoom,
+      alt: button.getAttribute('aria-label') || '',
+      thumb: button.closest('[data-cpn-media]')?.querySelector('img')?.currentSrc || button.closest('[data-cpn-media]')?.querySelector('img')?.src || '',
+    }));
+    const renderThumbnails = () => {
+      modalThumbs.innerHTML = galleryImages
+        .map(
+          (image, index) => `
+            <button class="cpn__zoom-thumb${index === activeIndex ? ' is-active' : ''}" type="button" role="tab"
+              aria-label="Ver imagen ${index + 1}" aria-selected="${index === activeIndex}" data-cpn-zoom-index="${index}">
+              <img src="${image.thumb}" alt="">
+            </button>
+          `
+        )
+        .join('');
+      modalThumbs.querySelectorAll('[data-cpn-zoom-index]').forEach((thumbnail) => {
+        thumbnail.addEventListener('click', () => showImage(Number(thumbnail.dataset.cpnZoomIndex)));
+      });
+    };
+    const showImage = (index) => {
+      if (!galleryImages.length) return;
+      activeIndex = (index + galleryImages.length) % galleryImages.length;
+      const image = galleryImages[activeIndex];
+      modalImage.src = image.src;
+      modalImage.alt = image.alt;
+      modalCounter.textContent = `${activeIndex + 1} / ${galleryImages.length}`;
+      modalThumbs.querySelectorAll('[data-cpn-zoom-index]').forEach((thumbnail) => {
+        const isActive = Number(thumbnail.dataset.cpnZoomIndex) === activeIndex;
+        thumbnail.classList.toggle('is-active', isActive);
+        thumbnail.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    };
     const closeModal = () => {
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
@@ -526,23 +678,29 @@
       document.body.classList.remove('overflow-hidden');
       lastFocusedElement?.focus();
     };
-    root.querySelectorAll('[data-cpn-zoom]').forEach((button) => {
+    zoomButtons.forEach((button, index) => {
       button.addEventListener('click', () => {
         lastFocusedElement = button;
-        modalImage.src = button.dataset.cpnZoom;
-        modalImage.alt = button.getAttribute('aria-label') || '';
+        activeIndex = index;
+        renderThumbnails();
+        showImage(activeIndex);
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('overflow-hidden');
         modal.focus();
       });
     });
+    previousButton.addEventListener('click', () => showImage(activeIndex - 1));
+    nextButton.addEventListener('click', () => showImage(activeIndex + 1));
+    modalImage.addEventListener('click', closeModal);
     modal.querySelector('[data-cpn-zoom-close]').addEventListener('click', closeModal);
     modal.addEventListener('click', (event) => {
       if (event.target === modal) closeModal();
     });
     modal.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+      if (event.key === 'ArrowLeft' && modal.classList.contains('is-open')) showImage(activeIndex - 1);
+      if (event.key === 'ArrowRight' && modal.classList.contains('is-open')) showImage(activeIndex + 1);
     });
   })();
 </script>
