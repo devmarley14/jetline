@@ -1,0 +1,617 @@
+{%- liquid
+  assign has_social = false
+  assign current_year = 'now' | date: '%Y'
+  if settings.social_instagram_link != blank or settings.social_facebook_link != blank or settings.social_youtube_link != blank or settings.social_tiktok_link != blank
+    assign has_social = true
+  endif
+-%}
+
+{%- style -%}
+  #DevFooter-{{ section.id }} {
+    --dev-footer-background: {{ section.settings.background_color }};
+    --dev-footer-max-width: {{ section.settings.max_width }}px;
+    --dev-footer-text: {{ section.settings.text_color }};
+    --dev-footer-muted: {{ section.settings.muted_text_color }};
+    --dev-footer-border: {{ section.settings.border_color }};
+    --dev-footer-heading-desktop: {{ section.settings.heading_size_desktop }}px;
+    --dev-footer-heading-mobile: {{ section.settings.heading_size_mobile }}px;
+    --dev-footer-body-desktop: {{ section.settings.body_size_desktop }}px;
+    --dev-footer-body-mobile: {{ section.settings.body_size_mobile }}px;
+    --dev-footer-logo-width-desktop: {{ section.settings.logo_width_desktop }}px;
+    --dev-footer-logo-width-mobile: {{ section.settings.logo_width_mobile }}px;
+    --dev-footer-padding-top: {{ section.settings.padding_top }}px;
+    --dev-footer-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --dev-footer-padding-inline-desktop: {{ section.settings.padding_inline_desktop }}px;
+    --dev-footer-padding-inline-mobile: {{ section.settings.padding_inline_mobile }}px;
+    --dev-footer-column-gap-desktop: {{ section.settings.column_gap_desktop }}px;
+    --dev-footer-column-gap-mobile: {{ section.settings.column_gap_mobile }}px;
+    --dev-footer-heading-weight: {{ section.settings.heading_weight }};
+    --dev-footer-body-weight: {{ section.settings.body_weight }};
+    --dev-footer-button-weight: {{ section.settings.button_weight }};
+    --dev-footer-margin-top-desktop: {{ section.settings.margin_top_desktop }}px;
+    --dev-footer-margin-bottom-desktop: {{ section.settings.margin_bottom_desktop }}px;
+    --dev-footer-margin-top-mobile: {{ section.settings.margin_top_mobile }}px;
+    --dev-footer-margin-bottom-mobile: {{ section.settings.margin_bottom_mobile }}px;
+  }
+{%- endstyle -%}
+
+<footer id="DevFooter-{{ section.id }}" class="dev-footer">
+  <div class="dev-footer__inner">
+    <div class="dev-footer__main">
+      <div class="dev-footer__brand">
+        {%- if section.settings.logo != blank -%}
+          {{
+            section.settings.logo
+            | image_url: width: 900
+            | image_tag:
+              widths: '180, 300, 450, 600, 900',
+              sizes: '(min-width: 750px) 220px, 180px',
+              loading: 'lazy',
+              alt: section.settings.logo_alt
+          }}
+        {%- elsif section.settings.logo_svg != blank -%}
+          {{ section.settings.logo_svg }}
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <div class="dev-footer__description rte">{{ section.settings.description }}</div>
+        {%- endif -%}
+        {%- if has_social -%}
+          <div class="dev-footer__social">
+            {%- if settings.social_instagram_link != blank -%}<a href="{{ settings.social_instagram_link }}" aria-label="Instagram">{{ 'icon-instagram.svg' | inline_asset_content }}</a>{%- endif -%}
+            {%- if settings.social_facebook_link != blank -%}<a href="{{ settings.social_facebook_link }}" aria-label="Facebook">{{ 'icon-facebook.svg' | inline_asset_content }}</a>{%- endif -%}
+            {%- if settings.social_youtube_link != blank -%}<a href="{{ settings.social_youtube_link }}" aria-label="YouTube">{{ 'icon-youtube.svg' | inline_asset_content }}</a>{%- endif -%}
+            {%- if settings.social_tiktok_link != blank -%}<a href="{{ settings.social_tiktok_link }}" aria-label="TikTok">{{ 'icon-tiktok.svg' | inline_asset_content }}</a>{%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu' -%}
+          <div class="dev-footer__column" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}<h2>{{ block.settings.heading }}</h2>{%- endif -%}
+            {%- if block.settings.menu != blank -%}
+              <ul role="list">
+                {%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- elsif block.type == 'newsletter' -%}
+          <div class="dev-footer__column dev-footer__newsletter" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}<h2>{{ block.settings.heading }}</h2>{%- endif -%}
+            {%- if block.settings.text != blank -%}<div class="dev-footer__newsletter-text rte">{{ block.settings.text }}</div>{%- endif -%}
+            {% form 'customer', class: 'dev-footer__form' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <label class="visually-hidden" for="DevFooterEmail-{{ section.id }}">Email</label>
+              <input id="DevFooterEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ block.settings.placeholder }}" required>
+              <button type="submit" aria-label="{{ block.settings.button_label | escape }}">→</button>
+            {% endform %}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="dev-footer__bottom">
+      <p>{{ section.settings.copyright_text | replace: '[year]', current_year | escape }}</p>
+    </div>
+  </div>
+</footer>
+
+{% style %}
+  #DevFooter-{{ section.id }} {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--dev-footer-background);
+    color: var(--dev-footer-text);
+    margin-top: var(--dev-footer-margin-top-mobile);
+    margin-bottom: var(--dev-footer-margin-bottom-mobile);
+    padding: var(--dev-footer-padding-top) 0 var(--dev-footer-padding-bottom);
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__inner {
+    width: calc(100% - (var(--dev-footer-padding-inline-mobile) * 2));
+    max-width: var(--dev-footer-max-width);
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--dev-footer-column-gap-mobile);
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__brand img,
+  #DevFooter-{{ section.id }} .dev-footer__brand > svg {
+    display: block;
+    width: var(--dev-footer-logo-width-mobile);
+    max-width: 100%;
+    height: auto;
+    fill: currentColor;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__description {
+    max-width: 30rem;
+    margin-top: 1.5rem;
+    color: var(--dev-footer-muted);
+    font-size: var(--dev-footer-body-mobile);
+    font-weight: var(--dev-footer-body-weight);
+    line-height: 1.55;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__description p {
+    margin: 0;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__social {
+    display: flex;
+    gap: 1.4rem;
+    margin-top: 1.8rem;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__social a {
+    display: flex;
+    width: 2.4rem;
+    height: 2.4rem;
+    color: var(--dev-footer-text);
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__social svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__column h2 {
+    margin: 0 0 1.5rem;
+    color: var(--dev-footer-text);
+    font-size: var(--dev-footer-heading-mobile);
+    font-weight: var(--dev-footer-heading-weight);
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__column ul {
+    display: grid;
+    gap: 0.9rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__column a {
+    color: var(--dev-footer-muted);
+    font-size: var(--dev-footer-body-mobile);
+    font-weight: var(--dev-footer-body-weight);
+    line-height: 1.35;
+    text-decoration: none;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__column a:hover {
+    color: var(--dev-footer-text);
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__newsletter-text {
+    margin: -0.5rem 0 1.4rem;
+    color: var(--dev-footer-muted);
+    font-size: var(--dev-footer-body-mobile);
+    font-weight: var(--dev-footer-body-weight);
+    line-height: 1.5;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__newsletter-text p {
+    margin: 0;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__form {
+    display: flex;
+    max-width: 32rem;
+    border: 1px solid var(--dev-footer-border);
+    border-radius: 0.3rem;
+    overflow: hidden;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__form input {
+    min-width: 0;
+    flex: 1;
+    padding: 1.2rem;
+    border: 0;
+    background: #fff;
+    color: #102443;
+    font: inherit;
+    font-size: var(--dev-footer-body-mobile);
+    font-weight: var(--dev-footer-body-weight);
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__form button {
+    width: 4.6rem;
+    border: 0;
+    border-left: 1px solid var(--dev-footer-border);
+    background: transparent;
+    color: var(--dev-footer-text);
+    font-size: 2.4rem;
+    font-weight: var(--dev-footer-button-weight);
+    cursor: pointer;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__bottom {
+    margin-top: 2.8rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--dev-footer-border);
+    text-align: center;
+  }
+
+  #DevFooter-{{ section.id }} .dev-footer__bottom p {
+    margin: 0;
+    color: var(--dev-footer-muted);
+    font-size: var(--dev-footer-body-mobile);
+    font-weight: var(--dev-footer-body-weight);
+  }
+
+  @media screen and (min-width: 750px) {
+    #DevFooter-{{ section.id }} {
+      margin-top: var(--dev-footer-margin-top-desktop);
+      margin-bottom: var(--dev-footer-margin-bottom-desktop);
+    }
+
+    #DevFooter-{{ section.id }} .dev-footer__inner {
+      width: calc(100% - (var(--dev-footer-padding-inline-desktop) * 2));
+    }
+
+    #DevFooter-{{ section.id }} .dev-footer__main {
+      grid-template-columns: minmax(20rem, 1.2fr) repeat(2, minmax(14rem, 1fr)) minmax(22rem, 1.4fr);
+      gap: var(--dev-footer-column-gap-desktop);
+    }
+
+    #DevFooter-{{ section.id }} .dev-footer__brand img,
+    #DevFooter-{{ section.id }} .dev-footer__brand > svg {
+      width: var(--dev-footer-logo-width-desktop);
+    }
+
+    #DevFooter-{{ section.id }} .dev-footer__description,
+    #DevFooter-{{ section.id }} .dev-footer__column a,
+    #DevFooter-{{ section.id }} .dev-footer__newsletter-text,
+    #DevFooter-{{ section.id }} .dev-footer__form input,
+    #DevFooter-{{ section.id }} .dev-footer__bottom p {
+      font-size: var(--dev-footer-body-desktop);
+      font-weight: var(--dev-footer-body-weight);
+    }
+
+    #DevFooter-{{ section.id }} .dev-footer__column h2 {
+      font-size: var(--dev-footer-heading-desktop);
+      font-weight: var(--dev-footer-heading-weight);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Dev - Footer",
+  "tag": "footer",
+  "class": "section",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "textarea",
+      "id": "logo_svg",
+      "label": "Código SVG del logo",
+      "info": "Se usa si no se ha subido una imagen."
+    },
+    {
+      "type": "text",
+      "id": "logo_alt",
+      "label": "Texto alternativo del logo",
+      "default": "Jetline Apparel"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Descripción",
+      "default": "<p>Performance aviation apparel engineered for pilots, crew and aviation professionals around the world.</p>"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright",
+      "default": "© [year] Jetline Apparel. All rights reserved."
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo del contenido",
+      "min": 320,
+      "max": 1440,
+      "step": 20,
+      "unit": "px",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "logo_width_desktop",
+      "label": "Ancho logo Desktop",
+      "min": 100,
+      "max": 400,
+      "step": 5,
+      "unit": "px",
+      "default": 190
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "label": "Ancho logo Mobile",
+      "min": 80,
+      "max": 280,
+      "step": 5,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Tamaño encabezados Desktop",
+      "min": 11,
+      "max": 26,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño encabezados Mobile",
+      "min": 11,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "body_size_desktop",
+      "label": "Tamaño texto Desktop",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Tamaño texto Mobile",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Peso de encabezados",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "Peso de textos",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "button_weight",
+      "label": "Peso del botón",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "column_gap_desktop",
+      "label": "Separación de columnas Desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "Separación de columnas Mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#021329"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color principal",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Color texto secundario",
+      "default": "#d8e0eb"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color de bordes",
+      "default": "#29415e"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_inline_desktop",
+      "label": "Padding lateral Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_inline_mobile",
+      "label": "Padding lateral Mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "label": "Margen superior Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "label": "Margen inferior Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Margen superior Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Margen inferior Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menú",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "Shop"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menú"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "Stay connected"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "<p>Be the first to know about new arrivals, exclusive offers, and more.</p>"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder",
+          "default": "Enter your email"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Etiqueta accesible del botón",
+          "default": "Subscribe"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dev - Footer",
+      "blocks": [
+        { "type": "menu", "settings": { "heading": "Shop", "menu": "footer" } },
+        { "type": "menu", "settings": { "heading": "Company", "menu": "footer" } },
+        { "type": "newsletter" }
+      ]
+    }
+  ]
+}
+{% endschema %}
