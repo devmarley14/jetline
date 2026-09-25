@@ -1,7 +1,17 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
       "type": "main-collection-banner",
+      "disabled": true,
       "settings": {
         "show_collection_description": true,
         "show_collection_image": false,
@@ -10,9 +20,11 @@
     },
     "product-grid": {
       "type": "main-collection-product-grid",
+      "disabled": true,
       "settings": {
         "products_per_page": 16,
         "columns_desktop": 4,
+        "columns_mobile": "2",
         "color_scheme": "scheme-1",
         "image_ratio": "adapt",
         "image_shape": "default",
@@ -23,14 +35,141 @@
         "enable_filtering": true,
         "filter_type": "horizontal",
         "enable_sorting": true,
-        "columns_mobile": "2",
         "padding_top": 36,
         "padding_bottom": 36
+      }
+    },
+    "c_collection_header_myfWRG": {
+      "type": "c-collection-header",
+      "blocks": {
+        "pill_gYQRLd": {
+          "type": "pill",
+          "settings": {
+            "label": "Shop All",
+            "filter_value": "",
+            "target_collection": "",
+            "url": "",
+            "is_default": true
+          }
+        },
+        "pill_3GMXbB": {
+          "type": "pill",
+          "settings": {
+            "label": "Jackets",
+            "filter_value": "Jackets",
+            "target_collection": "frontpage",
+            "url": "",
+            "is_default": false
+          }
+        }
+      },
+      "block_order": [
+        "pill_gYQRLd",
+        "pill_3GMXbB"
+      ],
+      "name": "C - Collection Header",
+      "settings": {
+        "eyebrow": "SHOP",
+        "heading": "All Products",
+        "subheading": "Dr. Jen's complete line of oral wellness products",
+        "pills_aria_label": "Filtrar productos",
+        "target_selector": ".c-col-new",
+        "sticky_desktop": false,
+        "sticky_offset_desktop": 0,
+        "sticky_mobile": false,
+        "sticky_offset_mobile": 0,
+        "max_width": 1600,
+        "bg_color": "#F9F9F9",
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 20,
+        "padding_top_mobile": 36,
+        "padding_bottom_mobile": 16,
+        "eyebrow_color": "#102443",
+        "heading_color": "#002C41",
+        "heading_font_family": "'Montserrat', sans-serif",
+        "heading_weight": 400,
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 34,
+        "subheading_color": "#000000",
+        "pill_active_bg": "#002C41",
+        "pill_active_text": "#FFFFFF",
+        "pill_inactive_bg": "#FFFFFF",
+        "pill_inactive_border": "#002C41",
+        "pill_inactive_text": "#002C41"
+      }
+    },
+    "c_collection_new_v2_UCdx6h": {
+      "type": "c-collection-new-v2",
+      "name": "C - Collection New v2",
+      "settings": {
+        "bg_color": "#FFFFFF",
+        "heading_color": "#002C41",
+        "text_color": "#4A4A4A",
+        "link_color": "#002C41",
+        "btn_bg_color": "#1164E8",
+        "btn_text_color": "#FFFFFF",
+        "btn_bg_hover": "#0D50B8",
+        "show_search": true,
+        "search_placeholder": "Search",
+        "show_filters": true,
+        "hide_filters_mobile": false,
+        "filter_label": "TYPE",
+        "all_label": "All",
+        "default_filter": "",
+        "sidebar_width": 180,
+        "show_promo_block": false,
+        "promo_position": "4",
+        "promo_title": "Find the best for you",
+        "promo_text": "Different smiles, different needs.\nSee how our formulas compare.",
+        "promo_button_text": "COMPARE ALL",
+        "promo_button_url": "",
+        "promo_image_alt": "Find the best for you",
+        "promo_bg_color": "#EAF2F3",
+        "promo_title_color": "#0C3550",
+        "promo_text_color": "#0C3550",
+        "promo_button_bg_color": "#07324B",
+        "promo_button_text_color": "#FFFFFF",
+        "promo_heading_font_family": "var(--Heading, \"IvyPresto Display\", serif)",
+        "promo_title_size_desktop": 40,
+        "promo_title_size_mobile": 32,
+        "promo_title_weight": 400,
+        "promo_title_line_height_desktop": 92,
+        "promo_title_line_height_mobile": 92,
+        "promo_text_size_desktop": 16,
+        "promo_text_size_mobile": 14,
+        "promo_text_line_height_desktop": 120,
+        "promo_text_line_height_mobile": 120,
+        "promo_button_font_size_desktop": 14,
+        "promo_button_font_size_mobile": 13,
+        "promo_button_font_weight": 700,
+        "promo_height_desktop": 560,
+        "promo_height_mobile": 360,
+        "promo_radius": 16,
+        "show_subscribe_save": true,
+        "subscribe_text": "Subscribe & Save up to 15% OFF",
+        "badge_alignment": "left",
+        "add_to_cart_text": "ADD TO CART",
+        "learn_more_text": "LEARN MORE",
+        "no_results_text": "No products found.",
+        "empty_text": "No products in this collection.",
+        "variants_default_open": false,
+        "choose_text": "Choose your",
+        "columns_desktop": "3",
+        "grid_gap": 32,
+        "image_height_desktop": 320,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "columns_mobile": "1",
+        "image_height_mobile": 280,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     }
   },
   "order": [
     "banner",
-    "product-grid"
+    "product-grid",
+    "c_collection_header_myfWRG",
+    "c_collection_new_v2_UCdx6h"
   ]
 }
