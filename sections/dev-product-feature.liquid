@@ -15,6 +15,7 @@
     --dev-feature-benefit-title-mobile: {{ section.settings.benefit_title_size_mobile }}px;
     --dev-feature-benefit-text-desktop: {{ section.settings.benefit_text_size_desktop }}px;
     --dev-feature-benefit-text-mobile: {{ section.settings.benefit_text_size_mobile }}px;
+    --dev-feature-button-margin-top: {{ section.settings.button_margin_top }}px;
     --dev-feature-icon-desktop: {{ section.settings.icon_size_desktop }}px;
     --dev-feature-icon-mobile: {{ section.settings.icon_size_mobile }}px;
     --dev-feature-benefits-columns: {{ section.settings.columns_desktop }};
@@ -231,7 +232,7 @@
     min-height: 4.8rem;
     align-items: center;
     justify-content: center;
-    margin-top: 2.2rem;
+    margin-top: var(--dev-feature-button-margin-top);
     padding: 1rem 2.2rem;
     border: 1px solid var(--dev-feature-button-border);
     border-radius: 0.3rem;
@@ -547,6 +548,16 @@
       "step": 1,
       "unit": "px",
       "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_margin_top",
+      "label": "Margen superior del botón",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 36
     },
     {
       "type": "range",
