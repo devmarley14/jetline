@@ -160,7 +160,7 @@
         "enable_mobile_slider": true,
         "full_width": false,
         "image_ratio": "4 / 5",
-        "section_max_width": 1440,
+        "section_max_width": 1600,
         "section_padding_inline_desktop": 44,
         "section_padding_inline_mobile": 24,
         "heading_max_width": 900,
