@@ -158,6 +158,82 @@
         "margin_bottom": 0
       }
     },
+    "dev_benefits_MRaaWH": {
+      "type": "dev-benefits",
+      "blocks": {
+        "benefit_HwDNh4": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Performance",
+            "description": "<p>Engineered for all-day comfort.</p>"
+          }
+        },
+        "benefit_AirUWk": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Premium materials",
+            "description": "<p>High quality fabrics designed to last.</p>"
+          }
+        },
+        "benefit_6bxUhX": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Modern design",
+            "description": "<p>Professional aviation styling and fit.</p>"
+          }
+        },
+        "benefit_UYapWq": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Trusted worldwide",
+            "description": "<p>Used by aviation professionals globally.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_HwDNh4",
+        "benefit_AirUWk",
+        "benefit_6bxUhX",
+        "benefit_UYapWq"
+      ],
+      "name": "Dev - Benefits",
+      "settings": {
+        "columns_desktop": "4",
+        "columns_mobile": "2",
+        "max_width": 1600,
+        "icon_size_desktop": 48,
+        "icon_size_mobile": 40,
+        "title_size_desktop": 15,
+        "title_size_mobile": 12,
+        "description_size_desktop": 13,
+        "description_size_mobile": 11,
+        "column_gap": 24,
+        "item_gap_desktop": 16,
+        "item_gap_mobile": 12,
+        "card_padding_desktop": 16,
+        "card_padding_mobile": 12,
+        "card_radius": 0,
+        "background_color": "#f9f9f9",
+        "text_color": "#102443",
+        "accent_color": "#102443",
+        "divider_color": "#e5e7eb",
+        "divider_width": 1,
+        "title_weight": "600",
+        "description_weight": "400",
+        "padding_inline_desktop": 40,
+        "padding_inline_mobile": 16,
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
     "dev_benefits_GJJFU6": {
       "type": "dev-benefits",
       "blocks": {
@@ -228,10 +304,73 @@
         "padding_inline_mobile": 16,
         "padding_top": 24,
         "padding_bottom": 24,
-        "margin_top_desktop": 60,
-        "margin_bottom_desktop": 40,
-        "margin_top_mobile": 60,
-        "margin_bottom_mobile": 32
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "dev_trust_bar_CGxHk6": {
+      "type": "dev-trust-bar",
+      "blocks": {
+        "item_JyyiMX": {
+          "type": "item",
+          "settings": {
+            "text": "Trusted by pilots worldwide",
+            "link": ""
+          }
+        },
+        "item_ipqqUh": {
+          "type": "item",
+          "settings": {
+            "text": "Trusted by pilots worldwide",
+            "link": ""
+          }
+        },
+        "item_Ji6e7a": {
+          "type": "item",
+          "settings": {
+            "text": "Trusted by pilots worldwide",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_JyyiMX",
+        "item_ipqqUh",
+        "item_Ji6e7a"
+      ],
+      "name": "Dev - Trust bar",
+      "settings": {
+        "accessibility_label": "Confianza de nuestros clientes",
+        "background_color": "#ffffff",
+        "text_color": "#071a38",
+        "divider_color": "#071a38",
+        "max_width": 1400,
+        "text_size_desktop": 13,
+        "text_size_mobile": 11,
+        "star_size_desktop": 18,
+        "star_size_mobile": 16,
+        "text_weight": "600",
+        "uppercase": true,
+        "show_stars": true,
+        "star_character": "★",
+        "show_dividers": true,
+        "gap_desktop": 18,
+        "gap_mobile": 10,
+        "letter_spacing": 1,
+        "star_spacing": 4,
+        "divider_height_desktop": 20,
+        "divider_height_mobile": 18,
+        "divider_spacing": 8,
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16,
+        "padding_inline_desktop": 32,
+        "padding_top_mobile": 12,
+        "padding_bottom_mobile": 12,
+        "padding_inline_mobile": 12,
+        "margin_top": 0,
+        "margin_bottom": 0
       }
     },
     "disclosures": {
@@ -267,7 +406,9 @@
   },
   "order": [
     "main",
+    "dev_benefits_MRaaWH",
     "dev_benefits_GJJFU6",
+    "dev_trust_bar_CGxHk6",
     "disclosures",
     "related-products"
   ]
