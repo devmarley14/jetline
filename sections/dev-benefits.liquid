@@ -46,22 +46,22 @@
 </section>
 
 {% stylesheet %}
-  #DevBenefits-{{ section.id }} .dev-benefits {
+  #DevBenefits-{{ section.id }}.dev-benefits {
     overflow: hidden;
     background: var(--dev-benefits-bg);
     padding: var(--dev-benefits-padding-top) 0 var(--dev-benefits-padding-bottom);
   }
 
-  #DevBenefits-{{ section.id }} .dev-benefits__inner {
+  #DevBenefits-{{ section.id }}.dev-benefits__inner {
     width: min(100% - 3rem, var(--page-width));
     margin: 0 auto;
   }
 
-  #DevBenefits-{{ section.id }} .dev-benefits__inner--full-width {
+  #DevBenefits-{{ section.id }}.dev-benefits__inner--full-width {
     width: 100%;
   }
 
-  #DevBenefits-{{ section.id }} .dev-benefits__heading {
+  #DevBenefits-{{ section.id }}.dev-benefits__heading {
     margin: 0 0 2.8rem;
     color: var(--dev-benefits-text);
     font-size: var(--dev-benefits-title-size);
@@ -70,7 +70,7 @@
     text-transform: uppercase;
   }
 
-  #DevBenefits-{{ section.id }} .dev-benefits__grid {
+  #DevBenefits-{{ section.id }}.dev-benefits__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--dev-benefits-gap);
@@ -79,7 +79,7 @@
     list-style: none;
   }
 
-  #DevBenefits-{{ section.id }} .dev-benefits__item {
+  #DevBenefits-{{ section.id }}.dev-benefits__item {
     display: flex;
     min-width: 0;
     align-items: flex-start;
@@ -88,7 +88,7 @@
     border-radius: var(--dev-benefits-radius);
   }
 
-  #DevBenefits-{{ section.id }} .dev-benefits__icon {
+  #DevBenefits-{{ section.id }}.dev-benefits__icon {
     display: flex;
     width: var(--dev-benefits-icon-size);
     min-width: var(--dev-benefits-icon-size);
@@ -98,15 +98,15 @@
     color: var(--dev-benefits-accent);
   }
 
-  #DevBenefits-{{ section.id }} .dev-benefits__icon svg,
-  #DevBenefits-{{ section.id }} .dev-benefits__icon img {
+  #DevBenefits-{{ section.id }}.dev-benefits__icon svg,
+  #DevBenefits-{{ section.id }}.dev-benefits__icon img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
 
-  #DevBenefits-{{ section.id }} .dev-benefits__title {
+  #DevBenefits-{{ section.id }}.dev-benefits__title {
     margin: 0;
     color: var(--dev-benefits-text);
     font-size: var(--dev-benefits-title-size);
@@ -114,40 +114,40 @@
     text-transform: uppercase;
   }
 
-  #DevBenefits-{{ section.id }} .dev-benefits__description {
+  #DevBenefits-{{ section.id }}.dev-benefits__description {
     margin-top: 0.8rem;
     color: var(--dev-benefits-text);
     font-size: var(--dev-benefits-description-size);
     line-height: 1.5;
   }
 
-  #DevBenefits-{{ section.id }} .dev-benefits__description p {
+  #DevBenefits-{{ section.id }}.dev-benefits__description p {
     margin: 0;
   }
 
   @media screen and (min-width: 750px) {
-    #DevBenefits-{{ section.id }} .dev-benefits__inner {
+    #DevBenefits-{{ section.id }}.dev-benefits__inner {
       width: min(100% - 10rem, var(--page-width));
     }
 
-    #DevBenefits-{{ section.id }} .dev-benefits__inner--full-width {
+    #DevBenefits-{{ section.id }}.dev-benefits__inner--full-width {
       width: 100%;
     }
 
-    #DevBenefits-{{ section.id }} .dev-benefits__grid {
+    #DevBenefits-{{ section.id }}.dev-benefits__grid {
       grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
     }
   }
 
   @media screen and (max-width: 749px) {
-    #DevBenefits-{{ section.id }} .dev-benefits__item {
+    #DevBenefits-{{ section.id }}.dev-benefits__item {
       flex-direction: column;
       align-items: center;
       gap: 1rem;
       text-align: center;
     }
 
-    #DevBenefits-{{ section.id }} .dev-benefits__description {
+    #DevBenefits-{{ section.id }}.dev-benefits__description {
       font-size: calc(var(--dev-benefits-description-size) - 1px);
     }
   }

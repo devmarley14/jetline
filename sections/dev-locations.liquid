@@ -66,22 +66,22 @@
 </section>
 
 {% stylesheet %}
-  #DevLocations-{{ section.id }} .dev-locations {
+  #DevLocations-{{ section.id }}.dev-locations {
     overflow: hidden;
     background: var(--dev-locations-background);
     padding: var(--dev-locations-padding-top) 0 var(--dev-locations-padding-bottom);
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__inner {
+  #DevLocations-{{ section.id }}.dev-locations__inner {
     width: min(100% - 3rem, var(--page-width));
     margin: 0 auto;
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__inner--full-width {
+  #DevLocations-{{ section.id }}.dev-locations__inner--full-width {
     width: 100%;
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__heading {
+  #DevLocations-{{ section.id }}.dev-locations__heading {
     margin: 0 0 2.8rem;
     color: var(--dev-locations-text);
     font-size: var(--dev-locations-heading-mobile);
@@ -90,13 +90,13 @@
     text-transform: uppercase;
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__grid {
+  #DevLocations-{{ section.id }}.dev-locations__grid {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: var(--dev-locations-card-gap);
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__card {
+  #DevLocations-{{ section.id }}.dev-locations__card {
     display: grid;
     grid-template-columns: var(--dev-locations-icon-mobile) minmax(0, 1fr);
     gap: 1.8rem;
@@ -105,7 +105,7 @@
     background: var(--dev-locations-card-background);
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__icon {
+  #DevLocations-{{ section.id }}.dev-locations__icon {
     display: flex;
     width: var(--dev-locations-icon-mobile);
     height: var(--dev-locations-icon-mobile);
@@ -114,15 +114,15 @@
     color: var(--dev-locations-accent);
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__icon svg,
-  #DevLocations-{{ section.id }} .dev-locations__icon img {
+  #DevLocations-{{ section.id }}.dev-locations__icon svg,
+  #DevLocations-{{ section.id }}.dev-locations__icon img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__title {
+  #DevLocations-{{ section.id }}.dev-locations__title {
     margin: 0;
     color: var(--dev-locations-text);
     font-size: var(--dev-locations-title-mobile);
@@ -130,29 +130,29 @@
     text-transform: uppercase;
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__address,
-  #DevLocations-{{ section.id }} .dev-locations__hours {
+  #DevLocations-{{ section.id }}.dev-locations__address,
+  #DevLocations-{{ section.id }}.dev-locations__hours {
     color: var(--dev-locations-muted);
     font-size: var(--dev-locations-body-mobile);
     line-height: 1.45;
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__address {
+  #DevLocations-{{ section.id }}.dev-locations__address {
     margin-top: 1.2rem;
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__hours {
+  #DevLocations-{{ section.id }}.dev-locations__hours {
     margin-top: 1.4rem;
     padding-top: 1.2rem;
     border-top: 1px solid color-mix(in srgb, var(--dev-locations-text) 18%, transparent);
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__address p,
-  #DevLocations-{{ section.id }} .dev-locations__hours p {
+  #DevLocations-{{ section.id }}.dev-locations__address p,
+  #DevLocations-{{ section.id }}.dev-locations__hours p {
     margin: 0;
   }
 
-  #DevLocations-{{ section.id }} .dev-locations__button {
+  #DevLocations-{{ section.id }}.dev-locations__button {
     display: inline-flex;
     min-height: 4.2rem;
     align-items: center;
@@ -170,38 +170,38 @@
   }
 
   @media screen and (min-width: 750px) {
-    #DevLocations-{{ section.id }} .dev-locations__inner {
+    #DevLocations-{{ section.id }}.dev-locations__inner {
       width: min(100% - 10rem, var(--page-width));
     }
 
-    #DevLocations-{{ section.id }} .dev-locations__inner--full-width {
+    #DevLocations-{{ section.id }}.dev-locations__inner--full-width {
       width: 100%;
     }
 
-    #DevLocations-{{ section.id }} .dev-locations__heading {
+    #DevLocations-{{ section.id }}.dev-locations__heading {
       font-size: var(--dev-locations-heading-desktop);
     }
 
-    #DevLocations-{{ section.id }} .dev-locations__grid {
+    #DevLocations-{{ section.id }}.dev-locations__grid {
       grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
     }
 
-    #DevLocations-{{ section.id }} .dev-locations__card {
+    #DevLocations-{{ section.id }}.dev-locations__card {
       grid-template-columns: var(--dev-locations-icon-desktop) minmax(0, 1fr);
     }
 
-    #DevLocations-{{ section.id }} .dev-locations__icon {
+    #DevLocations-{{ section.id }}.dev-locations__icon {
       width: var(--dev-locations-icon-desktop);
       height: var(--dev-locations-icon-desktop);
     }
 
-    #DevLocations-{{ section.id }} .dev-locations__title {
+    #DevLocations-{{ section.id }}.dev-locations__title {
       font-size: var(--dev-locations-title-desktop);
     }
 
-    #DevLocations-{{ section.id }} .dev-locations__address,
-    #DevLocations-{{ section.id }} .dev-locations__hours,
-    #DevLocations-{{ section.id }} .dev-locations__button {
+    #DevLocations-{{ section.id }}.dev-locations__address,
+    #DevLocations-{{ section.id }}.dev-locations__hours,
+    #DevLocations-{{ section.id }}.dev-locations__button {
       font-size: var(--dev-locations-body-desktop);
     }
   }

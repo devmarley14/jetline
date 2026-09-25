@@ -50,8 +50,8 @@
     margin-bottom: {{ section.settings.margin_bottom }}px;
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__media,
-  #DevBanner-{{ section.id }} .dev-banner__media::after {
+  #DevBanner-{{ section.id }}.dev-banner__media,
+  #DevBanner-{{ section.id }}.dev-banner__media::after {
     border-radius: var(--dev-banner-radius);
   }
 {%- endstyle -%}
@@ -127,38 +127,38 @@
 </section>
 
 {% stylesheet %}
-  #DevBanner-{{ section.id }} .dev-banner {
+  #DevBanner-{{ section.id }}.dev-banner {
     position: relative;
     min-height: var(--dev-banner-height-mobile);
     overflow: hidden;
     isolation: isolate;
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__media,
-  #DevBanner-{{ section.id }} .dev-banner__media::after,
-  #DevBanner-{{ section.id }} .dev-banner__image,
-  #DevBanner-{{ section.id }} .dev-banner__placeholder {
+  #DevBanner-{{ section.id }}.dev-banner__media,
+  #DevBanner-{{ section.id }}.dev-banner__media::after,
+  #DevBanner-{{ section.id }}.dev-banner__image,
+  #DevBanner-{{ section.id }}.dev-banner__placeholder {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__media {
+  #DevBanner-{{ section.id }}.dev-banner__media {
     z-index: -1;
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__media::after {
+  #DevBanner-{{ section.id }}.dev-banner__media::after {
     content: '';
     background: var(--dev-banner-overlay);
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__image {
+  #DevBanner-{{ section.id }}.dev-banner__image {
     object-fit: cover;
     object-position: var(--dev-banner-object-position-mobile);
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__content {
+  #DevBanner-{{ section.id }}.dev-banner__content {
     display: flex;
     min-height: inherit;
     align-items: center;
@@ -166,32 +166,32 @@
     padding: var(--dev-banner-content-padding-mobile);
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__content-inner {
+  #DevBanner-{{ section.id }}.dev-banner__content-inner {
     width: 100%;
     max-width: var(--dev-banner-content-max-mobile);
     color: var(--dev-banner-text-color);
     text-align: var(--dev-banner-text-align-mobile);
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__heading {
+  #DevBanner-{{ section.id }}.dev-banner__heading {
     margin: 0;
     color: var(--dev-banner-heading-color);
     font-size: var(--dev-banner-heading-size-mobile);
     line-height: 1.05;
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__text {
+  #DevBanner-{{ section.id }}.dev-banner__text {
     margin-top: 1.5rem;
     color: var(--dev-banner-text-color);
     font-size: var(--dev-banner-text-size-mobile);
     line-height: 1.45;
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__text p {
+  #DevBanner-{{ section.id }}.dev-banner__text p {
     margin: 0;
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__buttons {
+  #DevBanner-{{ section.id }}.dev-banner__buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: inherit;
@@ -199,7 +199,7 @@
     margin-top: 2rem;
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__button {
+  #DevBanner-{{ section.id }}.dev-banner__button {
     display: inline-flex;
     min-height: 4.5rem;
     align-items: center;
@@ -217,41 +217,41 @@
     text-decoration: none;
   }
 
-  #DevBanner-{{ section.id }} .dev-banner__button--secondary {
+  #DevBanner-{{ section.id }}.dev-banner__button--secondary {
     background: transparent;
     color: var(--dev-banner-button-border);
   }
 
   @media screen and (min-width: 750px) {
-    #DevBanner-{{ section.id }} .dev-banner {
+    #DevBanner-{{ section.id }}.dev-banner {
       min-height: var(--dev-banner-height-desktop);
     }
 
-    #DevBanner-{{ section.id }} .dev-banner__image {
+    #DevBanner-{{ section.id }}.dev-banner__image {
       object-position: var(--dev-banner-object-position-desktop);
     }
 
-    #DevBanner-{{ section.id }} .dev-banner__content {
+    #DevBanner-{{ section.id }}.dev-banner__content {
       justify-content: var(--dev-banner-content-align-desktop);
       padding: var(--dev-banner-content-padding-desktop);
     }
 
-    #DevBanner-{{ section.id }} .dev-banner__content-inner {
+    #DevBanner-{{ section.id }}.dev-banner__content-inner {
       max-width: var(--dev-banner-content-max-desktop);
       text-align: var(--dev-banner-text-align-desktop);
     }
 
-    #DevBanner-{{ section.id }} .dev-banner__heading {
+    #DevBanner-{{ section.id }}.dev-banner__heading {
       font-size: var(--dev-banner-heading-size-desktop);
     }
 
-    #DevBanner-{{ section.id }} .dev-banner__text {
+    #DevBanner-{{ section.id }}.dev-banner__text {
       font-size: var(--dev-banner-text-size-desktop);
     }
   }
 
   @media screen and (min-width: 750px) {
-    #DevBanner-{{ section.id }} .dev-banner:not(.dev-banner--full-width) {
+    #DevBanner-{{ section.id }}.dev-banner:not(.dev-banner--full-width) {
       margin-right: auto;
       margin-left: auto;
       max-width: var(--page-width);
