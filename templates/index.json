@@ -279,6 +279,7 @@
         "icon_size_mobile": 32,
         "benefit_gap": 12,
         "button_margin_top": 36,
+        "button_margin_top_desktop": 56,
         "image_radius": 0,
         "background_color": "#f9f9f9",
         "text_color": "#102443",
@@ -290,11 +291,70 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "dev_locations_4BDAE7": {
+      "type": "dev-locations",
+      "blocks": {
+        "location_7CthPX": {
+          "type": "location",
+          "settings": {
+            "svg_code": "",
+            "title": "Jetline Apparel Headquarters",
+            "address": "<p>West Building<br>6355 NW 36th Street, Suite 506<br>Miami, Florida 33166<br>United States</p>",
+            "hours": "<p>Monday - Friday<br>9:00 AM - 5:00 PM</p>",
+            "button_label": "Get directions",
+            "button_link": ""
+          }
+        },
+        "location_pCUWBq": {
+          "type": "location",
+          "settings": {
+            "svg_code": "",
+            "title": "Pan Am Apparel & Accessories Showroom",
+            "address": "<p>Located inside the Pan Am Building<br>5000 NW 36th Street<br>Miami, Florida 33166<br>United States</p>",
+            "hours": "<p>Monday - Friday<br>9:00 AM - 5:00 PM</p>",
+            "button_label": "Get directions",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "location_7CthPX",
+        "location_pCUWBq"
+      ],
+      "name": "Dev - Locations",
+      "settings": {
+        "heading": "Our locations",
+        "columns_desktop": "2",
+        "full_width": false,
+        "heading_size_desktop": 28,
+        "heading_size_mobile": 24,
+        "title_size_desktop": 18,
+        "title_size_mobile": 16,
+        "body_size_desktop": 14,
+        "body_size_mobile": 13,
+        "icon_size_desktop": 48,
+        "icon_size_mobile": 40,
+        "card_gap": 20,
+        "card_padding": 28,
+        "card_radius": 4,
+        "background_color": "#ffffff",
+        "card_background_color": "#fafafa",
+        "text_color": "#102443",
+        "muted_text_color": "#102443",
+        "accent_color": "#102443",
+        "button_background": "#ffffff",
+        "button_text_color": "#102443",
+        "button_border_color": "#102443",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "dev_banner_7hEdde",
     "dev_collection_carousel_6Y6pVV",
-    "dev_product_feature_QFUWUE"
+    "dev_product_feature_QFUWUE",
+    "dev_locations_4BDAE7"
   ]
 }
