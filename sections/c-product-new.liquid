@@ -4,7 +4,7 @@
     assign current_product = product
   endif
   assign current_variant = current_product.selected_or_first_available_variant
-  assign form_id = 'c-product-new-form-' | append: section.id
+  assign form_id = 'product-form-' | append: section.id
 -%}
 
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -292,12 +292,13 @@
   #CProductNew-{{ section.id }} .cpn__zoom-modal {
     position: fixed;
     inset: 0;
-    z-index: 100;
+    z-index: 1000;
     display: none;
     align-items: center;
     justify-content: center;
     padding: 2rem;
-    background: rgba(7, 26, 56, 0.92);
+    background: rgba(7, 26, 56, 0.96);
+    overscroll-behavior: contain;
   }
 
   #CProductNew-{{ section.id }} .cpn__zoom-modal.is-open {
@@ -308,6 +309,7 @@
     max-width: min(92vw, 1200px);
     max-height: 92vh;
     object-fit: contain;
+    cursor: zoom-out;
   }
 
   #CProductNew-{{ section.id }} .cpn__zoom-close {
@@ -368,6 +370,13 @@
   }
 {%- endstyle -%}
 
+<product-info
+  id="CProductInfo-{{ section.id }}"
+  data-section="{{ section.id }}"
+  data-product-id="{{ current_product.id }}"
+  data-update-url="true"
+  data-url="{{ current_product.url }}"
+>
 <section id="CProductNew-{{ section.id }}" class="c-product-new">
   <div class="cpn__inner">
     {%- if current_product != blank -%}
@@ -419,7 +428,7 @@
               {%- when 'description' -%}
                 {%- if block.settings.show_description -%}<div class="cpn__description rte" {{ block.shopify_attributes }}>{{ current_product.description }}</div>{%- endif -%}
               {%- when 'price' -%}
-                <div class="cpn__price" role="status" {{ block.shopify_attributes }}>{{ current_variant.price | money }}</div>
+                <div id="price-{{ section.id }}" class="cpn__price" role="status" {{ block.shopify_attributes }}>{{ current_variant.price | money }}</div>
               {%- when 'variant_picker' -%}
                 <div class="cpn__variant-picker" {{ block.shopify_attributes }}>
                   {% render 'product-variant-picker', product: current_product, block: block, product_form_id: form_id %}
@@ -432,8 +441,6 @@
                 <div class="cpn__buy-buttons" {{ block.shopify_attributes }}>
                   {% render 'buy-buttons', block: block, product: current_product, product_form_id: form_id, section_id: section.id, show_pickup_availability: false %}
                 </div>
-              {%- when 'custom_liquid' -%}
-                <div class="cpn__custom" {{ block.shopify_attributes }}>{{ block.settings.code }}</div>
             {%- endcase -%}
             {%- endunless -%}
           {%- endfor -%}
@@ -477,13 +484,23 @@
     {%- else -%}
       <p>{{ 'sections.featured_product.no_product' | t }}</p>
     {%- endif -%}
+  <div
+    class="cpn__zoom-modal"
+    data-cpn-zoom-modal
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="CProductNewZoomTitle-{{ section.id }}"
+    aria-hidden="true"
+    tabindex="-1"
+  >
+    <h2 id="CProductNewZoomTitle-{{ section.id }}" class="visually-hidden">
+      {{ current_product.title | escape }}
+    </h2>
+    <button class="cpn__zoom-close" type="button" data-cpn-zoom-close aria-label="Cerrar zoom">&times;</button>
+    <img class="cpn__zoom-image" data-cpn-zoom-image alt="">
   </div>
 </section>
-
-<div class="cpn__zoom-modal" data-cpn-zoom-modal aria-hidden="true">
-  <button class="cpn__zoom-close" type="button" data-cpn-zoom-close aria-label="Cerrar zoom">&times;</button>
-  <img class="cpn__zoom-image" data-cpn-zoom-image alt="">
-</div>
+</product-info>
 
 <script>
   (() => {
@@ -498,28 +515,33 @@
         media.forEach((item) => item.classList.toggle('is-active', item.dataset.cpnMedia === id));
       });
     });
-    const modal = root.nextElementSibling;
+    const modal = root.querySelector('[data-cpn-zoom-modal]');
+    if (!modal) return;
     const modalImage = modal.querySelector('[data-cpn-zoom-image]');
+    let lastFocusedElement;
     const closeModal = () => {
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
       modalImage.removeAttribute('src');
       document.body.classList.remove('overflow-hidden');
+      lastFocusedElement?.focus();
     };
     root.querySelectorAll('[data-cpn-zoom]').forEach((button) => {
       button.addEventListener('click', () => {
+        lastFocusedElement = button;
         modalImage.src = button.dataset.cpnZoom;
         modalImage.alt = button.getAttribute('aria-label') || '';
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('overflow-hidden');
+        modal.focus();
       });
     });
     modal.querySelector('[data-cpn-zoom-close]').addEventListener('click', closeModal);
     modal.addEventListener('click', (event) => {
       if (event.target === modal) closeModal();
     });
-    document.addEventListener('keydown', (event) => {
+    modal.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
     });
   })();
