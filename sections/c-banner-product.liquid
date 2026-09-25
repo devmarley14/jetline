@@ -1,0 +1,640 @@
+{% comment %}
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  C - Banner Producto                                          ║
+  ║  Banner con imagen de fondo (una para desktop, otra mobile)   ║
+  ║  y texto editable superpuesto (eyebrow, heading, subheading,  ║
+  ║  botón). Layout centrado, split top/bottom, igual en          ║
+  ║  desktop y mobile. Pensado para banners tipo "KeraHAp".       ║
+  ╚══════════════════════════════════════════════════════════════╝
+{% endcomment %}
+
+{%- assign section_id = section.id -%}
+
+<div
+  id="c-banner-{{ section_id }}"
+  class="c-banner"
+  data-section-id="{{ section_id }}"
+>
+  <div class="c-banner__container">
+
+    <!-- ══════════════════════════════════════
+         DESKTOP
+    ══════════════════════════════════════ -->
+    <div class="c-banner__desktop">
+      <div
+        class="c-banner__desktop-inner"
+        {% if section.settings.image_desktop != blank %}
+          style="background-image:url('{{ section.settings.image_desktop | image_url: width: 2000 }}');"
+        {% endif %}
+        role="img"
+        aria-label="{{ section.settings.image_alt | escape }}"
+      >
+        <div class="c-banner__desktop-text">
+          {%- if section.settings.eyebrow_text != blank -%}
+            <p class="c-banner__eyebrow">{{ section.settings.eyebrow_text }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading_text != blank -%}
+            <h2 class="c-banner__heading">{{ section.settings.heading_text }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subheading_line1 != blank -%}
+            <p class="c-banner__subheading-line1">{{ section.settings.subheading_line1 }}</p>
+          {%- endif -%}
+          {%- if section.settings.subheading_line2 != blank -%}
+            <p class="c-banner__subheading-line2">{{ section.settings.subheading_line2 }}</p>
+          {%- endif -%}
+          {%- if section.settings.button_text != blank -%}
+            {%- if section.settings.button_url != blank -%}
+              <a class="c-banner__button" href="{{ section.settings.button_url }}">{{ section.settings.button_text }}</a>
+            {%- else -%}
+              <span class="c-banner__button c-banner__button--static">{{ section.settings.button_text }}</span>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         MOBILE
+    ══════════════════════════════════════ -->
+    <div class="c-banner__mobile">
+      <div
+        class="c-banner__mobile-inner"
+        {% if section.settings.image_mobile != blank %}
+          style="background-image:url('{{ section.settings.image_mobile | image_url: width: 1200 }}');"
+        {% endif %}
+        role="img"
+        aria-label="{{ section.settings.image_alt | escape }}"
+      >
+        <div class="c-banner__text-top">
+          {%- if section.settings.eyebrow_text != blank -%}
+            <p class="c-banner__eyebrow">{{ section.settings.eyebrow_text }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading_text != blank -%}
+            <h2 class="c-banner__heading">{{ section.settings.heading_text }}</h2>
+          {%- endif -%}
+        </div>
+
+        <div class="c-banner__text-bottom">
+          {%- if section.settings.subheading_line1 != blank -%}
+            <p class="c-banner__subheading-line1">{{ section.settings.subheading_line1 }}</p>
+          {%- endif -%}
+          {%- if section.settings.subheading_line2 != blank -%}
+            <p class="c-banner__subheading-line2">{{ section.settings.subheading_line2 }}</p>
+          {%- endif -%}
+          {%- if section.settings.button_text != blank -%}
+            {%- if section.settings.button_url != blank -%}
+              <a class="c-banner__button" href="{{ section.settings.button_url }}">{{ section.settings.button_text }}</a>
+            {%- else -%}
+              <span class="c-banner__button c-banner__button--static">{{ section.settings.button_text }}</span>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     STYLES
+════════════════════════════════════════════════════════════ -->
+<style>
+#c-banner-{{ section_id }} {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-top: {{ section.settings.padding_top_desktop }}px;
+  padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: {{ section.settings.bg_color }};
+  font-family: 'Raleway', sans-serif;
+  box-sizing: border-box;
+}
+
+#c-banner-{{ section_id }} .c-banner__container {
+  max-width: {{ section.settings.banner_max_width }}px;
+  margin: 0 auto;
+}
+
+/* ════ DESKTOP ════ */
+#c-banner-{{ section_id }} .c-banner__desktop {
+  display: block;
+}
+
+#c-banner-{{ section_id }} .c-banner__mobile {
+  display: none;
+}
+
+#c-banner-{{ section_id }} .c-banner__desktop-inner {
+  position: relative;
+  width: 100%;
+  height: {{ section.settings.banner_height_desktop }}px;
+  border-radius: {{ section.settings.banner_radius }}px;
+  overflow: hidden;
+  background-color: {{ section.settings.bg_color }};
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
+}
+
+#c-banner-{{ section_id }} .c-banner__desktop-text {
+  width: 100%;
+  max-width: {{ section.settings.desktop_text_max_width }}px;
+  padding: 0 {{ section.settings.desktop_text_padding_right }}px 0 24px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* ════ MOBILE ════ */
+#c-banner-{{ section_id }} .c-banner__mobile-inner {
+  position: relative;
+  width: 100%;
+  height: {{ section.settings.banner_height_mobile }}px;
+  border-radius: {{ section.settings.banner_radius }}px;
+  overflow: hidden;
+  background-color: {{ section.settings.bg_color }};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 28px 24px;
+  box-sizing: border-box;
+}
+
+/* ════ SHARED TEXT BLOCKS ════ */
+#c-banner-{{ section_id }} .c-banner__text-top,
+#c-banner-{{ section_id }} .c-banner__text-bottom {
+  width: 100%;
+  max-width: {{ section.settings.desktop_text_max_width }}px;
+  margin: 0 auto;
+}
+
+/* ════ SHARED TEXT ════ */
+#c-banner-{{ section_id }} .c-banner__eyebrow {
+  margin: 0 0 8px;
+  font-family: 'Raleway', sans-serif;
+  font-size: {{ section.settings.eyebrow_size }}px;
+  font-weight: {{ section.settings.eyebrow_weight }};
+  letter-spacing: 0.06em;
+  color: {{ section.settings.eyebrow_color }};
+}
+
+#c-banner-{{ section_id }} .c-banner__heading {
+  margin: 0;
+  font-family: var(--Heading, "IvyPresto Display", serif);
+  font-size: {{ section.settings.heading_size }}px;
+  font-weight: {{ section.settings.heading_weight }};
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: {{ section.settings.heading_color }};
+}
+
+#c-banner-{{ section_id }} .c-banner__subheading-line1 {
+  margin: 0;
+  color: var(--Dark-Green, #002C41);
+  text-align: center;
+  font-family: var(--Subtitles-italic, "EightiesComeback_It VAR");
+  font-size: var(--Italic, 24px);
+  font-style: normal;
+  font-weight: {{ section.settings.subheading_line1_weight }};
+  line-height: normal;
+}
+
+#c-banner-{{ section_id }} .c-banner__subheading-line2 {
+  margin: 4px 0 0;
+  color: var(--Dark-Green, #002C41);
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  font-size: var(--Text-Regular, 16px);
+  font-style: normal;
+  font-weight: {{ section.settings.subheading_line2_weight }};
+  line-height: 120%; /* 19.2px */
+}
+
+#c-banner-{{ section_id }} .c-banner__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 14px;
+  min-height: 48px;
+  padding: 0 28px;
+  border-radius: 999px;
+  background: {{ section.settings.button_bg_color }};
+  color: {{ section.settings.button_text_color }};
+  font-family: 'Raleway', sans-serif;
+  font-size: 13px;
+  font-weight: {{ section.settings.button_weight }};
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-sizing: border-box;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+#c-banner-{{ section_id }} .c-banner__button:hover {
+  background: {{ section.settings.button_bg_hover }};
+  transform: translateY(-2px);
+}
+#c-banner-{{ section_id }} .c-banner__button--static {
+  pointer-events: none;
+}
+
+/* ════ RESPONSIVE ════ */
+@media (max-width: 768px) {
+  #c-banner-{{ section_id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #c-banner-{{ section_id }} .c-banner__container {
+    max-width: 100%;
+  }
+
+  #c-banner-{{ section_id }} .c-banner__desktop {
+    display: none;
+  }
+
+  #c-banner-{{ section_id }} .c-banner__mobile {
+    display: block;
+  }
+
+  #c-banner-{{ section_id }} .c-banner__eyebrow {
+    font-size: {{ section.settings.eyebrow_size_mobile }}px;
+  }
+
+  #c-banner-{{ section_id }} .c-banner__heading {
+    font-size: {{ section.settings.heading_size_mobile }}px;
+  }
+
+  #c-banner-{{ section_id }} .c-banner__subheading-line1 {
+    font-size: {{ section.settings.subheading_line1_size_mobile }}px;
+  }
+
+  #c-banner-{{ section_id }} .c-banner__subheading-line2 {
+    font-size: {{ section.settings.subheading_line2_size_mobile }}px;
+  }
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "C - Banner Producto",
+  "class": "section-c-banner-producto",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo (fallback)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Color eyebrow",
+      "default": "#0C3550"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color heading",
+      "default": "#002C41"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Fondo del botón",
+      "default": "#1164E8"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Texto del botón",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_hover",
+      "label": "Fondo del botón (hover)",
+      "default": "#0D50B8"
+    },
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Texto eyebrow",
+      "default": "THE MOST ADVANCED FLUORIDE-FREE TOOTHPASTE"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_weight",
+      "label": "Grosor eyebrow",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extrabold (800)" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading",
+      "default": "KeraHAp™"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Grosor heading",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "text",
+      "id": "subheading_line1",
+      "label": "Subheading — línea 1 (itálica)",
+      "default": "naturally derived nHAp"
+    },
+    {
+      "type": "select",
+      "id": "subheading_line1_weight",
+      "label": "Grosor subheading línea 1",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "text",
+      "id": "subheading_line2",
+      "label": "Subheading — línea 2 (regular)",
+      "default": "with biomimetic peptides"
+    },
+    {
+      "type": "select",
+      "id": "subheading_line2_weight",
+      "label": "Grosor subheading línea 2",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto del botón",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "select",
+      "id": "button_weight",
+      "label": "Grosor texto del botón",
+      "options": [
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extrabold (800)" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Link del botón"
+    },
+    {
+      "type": "header",
+      "content": "Imágenes de fondo"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Imagen de fondo — Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Imagen de fondo — Mobile"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Texto alternativo de la imagen",
+      "default": "KeraHAp - The most advanced fluoride-free toothpaste"
+    },
+    {
+      "type": "header",
+      "content": "Layout — General"
+    },
+    {
+      "type": "range",
+      "id": "banner_max_width",
+      "min": 600,
+      "max": 1440,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho del banner",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "banner_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de bordes",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding top — Desktop",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding bottom — Desktop",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding top — Mobile",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding bottom — Mobile",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
+      "type": "range",
+      "id": "banner_height_desktop",
+      "min": 180,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Alto del banner — Desktop",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "desktop_text_max_width",
+      "min": 200,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho del bloque de texto — Desktop",
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "desktop_text_padding_right",
+      "min": 0,
+      "max": 160,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding derecho del texto — Desktop",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño eyebrow — Desktop",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 28,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño heading — Desktop",
+      "default": 44
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "range",
+      "id": "banner_height_mobile",
+      "min": 400,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "label": "Alto del banner — Mobile",
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size_mobile",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño eyebrow — Mobile",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 24,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño heading — Mobile",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "subheading_line1_size_mobile",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño subheading línea 1 — Mobile",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "subheading_line2_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño subheading línea 2 — Mobile",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "C - Banner Producto"
+    }
+  ]
+}
+{% endschema %}
