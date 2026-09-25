@@ -106,8 +106,6 @@
     --dev-header-foreground: {{ section.settings.header_foreground }};
     --dev-header-border: {{ section.settings.header_border }};
     --dev-header-max-width: {{ section.settings.max_width }}px;
-    --dev-header-icon-size-desktop: {{ section.settings.header_icon_size_desktop }}px;
-    --dev-header-icon-size-mobile: {{ section.settings.header_icon_size_mobile }}px;
     --dev-header-menu-size-desktop: {{ section.settings.header_menu_size_desktop }}px;
     --dev-header-menu-size-mobile: {{ section.settings.header_menu_size_mobile }}px;
     --dev-header-logo-width-desktop: {{ section.settings.header_logo_width_desktop }}px;
@@ -121,7 +119,6 @@
     --dev-header-heading-weight: {{ section.settings.heading_weight }};
     --dev-header-menu-weight: {{ section.settings.menu_weight }};
     --dev-header-menu-transform: {% if section.settings.menu_uppercase %}uppercase{% else %}none{% endif %};
-    --dev-header-icon-weight: {{ section.settings.icon_weight }};
     --dev-header-margin-bottom: {{ section.settings.margin_bottom }}px;
   }
 
@@ -134,38 +131,6 @@
   #DevHeader-{{ section.id }} .header__icon,
   #DevHeader-{{ section.id }} .header__icon svg {
     color: var(--dev-header-foreground);
-  }
-
-  #DevHeader-{{ section.id }} .header__icon .svg-wrapper {
-    display: inline-flex;
-    width: var(--dev-header-icon-size-mobile);
-    min-width: var(--dev-header-icon-size-mobile);
-    height: var(--dev-header-icon-size-mobile);
-    align-items: center;
-    justify-content: center;
-  }
-
-  #DevHeader-{{ section.id }} .header__icon {
-    width: 4.4rem;
-    min-width: 4.4rem;
-    height: 4.4rem;
-    padding: 0;
-  }
-
-  #DevHeader-{{ section.id }} .header__icon svg {
-    display: block;
-    width: var(--dev-header-icon-size-mobile) !important;
-    height: var(--dev-header-icon-size-mobile) !important;
-    max-width: none;
-    max-height: none;
-  }
-
-  #DevHeader-{{ section.id }} .header__icon--account .svg-wrapper > svg {
-    transform: scale(1.12);
-  }
-
-  #DevHeader-{{ section.id }} .header__icon--cart .svg-wrapper > svg {
-    transform: scale(1.28);
   }
 
   #DevHeader-{{ section.id }} .header__menu-item {
@@ -184,10 +149,6 @@
     font-weight: var(--dev-header-heading-weight);
   }
 
-  #DevHeader-{{ section.id }} .header__icon {
-    font-weight: var(--dev-header-icon-weight);
-  }
-
   #DevHeader-{{ section.id }} .header {
     width: calc(100% - (var(--dev-header-padding-inline-mobile) * 2));
     max-width: var(--dev-header-max-width);
@@ -203,25 +164,6 @@
   }
 
   @media screen and (min-width: 750px) {
-    #DevHeader-{{ section.id }} .header__icon svg {
-      width: var(--dev-header-icon-size-desktop);
-      height: var(--dev-header-icon-size-desktop);
-    }
-
-    #DevHeader-{{ section.id }} .header__icon .svg-wrapper {
-      width: var(--dev-header-icon-size-desktop);
-      min-width: var(--dev-header-icon-size-desktop);
-      height: var(--dev-header-icon-size-desktop);
-    }
-
-    #DevHeader-{{ section.id }} .header__icon--account .svg-wrapper > svg {
-      transform: scale(1.12);
-    }
-
-    #DevHeader-{{ section.id }} .header__icon--cart .svg-wrapper > svg {
-      transform: scale(1.28);
-    }
-
     #DevHeader-{{ section.id }} .header__menu-item {
       font-size: var(--dev-header-menu-size-desktop);
     }
@@ -753,26 +695,6 @@
     },
     {
       "type": "range",
-      "id": "header_icon_size_desktop",
-      "label": "Tamaño de iconos Desktop",
-      "min": 16,
-      "max": 36,
-      "step": 1,
-      "unit": "px",
-      "default": 24
-    },
-    {
-      "type": "range",
-      "id": "header_icon_size_mobile",
-      "label": "Tamaño de iconos Mobile",
-      "min": 16,
-      "max": 36,
-      "step": 1,
-      "unit": "px",
-      "default": 22
-    },
-    {
-      "type": "range",
       "id": "header_menu_size_desktop",
       "label": "Tamaño del menú Desktop",
       "min": 10,
@@ -841,18 +763,6 @@
       "id": "menu_uppercase",
       "label": "Mostrar menú en mayúsculas",
       "default": false
-    },
-    {
-      "type": "select",
-      "id": "icon_weight",
-      "label": "Peso de iconos",
-      "options": [
-        { "value": "400", "label": "Regular" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "Semibold" },
-        { "value": "700", "label": "Bold" }
-      ],
-      "default": "400"
     },
     {
       "type": "header",
