@@ -1,0 +1,409 @@
+{% comment %}
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  C - Collection Header (con píldoras de filtro)               ║
+  ║  Uso: colócala ARRIBA de tu sección "C - Collection New".     ║
+  ║  Al hacer clic en una píldora, busca el radio equivalente     ║
+  ║  dentro de la sección de grid (selector configurable, por     ║
+  ║  defecto ".c-col-new") y lo marca + dispara "change" —        ║
+  ║  reutiliza el filtrado instantáneo que ya existe ahí, sin     ║
+  ║  ir al servidor.                                               ║
+  ║                                                                 ║
+  ║  Sticky: dos checkboxes independientes (Desktop / Mobile)     ║
+  ║  para fijar la barra al hacer scroll.                         ║
+  ╚══════════════════════════════════════════════════════════════╝
+{% endcomment %}
+
+{%- assign section_id = section.id -%}
+{%- assign s = section.settings -%}
+
+<div
+  id="c-col-header-{{ section_id }}"
+  class="c-col-header{% if s.sticky_desktop %} c-col-header--sticky-desktop{% endif %}{% if s.sticky_mobile %} c-col-header--sticky-mobile{% endif %}"
+  data-target-selector="{{ s.target_selector | escape }}"
+>
+  <div class="c-col-header__inner">
+
+    {%- if s.eyebrow != blank -%}
+      <p class="c-col-header__eyebrow">{{ s.eyebrow }}</p>
+    {%- endif -%}
+
+    {%- if s.heading != blank -%}
+      <h1 class="c-col-header__heading">{{ s.heading }}</h1>
+    {%- endif -%}
+
+    {%- if s.subheading != blank -%}
+      <p class="c-col-header__subheading">{{ s.subheading }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <nav class="c-col-header__pills" aria-label="{{ s.pills_aria_label | default: 'Filtrar productos' }}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'pill' -%}
+            <button
+              type="button"
+              class="c-col-header__pill{% if block.settings.is_default %} is-active{% endif %}"
+              data-filter-value="{{ block.settings.filter_value | escape }}"
+              data-collection-url="{% if block.settings.target_collection != blank %}{{ block.settings.target_collection.url }}{% endif %}"
+              data-manual-url="{{ block.settings.url }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.label }}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<style>
+  #c-col-header-{{ section_id }} {
+    background: {{ s.bg_color }};
+    padding-top: {{ s.padding_top_desktop }}px;
+    padding-bottom: {{ s.padding_bottom_desktop }}px;
+    font-family: 'Raleway', sans-serif;
+    z-index: 20;
+  }
+
+  #c-col-header-{{ section_id }} .c-col-header__inner {
+    max-width: {{ s.max_width }}px;
+    margin: 0 auto;
+    padding-left: 40px;
+    padding-right: 40px;
+    box-sizing: border-box;
+  }
+
+  #c-col-header-{{ section_id }} .c-col-header__eyebrow {
+    margin: 0 0 8px 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: {{ s.eyebrow_color }};
+  }
+
+  #c-col-header-{{ section_id }} .c-col-header__heading {
+    margin: 0 0 12px 0;
+    font-family: {{ s.heading_font_family }};
+    font-weight: {{ s.heading_weight }};
+    font-size: {{ s.heading_size_desktop }}px;
+    line-height: 1.1;
+    color: {{ s.heading_color }};
+  }
+
+  #c-col-header-{{ section_id }} .c-col-header__subheading {
+    margin: 0 0 28px 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: {{ s.subheading_color }};
+  }
+
+  #c-col-header-{{ section_id }} .c-col-header__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #c-col-header-{{ section_id }} .c-col-header__pill {
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1.5px solid {{ s.pill_inactive_border }};
+    background: {{ s.pill_inactive_bg }};
+    color: {{ s.pill_inactive_text }};
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  #c-col-header-{{ section_id }} .c-col-header__pill:hover {
+    border-color: {{ s.pill_active_bg }};
+  }
+
+  #c-col-header-{{ section_id }} .c-col-header__pill.is-active {
+    background: {{ s.pill_active_bg }};
+    border-color: {{ s.pill_active_bg }};
+    color: {{ s.pill_active_text }};
+  }
+
+  [data-c-col-header-loading="true"] {
+    opacity: 0.4;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  /* ════ STICKY — Desktop (≥750px) ════ */
+  @media screen and (min-width: 750px) {
+    #c-col-header-{{ section_id }}.c-col-header--sticky-desktop {
+      position: sticky;
+      top: {{ s.sticky_offset_desktop }}px;
+    }
+  }
+
+  /* ════ STICKY — Mobile (<750px) ════ */
+  @media screen and (max-width: 749px) {
+    #c-col-header-{{ section_id }}.c-col-header--sticky-mobile {
+      position: sticky;
+      top: {{ s.sticky_offset_mobile }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #c-col-header-{{ section_id }} {
+      padding-top: {{ s.padding_top_mobile }}px;
+      padding-bottom: {{ s.padding_bottom_mobile }}px;
+    }
+    #c-col-header-{{ section_id }} .c-col-header__inner {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    #c-col-header-{{ section_id }} .c-col-header__heading {
+      font-size: {{ s.heading_size_mobile }}px;
+    }
+    #c-col-header-{{ section_id }} .c-col-header__pills {
+      gap: 8px;
+    }
+    #c-col-header-{{ section_id }} .c-col-header__pill {
+      padding: 8px 16px;
+      font-size: 11px;
+    }
+  }
+</style>
+
+<script>
+(function () {
+  var sId     = {{ section_id | json }};
+  var wrapper = document.getElementById('c-col-header-' + sId);
+  if (!wrapper) return;
+
+  var targetSelector = wrapper.dataset.targetSelector || '.c-col-new';
+  var pills = wrapper.querySelectorAll('.c-col-header__pill');
+
+  function getTarget() {
+    return document.querySelector(targetSelector);
+  }
+
+  function normalize(val) {
+    val = (val || '').trim().toLowerCase();
+    return val === '' ? 'all' : val;
+  }
+
+  function setActiveByValue(value) {
+    var val = normalize(value);
+    pills.forEach(function (p) {
+      var pv = normalize(p.dataset.filterValue);
+      p.classList.toggle('is-active', pv === val);
+    });
+  }
+
+  function setActiveByElement(activeEl) {
+    pills.forEach(function (p) {
+      p.classList.toggle('is-active', p === activeEl);
+    });
+  }
+
+  /* ── Re-ejecuta los <script> que vienen dentro del HTML inyectado por AJAX
+       (innerHTML/replaceChild no los corre automáticamente) ── */
+  function reExecuteScripts(container) {
+    container.querySelectorAll('script').forEach(function (oldScript) {
+      var newScript = document.createElement('script');
+      Array.prototype.forEach.call(oldScript.attributes, function (attr) {
+        newScript.setAttribute(attr.name, attr.value);
+      });
+      newScript.textContent = oldScript.textContent;
+      oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+  }
+
+  /* ── Trae la sección de productos renderizada para OTRA colección, vía la
+       Section Rendering API de Shopify (?section_id=), y la intercambia en
+       la página sin recargar. Requiere que la sección de grid use la misma
+       plantilla de colección (mismo section.id) en todas las colecciones,
+       que es el comportamiento normal cuando usan la plantilla por defecto. ── */
+  function loadCollectionAjax(collectionUrl, pillEl) {
+    var target = getTarget();
+    if (!target) {
+      console.warn('[C-Collection-Header] No se encontró la sección de productos ("' + targetSelector + '").');
+      return;
+    }
+
+    var sectionId = target.id.replace('c-col-new-', '');
+    var sep = collectionUrl.indexOf('?') > -1 ? '&' : '?';
+    var fetchUrl = collectionUrl + sep + 'section_id=' + sectionId;
+
+    target.setAttribute('data-c-col-header-loading', 'true');
+
+    fetch(fetchUrl, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      })
+      .then(function (html) {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        var newSection = tmp.querySelector('#c-col-new-' + sectionId) || tmp.firstElementChild;
+        if (!newSection) throw new Error('No se pudo leer la sección de productos en la respuesta.');
+
+        target.parentNode.replaceChild(newSection, target);
+        reExecuteScripts(newSection);
+        syncWithTarget();
+        setActiveByElement(pillEl);
+        newSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      })
+      .catch(function (err) {
+        target.removeAttribute('data-c-col-header-loading');
+        console.error('[C-Collection-Header] Error cargando la colección vía AJAX:', err);
+      });
+  }
+
+  /* ── Filtra por tag dentro de la misma sección de grid (instantáneo, sin red) ── */
+  function filterByTag(rawValue, pillEl) {
+    var value  = normalize(rawValue);
+    var target = getTarget();
+
+    if (!target) {
+      console.warn('[C-Collection-Header] No se encontró la sección de productos ("' + targetSelector + '"). Revisa el ajuste "Selector de la sección a filtrar".');
+      return;
+    }
+
+    var radios  = target.querySelectorAll('.c-col-new__radio');
+    var matched = null;
+    radios.forEach(function (r) {
+      if (normalize(r.value) === value) matched = r;
+    });
+
+    if (matched) {
+      matched.checked = true;
+      matched.dispatchEvent(new Event('change', { bubbles: true }));
+    } else {
+      console.warn('[C-Collection-Header] No hay un filtro "' + rawValue + '" en la sección de productos. Revisa que coincida exactamente con custom.tag_one / custom.tag_two.');
+    }
+
+    setActiveByElement(pillEl);
+  }
+
+  /* ── Clic en una píldora — prioridad: Colección (AJAX) > Link manual (navega) > Tag (filtro instantáneo) ── */
+  pills.forEach(function (pill) {
+    pill.addEventListener('click', function () {
+      var collectionUrl = this.dataset.collectionUrl;
+      var manualUrl      = this.dataset.manualUrl;
+      var rawValue        = this.dataset.filterValue || '';
+
+      if (collectionUrl) {
+        loadCollectionAjax(collectionUrl, this);
+        return;
+      }
+
+      if (manualUrl) {
+        window.location.href = manualUrl;
+        return;
+      }
+
+      filterByTag(rawValue, this);
+    });
+  });
+
+  /* ── Mantener sincronizado si el filtro cambia desde otro lado (ej. sidebar en desktop) ── */
+  function syncWithTarget() {
+    var target = getTarget();
+    if (!target) return;
+    target.querySelectorAll('.c-col-new__radio').forEach(function (r) {
+      r.addEventListener('change', function () {
+        if (this.checked) setActiveByValue(this.value);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncWithTarget);
+  } else {
+    syncWithTarget();
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "C - Collection Header",
+  "tag": "section",
+  "class": "section-c-collection-header",
+  "settings": [
+    { "type": "header", "content": "Contenido" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "SHOP" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "All Products" },
+    { "type": "textarea", "id": "subheading", "label": "Subtítulo", "default": "Dr. Jen's complete line of oral wellness products" },
+    { "type": "text", "id": "pills_aria_label", "label": "Aria-label de la barra de filtros (accesibilidad)", "default": "Filtrar productos" },
+
+    { "type": "header", "content": "Conexión con el grid de productos" },
+    { "type": "text", "id": "target_selector", "label": "Selector CSS de la sección a filtrar", "default": ".c-col-new", "info": "No lo cambies a menos que sepas lo que haces. Debe apuntar al contenedor de tu sección \"C - Collection New\"." },
+
+    { "type": "header", "content": "Sticky (fijar al hacer scroll)" },
+    { "type": "checkbox", "id": "sticky_desktop", "label": "Sticky en Desktop", "default": false },
+    { "type": "range", "id": "sticky_offset_desktop", "label": "Distancia desde arriba — Desktop", "min": 0, "max": 200, "step": 5, "default": 0, "unit": "px" },
+    { "type": "checkbox", "id": "sticky_mobile", "label": "Sticky en Mobile", "default": false },
+    { "type": "range", "id": "sticky_offset_mobile", "label": "Distancia desde arriba — Mobile", "min": 0, "max": 200, "step": 5, "default": 0, "unit": "px" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo", "min": 900, "max": 1900, "step": 10, "default": 1440, "unit": "px" },
+    { "type": "color", "id": "bg_color", "label": "Fondo de sección", "default": "#ffffff" },
+
+    { "type": "header", "content": "Espaciado — Desktop" },
+    { "type": "range", "id": "padding_top_desktop", "label": "Padding superior", "min": 0, "max": 140, "step": 4, "default": 60 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Padding inferior", "min": 0, "max": 140, "step": 4, "default": 20 },
+
+    { "type": "header", "content": "Espaciado — Mobile" },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding superior", "min": 0, "max": 100, "step": 4, "default": 36 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding inferior", "min": 0, "max": 100, "step": 4, "default": 16 },
+
+    { "type": "header", "content": "Tipografía y colores — Textos" },
+    { "type": "color", "id": "eyebrow_color", "label": "Color del eyebrow", "default": "#1164E8" },
+    { "type": "color", "id": "heading_color", "label": "Color del título", "default": "#002C41" },
+    { "type": "text", "id": "heading_font_family", "label": "Fuente del título", "default": "'Raleway', sans-serif" },
+    { "type": "range", "id": "heading_weight", "label": "Grosor del título", "min": 300, "max": 800, "step": 100, "default": 400 },
+    { "type": "range", "id": "heading_size_desktop", "label": "Tamaño del título (desktop)", "min": 24, "max": 72, "step": 2, "default": 48 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Tamaño del título (mobile)", "min": 20, "max": 56, "step": 2, "default": 34 },
+    { "type": "color", "id": "subheading_color", "label": "Color del subtítulo", "default": "#4A4A4A" },
+
+    { "type": "header", "content": "Píldoras — Estado activo" },
+    { "type": "color", "id": "pill_active_bg", "label": "Fondo (activa)", "default": "#002C41" },
+    { "type": "color", "id": "pill_active_text", "label": "Texto (activa)", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Píldoras — Estado inactivo" },
+    { "type": "color", "id": "pill_inactive_bg", "label": "Fondo (inactiva)", "default": "#FFFFFF" },
+    { "type": "color", "id": "pill_inactive_border", "label": "Borde (inactiva)", "default": "#002C41" },
+    { "type": "color", "id": "pill_inactive_text", "label": "Texto (inactiva)", "default": "#002C41" }
+  ],
+  "blocks": [
+    {
+      "type": "pill",
+      "name": "Píldora de filtro",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Texto visible", "default": "Shop All" },
+        { "type": "text", "id": "filter_value", "label": "Valor del filtro (en la misma página)", "info": "Se usa SOLO si no seleccionaste una colección abajo. Debe coincidir EXACTAMENTE con el custom.tag_one / custom.tag_two de tus productos. Déjalo vacío para \"Shop All\"." },
+        { "type": "collection", "id": "target_collection", "label": "Colección (prioridad más alta)", "info": "Si seleccionas una colección, la píldora trae esos productos por AJAX y los muestra en esta misma sección, sin recargar la página." },
+        { "type": "url", "id": "url", "label": "O un link manual (menor prioridad)", "info": "Solo se usa si no seleccionaste colección. A diferencia de la colección, este SÍ hace una navegación normal (recarga la página)." },
+        { "type": "checkbox", "id": "is_default", "label": "Activa por defecto al cargar la página", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "C - Collection Header",
+      "blocks": [
+        { "type": "pill", "settings": { "label": "Shop All", "filter_value": "", "is_default": true } },
+        { "type": "pill", "settings": { "label": "Fluoride-Free", "filter_value": "Fluoride-Free" } },
+        { "type": "pill", "settings": { "label": "Fluoride", "filter_value": "Fluoride" } },
+        { "type": "pill", "settings": { "label": "Dental Floss" } },
+        { "type": "pill", "settings": { "label": "Bundle and Save" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
