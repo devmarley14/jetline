@@ -256,7 +256,7 @@
         "button_link": "",
         "full_width": true,
         "section_max_width": 1600,
-        "padding_inline_desktop": 40,
+        "padding_inline_desktop": 0,
         "padding_inline_mobile": 20,
         "columns_desktop": "5",
         "heading_size_desktop": 36,
