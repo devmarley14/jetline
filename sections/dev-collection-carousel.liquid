@@ -118,7 +118,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+{%- style -%}
   #DevCollectionCarousel-{{ section.id }}.dev-category-section {
     background: var(--dev-category-section-background);
     padding: var(--dev-category-section-padding-top) 0 var(--dev-category-section-padding-bottom);
@@ -192,14 +192,16 @@
     min-width: 0;
     overflow: hidden;
     border-radius: var(--dev-category-card-radius);
-    background: #fff;
+    background: #f2f2f2;
     scroll-snap-align: center;
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-card__media {
+    position: relative;
+    width: 100%;
     aspect-ratio: var(--dev-category-image-ratio);
     overflow: hidden;
-    background: #f2f3f4;
+    background: #f2f2f2;
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-card__media img,
@@ -211,6 +213,11 @@
     transition: transform 0.35s ease;
   }
 
+  #DevCollectionCarousel-{{ section.id }} .dev-category-card__media img {
+    position: absolute;
+    inset: 0;
+  }
+
   #DevCollectionCarousel-{{ section.id }} .dev-category-card:hover .dev-category-card__media img,
   #DevCollectionCarousel-{{ section.id }} .dev-category-card:focus-within .dev-category-card__media img {
     transform: scale(1.04);
@@ -218,6 +225,7 @@
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-card__footer {
     position: relative;
+    z-index: 1;
     min-height: 6.8rem;
     padding: var(--dev-category-card-padding-mobile);
     text-align: center;
@@ -394,7 +402,7 @@
       transition: none;
     }
   }
-{% endstylesheet %}
+{%- endstyle -%}
 
 {% schema %}
 {
