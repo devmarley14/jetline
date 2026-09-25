@@ -18,6 +18,8 @@
     --dev-category-gap: {{ section.settings.card_gap }}px;
     --dev-category-card-radius: {{ section.settings.card_radius }}px;
     --dev-category-section-max-width: {{ section.settings.section_max_width }}px;
+    --dev-category-section-padding-inline-mobile: {{ section.settings.section_padding_inline_mobile }}px;
+    --dev-category-section-padding-inline-desktop: {{ section.settings.section_padding_inline_desktop }}px;
     --dev-category-heading-max-width: {{ section.settings.heading_max_width }}px;
     --dev-category-card-title-max-width: {{ section.settings.card_title_max_width }}px;
     --dev-category-card-padding-desktop: {{ section.settings.card_padding_desktop }}px;
@@ -126,13 +128,19 @@
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-section__inner {
-    width: min(calc(100% - 3rem), var(--dev-category-section-max-width));
+    width: min(
+      calc(100% - (var(--dev-category-section-padding-inline-mobile) * 2)),
+      var(--dev-category-section-max-width)
+    );
     max-width: var(--dev-category-section-max-width);
     margin: 0 auto;
   }
 
   #DevCollectionCarousel-{{ section.id }}.dev-category-section--full-width .dev-category-section__inner {
-    width: 100%;
+    width: min(
+      calc(100% - (var(--dev-category-section-padding-inline-mobile) * 2)),
+      var(--dev-category-section-max-width)
+    );
     max-width: var(--dev-category-section-max-width);
   }
 
@@ -327,12 +335,18 @@
 
   @media screen and (min-width: 750px) {
     #DevCollectionCarousel-{{ section.id }} .dev-category-section__inner {
-      width: min(calc(100% - 10rem), var(--dev-category-section-max-width));
+      width: min(
+        calc(100% - (var(--dev-category-section-padding-inline-desktop) * 2)),
+        var(--dev-category-section-max-width)
+      );
       max-width: var(--dev-category-section-max-width);
     }
 
     #DevCollectionCarousel-{{ section.id }}.dev-category-section--full-width .dev-category-section__inner {
-      width: 100%;
+      width: min(
+        calc(100% - (var(--dev-category-section-padding-inline-desktop) * 2)),
+        var(--dev-category-section-max-width)
+      );
       max-width: var(--dev-category-section-max-width);
     }
 
@@ -478,6 +492,26 @@
       "step": 20,
       "unit": "px",
       "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "section_padding_inline_desktop",
+      "label": "Padding lateral Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "section_padding_inline_mobile",
+      "label": "Padding lateral Mobile",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 24
     },
     {
       "type": "range",
