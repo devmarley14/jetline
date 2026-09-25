@@ -17,6 +17,13 @@
     --dev-category-columns-mobile: {{ mobile_columns }};
     --dev-category-gap: {{ section.settings.card_gap }}px;
     --dev-category-card-radius: {{ section.settings.card_radius }}px;
+    --dev-category-section-max-width: {{ section.settings.section_max_width }}px;
+    --dev-category-heading-max-width: {{ section.settings.heading_max_width }}px;
+    --dev-category-card-title-max-width: {{ section.settings.card_title_max_width }}px;
+    --dev-category-card-padding-desktop: {{ section.settings.card_padding_desktop }}px;
+    --dev-category-card-padding-mobile: {{ section.settings.card_padding_mobile }}px;
+    --dev-category-button-height-desktop: {{ section.settings.button_height_desktop }}px;
+    --dev-category-button-height-mobile: {{ section.settings.button_height_mobile }}px;
     --dev-category-image-ratio: {{ section.settings.image_ratio }};
     --dev-category-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
     --dev-category-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
@@ -93,7 +100,7 @@
       </ul>
 
       {%- if desktop_slider or mobile_slider -%}
-        <div class="dev-category-carousel__controls">
+        <div class="dev-category-carousel__controls{% if desktop_slider == false %} dev-category-carousel__controls--mobile-only{% endif %}">
           <button type="button" class="dev-category-carousel__arrow" name="previous" aria-label="Anterior" aria-controls="Slider-{{ section.id }}">
             <span aria-hidden="true">←</span>
           </button>
@@ -119,14 +126,14 @@
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-section__inner {
-    width: min(calc(100% - 3rem), 1440px);
-    max-width: 1440px;
+    width: min(calc(100% - 3rem), var(--dev-category-section-max-width));
+    max-width: var(--dev-category-section-max-width);
     margin: 0 auto;
   }
 
   #DevCollectionCarousel-{{ section.id }}.dev-category-section--full-width .dev-category-section__inner {
     width: 100%;
-    max-width: 1440px;
+    max-width: var(--dev-category-section-max-width);
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-section__heading {
@@ -137,6 +144,9 @@
     line-height: 1.2;
     text-align: center;
     text-transform: uppercase;
+    max-width: var(--dev-category-heading-max-width);
+    margin-right: auto;
+    margin-left: auto;
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-carousel {
@@ -209,7 +219,7 @@
   #DevCollectionCarousel-{{ section.id }} .dev-category-card__footer {
     position: relative;
     min-height: 6.8rem;
-    padding: 1.5rem 1rem 1.2rem;
+    padding: var(--dev-category-card-padding-mobile);
     text-align: center;
   }
 
@@ -220,6 +230,9 @@
     font-weight: var(--dev-category-title-weight);
     line-height: 1.2;
     text-transform: uppercase;
+    max-width: var(--dev-category-card-title-max-width);
+    margin-right: auto;
+    margin-left: auto;
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-card__button {
@@ -228,7 +241,7 @@
     bottom: 1rem;
     left: 1rem;
     display: flex;
-    min-height: 3.8rem;
+    min-height: var(--dev-category-button-height-mobile);
     align-items: center;
     justify-content: center;
     gap: 0.8rem;
@@ -253,7 +266,7 @@
   #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__controls {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 1.4rem;
     margin-top: 2rem;
   }
@@ -264,16 +277,28 @@
     height: 4rem;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--dev-category-button-border);
+    flex: 0 0 4rem;
+    border: 1px solid #d9dde3;
     border-radius: 50%;
-    background: transparent;
-    color: var(--dev-category-button-border);
+    background: #f1f2f4;
+    color: #8a929d;
     cursor: pointer;
+    transition: width 0.2s ease, flex-basis 0.2s ease, border-radius 0.2s ease, background-color 0.2s ease,
+      border-color 0.2s ease, color 0.2s ease;
+  }
+
+  #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__arrow:not(:disabled) {
+    width: 6.4rem;
+    flex-basis: 6.4rem;
+    border-color: var(--dev-category-button-background);
+    border-radius: 0.4rem;
+    background: var(--dev-category-button-background);
+    color: var(--dev-category-button-text);
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__arrow:disabled {
     cursor: not-allowed;
-    opacity: 0.35;
+    opacity: 1;
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__counter {
@@ -282,15 +307,25 @@
     font-weight: var(--dev-category-counter-weight);
   }
 
+  #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__controls--mobile-only {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__controls--mobile-only {
+      display: flex;
+    }
+  }
+
   @media screen and (min-width: 750px) {
     #DevCollectionCarousel-{{ section.id }} .dev-category-section__inner {
-      width: min(calc(100% - 10rem), 1440px);
-      max-width: 1440px;
+      width: min(calc(100% - 10rem), var(--dev-category-section-max-width));
+      max-width: var(--dev-category-section-max-width);
     }
 
     #DevCollectionCarousel-{{ section.id }}.dev-category-section--full-width .dev-category-section__inner {
       width: 100%;
-      max-width: 1440px;
+      max-width: var(--dev-category-section-max-width);
     }
 
     #DevCollectionCarousel-{{ section.id }} .dev-category-section__heading {
@@ -337,8 +372,13 @@
       font-size: var(--dev-category-title-size-desktop);
     }
 
+    #DevCollectionCarousel-{{ section.id }} .dev-category-card__footer {
+      padding: var(--dev-category-card-padding-desktop);
+    }
+
     #DevCollectionCarousel-{{ section.id }} .dev-category-card__button {
       font-size: var(--dev-category-button-size-desktop);
+      min-height: var(--dev-category-button-height-desktop);
     }
 
     #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__counter {
@@ -416,6 +456,80 @@
         { "value": "4 / 3", "label": "Horizontal" }
       ],
       "default": "4 / 5"
+    },
+    {
+      "type": "header",
+      "content": "Layout y espaciado"
+    },
+    {
+      "type": "range",
+      "id": "section_max_width",
+      "label": "Ancho máximo de la sección",
+      "min": 960,
+      "max": 2000,
+      "step": 20,
+      "unit": "px",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "label": "Ancho máximo del título de sección",
+      "min": 240,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "card_title_max_width",
+      "label": "Ancho máximo del título de card",
+      "min": 120,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "card_padding_desktop",
+      "label": "Padding de card Desktop",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Padding de card Mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_height_desktop",
+      "label": "Altura de botón Desktop",
+      "min": 28,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "button_height_mobile",
+      "label": "Altura de botón Mobile",
+      "min": 28,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 38
     },
     {
       "type": "header",
