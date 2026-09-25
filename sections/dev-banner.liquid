@@ -130,7 +130,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+{%- style -%}
   #DevBanner-{{ section.id }}.dev-banner {
     position: relative;
     min-height: var(--dev-banner-height-mobile);
@@ -149,7 +149,13 @@
   }
 
   #DevBanner-{{ section.id }} .dev-banner__media {
-    z-index: -1;
+    z-index: 0;
+  }
+
+  #DevBanner-{{ section.id }} .dev-banner__media picture {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
   #DevBanner-{{ section.id }} .dev-banner__media::after {
@@ -165,9 +171,11 @@
   #DevBanner-{{ section.id }} .dev-banner__content {
     display: flex;
     min-height: inherit;
+    position: relative;
     align-items: center;
     justify-content: var(--dev-banner-content-align-mobile);
     padding: var(--dev-banner-content-padding-mobile);
+    z-index: 1;
   }
 
   #DevBanner-{{ section.id }} .dev-banner__content-inner {
@@ -266,7 +274,7 @@
       max-width: var(--page-width);
     }
   }
-{% endstylesheet %}
+{%- endstyle -%}
 
 {% schema %}
 {
