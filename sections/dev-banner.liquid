@@ -65,7 +65,7 @@
   aria-label="{{ section.settings.accessibility_label | escape }}"
 >
   <div class="dev-banner__media">
-    {%- if desktop_image != blank or mobile_image != blank -%}
+    {%- if desktop_image != blank -%}
       <picture>
         {%- if mobile_image != blank -%}
           <source
@@ -82,7 +82,6 @@
         {%- endif -%}
         {{
           desktop_image
-          | default: mobile_image
           | image_url: width: 3840
           | image_tag:
             widths: image_widths,
