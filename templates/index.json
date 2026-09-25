@@ -361,7 +361,11 @@
         "padding_inline_desktop": 40,
         "padding_inline_mobile": 16,
         "padding_top": 24,
-        "padding_bottom": 24
+        "padding_bottom": 24,
+        "margin_top_desktop": 60,
+        "margin_bottom_desktop": 40,
+        "margin_top_mobile": 60,
+        "margin_bottom_mobile": 32
       }
     },
     "dev_locations_4BDAE7": {
@@ -432,10 +436,10 @@
         "padding_bottom": 36
       }
     },
-    "dev_benefits_cFadiU": {
+    "dev_benefits_4UP8XL": {
       "type": "dev-benefits",
       "blocks": {
-        "benefit_FbKxRf": {
+        "benefit_RiiJcW": {
           "type": "benefit",
           "settings": {
             "svg_code": "",
@@ -443,7 +447,7 @@
             "description": "<p>Engineered for all-day comfort.</p>"
           }
         },
-        "benefit_WPNCqd": {
+        "benefit_JwrdWk": {
           "type": "benefit",
           "settings": {
             "svg_code": "",
@@ -451,7 +455,7 @@
             "description": "<p>High quality fabrics designed to last.</p>"
           }
         },
-        "benefit_t8kedP": {
+        "benefit_7MQQKA": {
           "type": "benefit",
           "settings": {
             "svg_code": "",
@@ -459,7 +463,7 @@
             "description": "<p>Professional aviation styling and fit.</p>"
           }
         },
-        "benefit_7FETM9": {
+        "benefit_waA9rC": {
           "type": "benefit",
           "settings": {
             "svg_code": "",
@@ -469,10 +473,10 @@
         }
       },
       "block_order": [
-        "benefit_FbKxRf",
-        "benefit_WPNCqd",
-        "benefit_t8kedP",
-        "benefit_7FETM9"
+        "benefit_RiiJcW",
+        "benefit_JwrdWk",
+        "benefit_7MQQKA",
+        "benefit_waA9rC"
       ],
       "name": "Dev - Benefits",
       "settings": {
@@ -501,7 +505,11 @@
         "padding_inline_desktop": 40,
         "padding_inline_mobile": 16,
         "padding_top": 24,
-        "padding_bottom": 24
+        "padding_bottom": 24,
+        "margin_top_desktop": 60,
+        "margin_bottom_desktop": 40,
+        "margin_top_mobile": 60,
+        "margin_bottom_mobile": 32
       }
     }
   },
@@ -511,6 +519,6 @@
     "dev_product_feature_QFUWUE",
     "dev_benefits_NPA6eK",
     "dev_locations_4BDAE7",
-    "dev_benefits_cFadiU"
+    "dev_benefits_4UP8XL"
   ]
 }

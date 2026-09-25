@@ -1,25 +1,34 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "dev_footer": {
+    "dev_footer_wDiwDy": {
       "type": "dev-footer",
       "blocks": {
-        "brand_menu": {
+        "menu_BfTyeN": {
           "type": "menu",
           "settings": {
             "heading": "Shop",
             "menu": "footer"
           }
         },
-        "company_menu": {
+        "menu_ter7Cx": {
           "type": "menu",
           "settings": {
             "heading": "Company",
             "menu": "footer"
           }
         },
-        "newsletter": {
+        "newsletter_PLYrcQ": {
           "type": "newsletter",
           "settings": {
             "heading": "Stay connected",
@@ -30,31 +39,63 @@
         }
       },
       "block_order": [
-        "brand_menu",
-        "company_menu",
-        "newsletter"
+        "menu_BfTyeN",
+        "menu_ter7Cx",
+        "newsletter_PLYrcQ"
       ],
+      "name": "Dev - Footer",
       "settings": {
+        "logo_svg": "",
         "logo_alt": "Jetline Apparel",
         "description": "<p>Performance aviation apparel engineered for pilots, crew and aviation professionals around the world.</p>",
         "copyright_text": "© [year] Jetline Apparel. All rights reserved.",
-        "full_width": true,
+        "max_width": 1440,
         "logo_width_desktop": 190,
         "logo_width_mobile": 160,
         "heading_size_desktop": 14,
         "heading_size_mobile": 13,
         "body_size_desktop": 14,
         "body_size_mobile": 12,
+        "heading_weight": "700",
+        "body_weight": "400",
+        "button_weight": "700",
+        "column_gap_desktop": 32,
+        "column_gap_mobile": 28,
         "background_color": "#021329",
         "text_color": "#ffffff",
         "muted_text_color": "#d8e0eb",
         "border_color": "#29415e",
         "padding_top": 28,
-        "padding_bottom": 18
+        "padding_bottom": 16,
+        "padding_inline_desktop": 40,
+        "padding_inline_mobile": 16,
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-1",
+        "newsletter_enable": true,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
   "order": [
-    "dev_footer"
+    "dev_footer_wDiwDy",
+    "footer"
   ]
 }
