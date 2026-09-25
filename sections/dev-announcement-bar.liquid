@@ -27,6 +27,8 @@
     --announcement-divider-color: {{ section.settings.divider_color }};
     --announcement-background: {{ section.settings.background_color }};
     --announcement-max-width: {{ section.settings.max_width }}px;
+    background: var(--announcement-background);
+    color: var(--announcement-text-color);
   }
 
   #AnnouncementBar-{{ section.id }} .utility-bar__grid {
@@ -40,6 +42,19 @@
   #AnnouncementBar-{{ section.id }} .announcement-bar__message {
     color: var(--announcement-text-color);
     font-size: var(--announcement-text-size);
+  }
+
+  #AnnouncementBar-{{ section.id }} .announcement-bar__announcement,
+  #AnnouncementBar-{{ section.id }} .announcement-bar__link {
+    color: var(--announcement-text-color);
+  }
+
+  #AnnouncementBar-{{ section.id }} .announcement-bar-slider {
+    background: var(--announcement-background);
+  }
+
+  #AnnouncementBar-{{ section.id }} .announcement-bar__slide-clone {
+    display: none;
   }
 
   #AnnouncementBar-{{ section.id }} .announcement-bar__announcement {
@@ -97,13 +112,82 @@
   }
 
   @media screen and (max-width: 749px) {
+    #AnnouncementBar-{{ section.id }} {
+      overflow: hidden;
+    }
+
+    #AnnouncementBar-{{ section.id }} .utility-bar__grid {
+      width: 100%;
+    }
+
     #AnnouncementBar-{{ section.id }} .announcement-bar-slider .slider {
       min-height: var(--announcement-height);
+    }
+
+    #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping {
+      width: max-content;
+      max-width: none;
+      animation: announcement-bar-loop-{{ section.id }} {{ section.settings.change_slides_speed | times: 2 }}s linear infinite;
+      -webkit-animation: announcement-bar-loop-{{ section.id }} {{ section.settings.change_slides_speed | times: 2 }}s linear infinite;
+    }
+
+    #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .slider {
+      display: flex;
+      width: max-content;
+      min-width: 0;
+      overflow: visible;
+    }
+
+    #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .slider__slide {
+      flex: 0 0 auto;
+      width: max-content;
+      min-width: 0;
+    }
+
+    #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .announcement-bar__slide-clone {
+      display: block;
+    }
+
+    #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .announcement-bar__announcement,
+    #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .announcement-bar__message {
+      width: max-content;
+      max-width: none;
+      white-space: nowrap;
+    }
+
+    #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping .slider-button {
+      display: none;
     }
 
     #AnnouncementBar-{{ section.id }} .announcement-bar__message {
       padding: 0 0.8rem;
       line-height: 1.2;
+    }
+
+    @keyframes announcement-bar-loop-{{ section.id }} {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @-webkit-keyframes announcement-bar-loop-{{ section.id }} {
+      from {
+        -webkit-transform: translateX(0);
+      }
+      to {
+        -webkit-transform: translateX(-50%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #AnnouncementBar-{{ section.id }} .announcement-bar-slider.is-looping {
+        animation: none;
+        -webkit-animation: none;
+        transform: none;
+      }
     }
   }
 {%- endstyle -%}
@@ -227,6 +311,25 @@
           </button>
         </div>
       </slideshow-component>
+      <script>
+        (() => {
+          const section = document.querySelector('#AnnouncementBar-{{ section.id }}');
+          const slider = section?.querySelector('.announcement-bar-slider');
+          const track = slider?.querySelector('.slider');
+          if (!section || !slider || !track || track.dataset.loopInitialized === 'true') return;
+
+          Array.from(track.children).forEach((slide) => {
+            const clone = slide.cloneNode(true);
+            clone.removeAttribute('id');
+            clone.setAttribute('aria-hidden', 'true');
+            clone.classList.add('announcement-bar__slide-clone');
+            track.appendChild(clone);
+          });
+
+          slider.classList.add('is-looping');
+          track.dataset.loopInitialized = 'true';
+        })();
+      </script>
       {%- if request.design_mode -%}
         <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
         <style>
