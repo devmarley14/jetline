@@ -22,13 +22,6 @@
           "type": "title",
           "settings": {}
         },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
-          }
-        },
         "description": {
           "type": "description",
           "settings": {
@@ -87,6 +80,13 @@
             "text": "Adjustable cuffs"
           }
         },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
         "size_guide": {
           "type": "size_guide",
           "settings": {
@@ -120,6 +120,7 @@
         "buy_buttons"
       ],
       "settings": {
+        "product": "",
         "max_width": 1440,
         "background_color": "#ffffff",
         "panel_background_color": "#f8f8f8",
@@ -127,6 +128,9 @@
         "muted_text_color": "#26334d",
         "accent_color": "#0c1834",
         "border_color": "#d8dde5",
+        "button_background_color": "#071a38",
+        "button_text_color": "#ffffff",
+        "button_uppercase": true,
         "title_size_desktop": 34,
         "title_size_mobile": 24,
         "body_size_desktop": 13,
@@ -154,15 +158,96 @@
         "margin_bottom": 0
       }
     },
+    "dev_benefits_GJJFU6": {
+      "type": "dev-benefits",
+      "blocks": {
+        "benefit_GKfctT": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Performance",
+            "description": "<p>Engineered for all-day comfort.</p>"
+          }
+        },
+        "benefit_pR6gXk": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Premium materials",
+            "description": "<p>High quality fabrics designed to last.</p>"
+          }
+        },
+        "benefit_PXkfWH": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Modern design",
+            "description": "<p>Professional aviation styling and fit.</p>"
+          }
+        },
+        "benefit_Ltbphn": {
+          "type": "benefit",
+          "settings": {
+            "svg_code": "",
+            "title": "Trusted worldwide",
+            "description": "<p>Used by aviation professionals globally.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_GKfctT",
+        "benefit_pR6gXk",
+        "benefit_PXkfWH",
+        "benefit_Ltbphn"
+      ],
+      "name": "Dev - Benefits",
+      "settings": {
+        "columns_desktop": "4",
+        "columns_mobile": "2",
+        "max_width": 1600,
+        "icon_size_desktop": 48,
+        "icon_size_mobile": 40,
+        "title_size_desktop": 15,
+        "title_size_mobile": 12,
+        "description_size_desktop": 13,
+        "description_size_mobile": 11,
+        "column_gap": 24,
+        "item_gap_desktop": 16,
+        "item_gap_mobile": 12,
+        "card_padding_desktop": 16,
+        "card_padding_mobile": 12,
+        "card_radius": 0,
+        "background_color": "#102443",
+        "text_color": "#F9F9F9",
+        "accent_color": "#F9F9F9",
+        "divider_color": "#e5e7eb",
+        "divider_width": 1,
+        "title_weight": "600",
+        "description_weight": "400",
+        "padding_inline_desktop": 40,
+        "padding_inline_mobile": 16,
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "margin_top_desktop": 60,
+        "margin_bottom_desktop": 40,
+        "margin_top_mobile": 60,
+        "margin_bottom_mobile": 32
+      }
+    },
     "disclosures": {
       "type": "disclosures",
       "settings": {
+        "heading": "Disclosures",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 0
       }
     },
     "related-products": {
       "type": "related-products",
+      "disabled": true,
       "settings": {
         "heading": "You may also like",
         "heading_size": "h2",
@@ -182,6 +267,7 @@
   },
   "order": [
     "main",
+    "dev_benefits_GJJFU6",
     "disclosures",
     "related-products"
   ]
