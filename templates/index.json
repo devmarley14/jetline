@@ -254,7 +254,7 @@
         "description": "<p><strong>The lightest pilot shirt ever created.<br/>Engineered for comfort. Built for performance.</strong></p>",
         "button_label": "Shop now",
         "button_link": "",
-        "full_width": false,
+        "full_width": true,
         "section_max_width": 1600,
         "padding_inline_desktop": 40,
         "padding_inline_mobile": 20,
