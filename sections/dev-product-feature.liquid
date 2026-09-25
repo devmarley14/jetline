@@ -22,6 +22,7 @@
     --dev-feature-benefit-text-weight: {{ section.settings.benefit_text_weight }};
     --dev-feature-button-weight: {{ section.settings.button_weight }};
     --dev-feature-button-margin-top: {{ section.settings.button_margin_top }}px;
+    --dev-feature-button-margin-top-desktop: {{ section.settings.button_margin_top_desktop }}px;
     --dev-feature-icon-desktop: {{ section.settings.icon_size_desktop }}px;
     --dev-feature-icon-mobile: {{ section.settings.icon_size_mobile }}px;
     --dev-feature-benefits-columns: {{ section.settings.columns_desktop }};
@@ -262,6 +263,14 @@
   }
 
   @media screen and (max-width: 749px) {
+    #DevProductFeature-{{ section.id }} .dev-product-feature__button {
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
     #DevProductFeature-{{ section.id }} .dev-product-feature__benefit:nth-child(4) {
       margin-left: 16.666%;
     }
@@ -348,6 +357,7 @@
 
     #DevProductFeature-{{ section.id }} .dev-product-feature__button {
       font-size: var(--dev-feature-body-desktop);
+      margin-top: var(--dev-feature-button-margin-top-desktop);
     }
   }
 {%- endstyle -%}
@@ -674,12 +684,22 @@
     {
       "type": "range",
       "id": "button_margin_top",
-      "label": "Margen superior del botón",
+      "label": "Margen superior del botón Mobile",
       "min": 0,
       "max": 120,
       "step": 2,
       "unit": "px",
       "default": 36
+    },
+    {
+      "type": "range",
+      "id": "button_margin_top_desktop",
+      "label": "Margen superior del botón Desktop",
+      "min": 0,
+      "max": 180,
+      "step": 2,
+      "unit": "px",
+      "default": 56
     },
     {
       "type": "range",
