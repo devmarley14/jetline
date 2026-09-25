@@ -96,45 +96,50 @@
         "category_xRkjRi": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_q9ggmpq9ggmpq9gg.jpg",
             "image_alt": "Categoría de productos",
             "title": "Outerwear",
-            "collection_link": "",
+            "collection_link": "shopify://collections",
             "button_label": ""
           }
         },
         "category_WhxHaC": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_iu6iy0iu6iy0iu6i.jpg",
             "image_alt": "Categoría de productos",
             "title": "Flight attendant",
-            "collection_link": "",
+            "collection_link": "shopify://collections",
             "button_label": ""
           }
         },
         "category_tnFLaq": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_l1u6e8l1u6e8l1u6.jpg",
             "image_alt": "Categoría de productos",
             "title": "Accessories",
-            "collection_link": "",
+            "collection_link": "shopify://collections",
             "button_label": ""
           }
         },
         "category_a9DQi3": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_5mesgr5mesgr5mes.jpg",
             "image_alt": "Categoría de productos",
             "title": "Aviation apparel",
-            "collection_link": "",
+            "collection_link": "shopify://collections",
             "button_label": ""
           }
         },
         "category_JtxENi": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_62ea9d62ea9d62ea.jpg",
             "image_alt": "Categoría de productos",
             "title": "Corporate uniforms",
-            "collection_link": "",
+            "collection_link": "shopify://collections",
             "button_label": ""
           }
         }
@@ -150,7 +155,7 @@
       "name": "Dev - Shop by category",
       "settings": {
         "heading": "Shop by category",
-        "columns_desktop": "6",
+        "columns_desktop": "5",
         "columns_mobile": "1",
         "enable_mobile_slider": true,
         "full_width": false,
@@ -162,12 +167,12 @@
         "card_padding_mobile": 12,
         "button_height_desktop": 38,
         "button_height_mobile": 38,
-        "heading_size_desktop": 24,
+        "heading_size_desktop": 29,
         "heading_size_mobile": 20,
-        "heading_weight": "700",
-        "title_size_desktop": 18,
+        "heading_weight": "500",
+        "title_size_desktop": 17,
         "title_size_mobile": 15,
-        "title_weight": "700",
+        "title_weight": "600",
         "button_size_desktop": 13,
         "button_size_mobile": 13,
         "button_weight": "700",
