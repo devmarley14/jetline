@@ -80,10 +80,10 @@
         "margin_bottom": 0
       }
     },
-    "dev_collection_carousel_ek8gVD": {
+    "dev_collection_carousel_6Y6pVV": {
       "type": "dev-collection-carousel",
       "blocks": {
-        "category_ryNC3W": {
+        "category_6Uagkb": {
           "type": "category",
           "settings": {
             "image_alt": "Categoría de productos",
@@ -92,7 +92,7 @@
             "button_label": ""
           }
         },
-        "category_ND9Pj8": {
+        "category_xRkjRi": {
           "type": "category",
           "settings": {
             "image_alt": "Categoría de productos",
@@ -101,7 +101,7 @@
             "button_label": ""
           }
         },
-        "category_TbybR7": {
+        "category_WhxHaC": {
           "type": "category",
           "settings": {
             "image_alt": "Categoría de productos",
@@ -110,7 +110,7 @@
             "button_label": ""
           }
         },
-        "category_A9EnWQ": {
+        "category_tnFLaq": {
           "type": "category",
           "settings": {
             "image_alt": "Categoría de productos",
@@ -119,7 +119,7 @@
             "button_label": ""
           }
         },
-        "category_GXmXGd": {
+        "category_a9DQi3": {
           "type": "category",
           "settings": {
             "image_alt": "Categoría de productos",
@@ -128,7 +128,7 @@
             "button_label": ""
           }
         },
-        "category_d3Xtpa": {
+        "category_JtxENi": {
           "type": "category",
           "settings": {
             "image_alt": "Categoría de productos",
@@ -139,22 +139,22 @@
         }
       },
       "block_order": [
-        "category_ryNC3W",
-        "category_ND9Pj8",
-        "category_TbybR7",
-        "category_A9EnWQ",
-        "category_GXmXGd",
-        "category_d3Xtpa"
+        "category_6Uagkb",
+        "category_xRkjRi",
+        "category_WhxHaC",
+        "category_tnFLaq",
+        "category_a9DQi3",
+        "category_JtxENi"
       ],
       "name": "Dev - Shop by category",
       "settings": {
         "heading": "Shop by category",
-        "columns_desktop": "5",
-        "columns_mobile": "2",
+        "columns_desktop": "6",
+        "columns_mobile": "1",
         "enable_mobile_slider": true,
         "full_width": false,
         "image_ratio": "4 / 5",
-        "title_size_desktop": 21,
+        "title_size_desktop": 18,
         "title_size_mobile": 15,
         "card_gap": 18,
         "card_radius": 4,
@@ -171,6 +171,6 @@
   },
   "order": [
     "dev_banner_7hEdde",
-    "dev_collection_carousel_ek8gVD"
+    "dev_collection_carousel_6Y6pVV"
   ]
 }
