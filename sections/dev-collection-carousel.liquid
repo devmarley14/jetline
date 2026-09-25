@@ -18,8 +18,18 @@
     --dev-category-gap: {{ section.settings.card_gap }}px;
     --dev-category-card-radius: {{ section.settings.card_radius }}px;
     --dev-category-image-ratio: {{ section.settings.image_ratio }};
+    --dev-category-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
+    --dev-category-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
     --dev-category-title-size-desktop: {{ section.settings.title_size_desktop }}px;
     --dev-category-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --dev-category-button-size-desktop: {{ section.settings.button_size_desktop }}px;
+    --dev-category-button-size-mobile: {{ section.settings.button_size_mobile }}px;
+    --dev-category-counter-size-desktop: {{ section.settings.counter_size_desktop }}px;
+    --dev-category-counter-size-mobile: {{ section.settings.counter_size_mobile }}px;
+    --dev-category-heading-weight: {{ section.settings.heading_weight }};
+    --dev-category-title-weight: {{ section.settings.title_weight }};
+    --dev-category-button-weight: {{ section.settings.button_weight }};
+    --dev-category-counter-weight: {{ section.settings.counter_weight }};
     --dev-category-title-color: {{ section.settings.title_color }};
     --dev-category-button-background: {{ section.settings.button_background }};
     --dev-category-button-text: {{ section.settings.button_text_color }};
@@ -109,18 +119,21 @@
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-section__inner {
-    width: min(100% - 3rem, var(--page-width));
+    width: min(calc(100% - 3rem), 1440px);
+    max-width: 1440px;
     margin: 0 auto;
   }
 
   #DevCollectionCarousel-{{ section.id }}.dev-category-section--full-width .dev-category-section__inner {
     width: 100%;
+    max-width: 1440px;
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-section__heading {
     margin: 0 0 2.4rem;
     color: var(--dev-category-title-color);
-    font-size: var(--dev-category-title-size-mobile);
+    font-size: var(--dev-category-heading-size-mobile);
+    font-weight: var(--dev-category-heading-weight);
     line-height: 1.2;
     text-align: center;
     text-transform: uppercase;
@@ -204,6 +217,7 @@
     margin: 0;
     color: var(--dev-category-title-color);
     font-size: var(--dev-category-title-size-mobile);
+    font-weight: var(--dev-category-title-weight);
     line-height: 1.2;
     text-transform: uppercase;
   }
@@ -221,8 +235,8 @@
     border: 1px solid var(--dev-category-button-border);
     background: var(--dev-category-button-background);
     color: var(--dev-category-button-text);
-    font-size: 1.3rem;
-    font-weight: 700;
+    font-size: var(--dev-category-button-size-mobile);
+    font-weight: var(--dev-category-button-weight);
     line-height: 1.2;
     text-decoration: none;
     opacity: 0;
@@ -264,21 +278,24 @@
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__counter {
     color: var(--dev-category-title-color);
-    font-size: 1.3rem;
+    font-size: var(--dev-category-counter-size-mobile);
+    font-weight: var(--dev-category-counter-weight);
   }
 
   @media screen and (min-width: 750px) {
     #DevCollectionCarousel-{{ section.id }} .dev-category-section__inner {
-      width: min(100% - 10rem, var(--page-width));
+      width: min(calc(100% - 10rem), 1440px);
+      max-width: 1440px;
     }
 
     #DevCollectionCarousel-{{ section.id }}.dev-category-section--full-width .dev-category-section__inner {
       width: 100%;
+      max-width: 1440px;
     }
 
     #DevCollectionCarousel-{{ section.id }} .dev-category-section__heading {
       margin-bottom: 3rem;
-      font-size: var(--dev-category-title-size-desktop);
+      font-size: var(--dev-category-heading-size-desktop);
     }
 
     #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track {
@@ -318,6 +335,14 @@
 
     #DevCollectionCarousel-{{ section.id }} .dev-category-card__title {
       font-size: var(--dev-category-title-size-desktop);
+    }
+
+    #DevCollectionCarousel-{{ section.id }} .dev-category-card__button {
+      font-size: var(--dev-category-button-size-desktop);
+    }
+
+    #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__counter {
+      font-size: var(--dev-category-counter-size-desktop);
     }
   }
 
@@ -393,6 +418,141 @@
       "default": "4 / 5"
     },
     {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Tamaño título de sección Desktop",
+      "min": 12,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño título de sección Mobile",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Peso título de sección",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Tamaño título de card Desktop",
+      "min": 10,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Tamaño título de card Mobile",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Peso título de card",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "button_size_desktop",
+      "label": "Tamaño texto botón Desktop",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "button_size_mobile",
+      "label": "Tamaño texto botón Mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "button_weight",
+      "label": "Peso texto botón",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "counter_size_desktop",
+      "label": "Tamaño contador Desktop",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "counter_size_mobile",
+      "label": "Tamaño contador Mobile",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "counter_weight",
+      "label": "Peso contador",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
       "type": "range",
       "id": "card_gap",
       "label": "Separación entre cards",
@@ -411,26 +571,6 @@
       "step": 1,
       "unit": "px",
       "default": 4
-    },
-    {
-      "type": "range",
-      "id": "title_size_desktop",
-      "label": "Tamaño título Desktop",
-      "min": 12,
-      "max": 48,
-      "step": 1,
-      "unit": "px",
-      "default": 18
-    },
-    {
-      "type": "range",
-      "id": "title_size_mobile",
-      "label": "Tamaño título Mobile",
-      "min": 11,
-      "max": 36,
-      "step": 1,
-      "unit": "px",
-      "default": 15
     },
     {
       "type": "text",
