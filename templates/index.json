@@ -156,7 +156,7 @@
       "settings": {
         "heading": "Shop by category",
         "columns_desktop": "5",
-        "columns_mobile": "1",
+        "columns_mobile": "2",
         "enable_mobile_slider": true,
         "full_width": false,
         "image_ratio": "4 / 5",
@@ -173,7 +173,7 @@
         "heading_size_mobile": 20,
         "heading_weight": "500",
         "title_size_desktop": 17,
-        "title_size_mobile": 15,
+        "title_size_mobile": 14,
         "title_weight": "600",
         "button_size_desktop": 13,
         "button_size_mobile": 13,
