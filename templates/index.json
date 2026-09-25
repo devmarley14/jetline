@@ -149,8 +149,8 @@
       "name": "Dev - Shop by category",
       "settings": {
         "heading": "Shop by category",
-        "columns_desktop": "6",
-        "columns_mobile": "3",
+        "columns_desktop": "5",
+        "columns_mobile": "2",
         "enable_mobile_slider": true,
         "full_width": false,
         "image_ratio": "4 / 5",

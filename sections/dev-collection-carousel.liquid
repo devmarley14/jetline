@@ -108,7 +108,7 @@
     overflow: hidden;
   }
 
-  #DevCollectionCarousel-{{ section.id }}.dev-category-section__inner {
+  #DevCollectionCarousel-{{ section.id }} .dev-category-section__inner {
     width: min(100% - 3rem, var(--page-width));
     margin: 0 auto;
   }
@@ -117,7 +117,7 @@
     width: 100%;
   }
 
-  #DevCollectionCarousel-{{ section.id }}.dev-category-section__heading {
+  #DevCollectionCarousel-{{ section.id }} .dev-category-section__heading {
     margin: 0 0 2.4rem;
     color: var(--dev-category-title-color);
     font-size: var(--dev-category-title-size-mobile);
@@ -140,18 +140,28 @@
     list-style: none;
   }
 
-  #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track--mobile-slider {
-    display: flex;
-    gap: var(--dev-category-gap);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    padding: 0 max(1.5rem, calc((100% - 82vw) / 2));
-  }
+  @media screen and (max-width: 749px) {
+    #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track--mobile-slider {
+      display: flex;
+      gap: var(--dev-category-gap);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding: 0 max(1.5rem, calc((100% - 82vw) / 2));
+    }
 
-  #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track--mobile-slider::-webkit-scrollbar {
-    display: none;
+    #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track--mobile-slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track--mobile-slider .dev-category-card {
+      flex: 0 0 calc((100% - (var(--dev-category-columns-mobile) - 1) * var(--dev-category-gap)) / var(--dev-category-columns-mobile));
+    }
+
+    #DevCollectionCarousel-{{ section.id }} .dev-category-carousel--mobile-columns-1 .dev-category-carousel__track--mobile-slider .dev-category-card {
+      flex-basis: 82vw;
+    }
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-card {
@@ -161,14 +171,6 @@
     border-radius: var(--dev-category-card-radius);
     background: #fff;
     scroll-snap-align: center;
-  }
-
-  #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track--mobile-slider .dev-category-card {
-    flex: 0 0 calc((100% - (var(--dev-category-columns-mobile) - 1) * var(--dev-category-gap)) / var(--dev-category-columns-mobile));
-  }
-
-  #DevCollectionCarousel-{{ section.id }} .dev-category-carousel--mobile-columns-1 .dev-category-carousel__track--mobile-slider .dev-category-card {
-    flex-basis: 82vw;
   }
 
   #DevCollectionCarousel-{{ section.id }} .dev-category-card__media {
@@ -266,7 +268,7 @@
   }
 
   @media screen and (min-width: 750px) {
-    #DevCollectionCarousel-{{ section.id }}.dev-category-section__inner {
+    #DevCollectionCarousel-{{ section.id }} .dev-category-section__inner {
       width: min(100% - 10rem, var(--page-width));
     }
 
@@ -274,13 +276,24 @@
       width: 100%;
     }
 
-    #DevCollectionCarousel-{{ section.id }}.dev-category-section__heading {
+    #DevCollectionCarousel-{{ section.id }} .dev-category-section__heading {
       margin-bottom: 3rem;
       font-size: var(--dev-category-title-size-desktop);
     }
 
     #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track {
+      display: grid;
+      overflow: visible;
       grid-template-columns: repeat(var(--dev-category-columns-desktop), minmax(0, 1fr));
+      padding: 0;
+      scroll-snap-type: none;
+    }
+
+    #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track--mobile-slider {
+      display: grid;
+      overflow: visible;
+      padding: 0;
+      scroll-snap-type: none;
     }
 
     #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track--desktop-slider {
@@ -297,6 +310,10 @@
 
     #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track--desktop-slider .dev-category-card {
       flex: 0 0 calc((100% - (var(--dev-category-columns-desktop) - 1) * var(--dev-category-gap)) / var(--dev-category-columns-desktop));
+    }
+
+    #DevCollectionCarousel-{{ section.id }} .dev-category-carousel__track:not(.dev-category-carousel__track--desktop-slider) .dev-category-card {
+      flex: initial;
     }
 
     #DevCollectionCarousel-{{ section.id }} .dev-category-card__title {
