@@ -31,6 +31,8 @@
     --dev-feature-section-max-width: {{ section.settings.section_max_width }}px;
     --dev-feature-padding-inline-desktop: {{ section.settings.padding_inline_desktop }}px;
     --dev-feature-padding-inline-mobile: {{ section.settings.padding_inline_mobile }}px;
+    --dev-feature-content-padding-inline-desktop: {{ section.settings.content_padding_inline_desktop }}px;
+    --dev-feature-content-padding-inline-mobile: {{ section.settings.content_padding_inline_mobile }}px;
     --dev-feature-radius: {{ section.settings.image_radius }}px;
   }
 {%- endstyle -%}
@@ -145,6 +147,8 @@
 
   #DevProductFeature-{{ section.id }} .dev-product-feature__content {
     color: var(--dev-feature-text);
+    padding-right: var(--dev-feature-content-padding-inline-mobile);
+    padding-left: var(--dev-feature-content-padding-inline-mobile);
   }
 
   #DevProductFeature-{{ section.id }} .dev-product-feature__eyebrow {
@@ -244,6 +248,8 @@
     align-items: center;
     justify-content: center;
     margin-top: var(--dev-feature-button-margin-top);
+    margin-right: auto;
+    margin-left: auto;
     padding: 1rem 2.2rem;
     border: 1px solid var(--dev-feature-button-border);
     border-radius: 0.3rem;
@@ -301,6 +307,11 @@
 
     #DevProductFeature-{{ section.id }} .dev-product-feature__eyebrow {
       font-size: var(--dev-feature-body-desktop);
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__content {
+      padding-right: var(--dev-feature-content-padding-inline-desktop);
+      padding-left: var(--dev-feature-content-padding-inline-desktop);
     }
 
     #DevProductFeature-{{ section.id }} .dev-product-feature__heading {
@@ -437,6 +448,26 @@
       "step": 2,
       "unit": "px",
       "default": 24
+    },
+    {
+      "type": "range",
+      "id": "content_padding_inline_desktop",
+      "label": "Padding columna derecha Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding_inline_mobile",
+      "label": "Padding columna derecha Mobile",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "select",
