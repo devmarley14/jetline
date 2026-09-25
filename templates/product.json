@@ -1,20 +1,16 @@
 {
   "sections": {
     "main": {
-      "type": "main-product",
+      "type": "c-product-new",
       "blocks": {
-        "vendor": {
-          "type": "text",
+        "badge": {
+          "type": "badge",
           "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
+            "text": "New arrival"
           }
         },
         "title": {
           "type": "title"
-        },
-        "price": {
-          "type": "price"
         },
         "variant_picker": {
           "type": "variant_picker",
@@ -23,50 +19,128 @@
             "swatch_shape": "circle"
           }
         },
-        "quantity_selector": {
-          "type": "quantity_selector"
+        "description": {
+          "type": "description",
+          "settings": {
+            "show_description": true
+          }
+        },
+        "price": {
+          "type": "price"
+        },
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Premium softshell fabric"
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Wind & water resistant"
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "text": "Breathable and lightweight"
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "text": "Soft microfleece lining"
+          }
+        },
+        "benefit_5": {
+          "type": "benefit",
+          "settings": {
+            "text": "Zip-through cadet collar"
+          }
+        },
+        "benefit_6": {
+          "type": "benefit",
+          "settings": {
+            "text": "Hidden guard"
+          }
+        },
+        "benefit_7": {
+          "type": "benefit",
+          "settings": {
+            "text": "Zipped hand pockets"
+          }
+        },
+        "benefit_8": {
+          "type": "benefit",
+          "settings": {
+            "text": "Adjustable cuffs"
+          }
+        },
+        "size_guide": {
+          "type": "size_guide",
+          "settings": {
+            "label": "Size guide",
+            "link": ""
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
-          }
-        },
-        "description": {
-          "type": "description"
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
+            "show_gift_card_recipient": false
           }
         }
       },
       "block_order": [
-        "vendor",
+        "badge",
         "title",
-        "price",
-        "variant_picker",
-        "quantity_selector",
-        "buy_buttons",
         "description",
-        "share"
+        "price",
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4",
+        "benefit_5",
+        "benefit_6",
+        "benefit_7",
+        "benefit_8",
+        "variant_picker",
+        "size_guide",
+        "buy_buttons"
       ],
       "settings": {
-        "enable_sticky_info": true,
-        "color_scheme": "scheme-1",
-        "media_position": "left",
-        "gallery_layout": "stacked",
-        "media_size": "large",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "image_zoom": "lightbox",
-        "mobile_thumbnails": "hide",
-        "hide_variants": true,
-        "enable_video_looping": false,
-        "padding_top": 36,
-        "padding_bottom": 12
+        "max_width": 1440,
+        "background_color": "#ffffff",
+        "panel_background_color": "#f8f8f8",
+        "text_color": "#0c1834",
+        "muted_text_color": "#26334d",
+        "accent_color": "#0c1834",
+        "border_color": "#d8dde5",
+        "title_size_desktop": 34,
+        "title_size_mobile": 24,
+        "body_size_desktop": 13,
+        "body_size_mobile": 12,
+        "price_size_desktop": 24,
+        "price_size_mobile": 20,
+        "label_size_desktop": 11,
+        "label_size_mobile": 10,
+        "title_weight": "700",
+        "body_weight": "400",
+        "label_weight": "600",
+        "price_weight": "700",
+        "thumbnail_size": 88,
+        "column_gap_desktop": 48,
+        "column_gap_mobile": 16,
+        "media_radius": 2,
+        "button_radius": 2,
+        "padding_top_desktop": 32,
+        "padding_bottom_desktop": 32,
+        "padding_inline_desktop": 40,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "padding_inline_mobile": 12,
+        "margin_top": 0,
+        "margin_bottom": 0
       }
     },
     "disclosures": {

@@ -1,0 +1,808 @@
+{%- liquid
+  assign current_product = section.settings.product
+  if current_product == blank
+    assign current_product = product
+  endif
+  assign current_variant = current_product.selected_or_first_available_variant
+  assign form_id = 'c-product-new-form-' | append: section.id
+-%}
+
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
+{{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
+{{ 'component-swatch.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  #CProductNew-{{ section.id }} {
+    --cpn-max-width: {{ section.settings.max_width }}px;
+    --cpn-background: {{ section.settings.background_color }};
+    --cpn-panel-background: {{ section.settings.panel_background_color }};
+    --cpn-text: {{ section.settings.text_color }};
+    --cpn-muted: {{ section.settings.muted_text_color }};
+    --cpn-accent: {{ section.settings.accent_color }};
+    --cpn-border: {{ section.settings.border_color }};
+    --cpn-title-size-desktop: {{ section.settings.title_size_desktop }}px;
+    --cpn-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --cpn-body-size-desktop: {{ section.settings.body_size_desktop }}px;
+    --cpn-body-size-mobile: {{ section.settings.body_size_mobile }}px;
+    --cpn-price-size-desktop: {{ section.settings.price_size_desktop }}px;
+    --cpn-price-size-mobile: {{ section.settings.price_size_mobile }}px;
+    --cpn-label-size-desktop: {{ section.settings.label_size_desktop }}px;
+    --cpn-label-size-mobile: {{ section.settings.label_size_mobile }}px;
+    --cpn-title-weight: {{ section.settings.title_weight }};
+    --cpn-body-weight: {{ section.settings.body_weight }};
+    --cpn-label-weight: {{ section.settings.label_weight }};
+    --cpn-price-weight: {{ section.settings.price_weight }};
+    --cpn-padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
+    --cpn-padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+    --cpn-padding-inline-desktop: {{ section.settings.padding_inline_desktop }}px;
+    --cpn-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --cpn-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --cpn-padding-inline-mobile: {{ section.settings.padding_inline_mobile }}px;
+    --cpn-column-gap-desktop: {{ section.settings.column_gap_desktop }}px;
+    --cpn-column-gap-mobile: {{ section.settings.column_gap_mobile }}px;
+    --cpn-media-radius: {{ section.settings.media_radius }}px;
+    --cpn-button-radius: {{ section.settings.button_radius }}px;
+    --cpn-thumb-size: {{ section.settings.thumbnail_size }}px;
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+    background: var(--cpn-background);
+    color: var(--cpn-text);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__inner {
+    width: calc(100% - (var(--cpn-padding-inline-mobile) * 2));
+    max-width: var(--cpn-max-width);
+    margin: 0 auto;
+    padding: var(--cpn-padding-top-mobile) 0 var(--cpn-padding-bottom-mobile);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--cpn-column-gap-mobile);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__gallery {
+    display: grid;
+    grid-template-columns: var(--cpn-thumb-size) minmax(0, 1fr);
+    gap: 0.8rem;
+    min-width: 0;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__thumb {
+    display: block;
+    width: var(--cpn-thumb-size);
+    height: var(--cpn-thumb-size);
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 0.3rem;
+    background: var(--cpn-panel-background);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__thumb[aria-current='true'] {
+    border-color: var(--cpn-accent);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__thumb img,
+  #CProductNew-{{ section.id }} .cpn__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__media {
+    aspect-ratio: 1 / 1;
+    min-width: 0;
+    border-radius: var(--cpn-media-radius);
+    background: var(--cpn-panel-background);
+    overflow: hidden;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__media-item {
+    display: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__media-item.is-active {
+    display: block;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__info {
+    min-width: 0;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__badge {
+    display: inline-flex;
+    margin-bottom: 0.8rem;
+    padding: 0.35rem 0.7rem;
+    background: var(--cpn-accent);
+    color: var(--cpn-panel-background);
+    font-size: var(--cpn-label-size-mobile);
+    font-weight: var(--cpn-label-weight);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__title {
+    margin: 0;
+    color: var(--cpn-text);
+    font-size: var(--cpn-title-size-mobile);
+    font-weight: var(--cpn-title-weight);
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__description,
+  #CProductNew-{{ section.id }} .cpn__custom {
+    margin-top: 1rem;
+    color: var(--cpn-muted);
+    font-size: var(--cpn-body-size-mobile);
+    font-weight: var(--cpn-body-weight);
+    line-height: 1.4;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__price {
+    margin-top: 1.2rem;
+    color: var(--cpn-text);
+    font-size: var(--cpn-price-size-mobile);
+    font-weight: var(--cpn-price-weight);
+    line-height: 1;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__benefits {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.3rem 1.5rem;
+    margin: 1.2rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid var(--cpn-border);
+    border-bottom: 1px solid var(--cpn-border);
+    list-style: none;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__benefit {
+    color: var(--cpn-text);
+    font-size: var(--cpn-body-size-mobile);
+    font-weight: var(--cpn-body-weight);
+    line-height: 1.35;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__benefit::before {
+    content: '•';
+    margin-right: 0.5rem;
+    color: var(--cpn-accent);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__option-label {
+    display: block;
+    margin: 0 0 0.5rem;
+    color: var(--cpn-text);
+    font-size: var(--cpn-label-size-mobile);
+    font-weight: var(--cpn-label-weight);
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__variant-picker {
+    margin-top: 0.8rem;
+  }
+
+  #CProductNew-{{ section.id }} .product-form__input {
+    margin: 0 0 0.8rem;
+  }
+
+  #CProductNew-{{ section.id }} .product-form__input .form__label {
+    color: var(--cpn-text);
+    font-size: var(--cpn-label-size-mobile);
+    font-weight: var(--cpn-label-weight);
+  }
+
+  #CProductNew-{{ section.id }} .cpn__size-guide {
+    display: inline-flex;
+    margin: 0.2rem 0 1rem;
+    color: var(--cpn-text);
+    font-size: var(--cpn-label-size-mobile);
+    font-weight: var(--cpn-label-weight);
+    text-decoration: underline;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__buy-buttons {
+    margin-top: 1rem;
+  }
+
+  #CProductNew-{{ section.id }} .cpn__buy-buttons .product-form__submit,
+  #CProductNew-{{ section.id }} .cpn__buy-buttons .shopify-payment-button__button {
+    min-height: 4.2rem;
+    border-radius: var(--cpn-button-radius);
+    font-size: var(--cpn-body-size-mobile);
+    font-weight: var(--cpn-label-weight);
+  }
+
+  @media screen and (min-width: 750px) {
+    #CProductNew-{{ section.id }} .cpn__inner {
+      width: calc(100% - (var(--cpn-padding-inline-desktop) * 2));
+      padding-top: var(--cpn-padding-top-desktop);
+      padding-bottom: var(--cpn-padding-bottom-desktop);
+    }
+
+    #CProductNew-{{ section.id }} .cpn__layout {
+      grid-template-columns: minmax(0, 1.15fr) minmax(28rem, 0.85fr);
+      gap: var(--cpn-column-gap-desktop);
+      align-items: start;
+    }
+
+    #CProductNew-{{ section.id }} .cpn__badge,
+    #CProductNew-{{ section.id }} .cpn__option-label,
+    #CProductNew-{{ section.id }} .product-form__input .form__label,
+    #CProductNew-{{ section.id }} .cpn__size-guide {
+      font-size: var(--cpn-label-size-desktop);
+    }
+
+    #CProductNew-{{ section.id }} .cpn__title {
+      font-size: var(--cpn-title-size-desktop);
+    }
+
+    #CProductNew-{{ section.id }} .cpn__description,
+    #CProductNew-{{ section.id }} .cpn__custom,
+    #CProductNew-{{ section.id }} .cpn__benefit,
+    #CProductNew-{{ section.id }} .cpn__buy-buttons .product-form__submit,
+    #CProductNew-{{ section.id }} .cpn__buy-buttons .shopify-payment-button__button {
+      font-size: var(--cpn-body-size-desktop);
+    }
+
+    #CProductNew-{{ section.id }} .cpn__price {
+      font-size: var(--cpn-price-size-desktop);
+    }
+  }
+{%- endstyle -%}
+
+<section id="CProductNew-{{ section.id }}" class="c-product-new">
+  <div class="cpn__inner">
+    {%- if current_product != blank -%}
+      <div class="cpn__layout">
+        <div class="cpn__gallery" data-cpn-gallery>
+          <div class="cpn__thumbs" role="tablist">
+            {%- for media in current_product.media -%}
+              {%- if media.media_type == 'image' -%}
+                <button
+                  class="cpn__thumb"
+                  type="button"
+                  role="tab"
+                  aria-label="{{ media.alt | default: current_product.title | escape }}"
+                  aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                  data-cpn-thumb="{{ media.id }}"
+                >
+                  {{ media | image_url: width: 240 | image_tag: loading: 'lazy', alt: media.alt | default: current_product.title }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          <div class="cpn__media">
+            {%- for media in current_product.media -%}
+              {%- if media.media_type == 'image' -%}
+                <div class="cpn__media-item{% if forloop.first %} is-active{% endif %}" data-cpn-media="{{ media.id }}">
+                  {{ media | image_url: width: 1600 | image_tag: loading: 'lazy', alt: media.alt | default: current_product.title }}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="cpn__info">
+          {%- for block in section.blocks -%}
+            {%- unless block.type == 'benefit' or block.type == 'variant_picker' or block.type == 'size_guide' or block.type == 'buy_buttons' -%}
+            {%- case block.type -%}
+              {%- when 'badge' -%}
+                {%- if block.settings.text != blank -%}<span class="cpn__badge" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>{%- endif -%}
+              {%- when 'title' -%}
+                <h1 class="cpn__title" {{ block.shopify_attributes }}>{{ current_product.title | escape }}</h1>
+              {%- when 'description' -%}
+                {%- if block.settings.show_description -%}<div class="cpn__description rte" {{ block.shopify_attributes }}>{{ current_product.description }}</div>{%- endif -%}
+              {%- when 'price' -%}
+                <div class="cpn__price" role="status" {{ block.shopify_attributes }}>{{ current_variant.price | money }}</div>
+              {%- when 'variant_picker' -%}
+                <div class="cpn__variant-picker" {{ block.shopify_attributes }}>
+                  {% render 'product-variant-picker', product: current_product, block: block, product_form_id: form_id %}
+                </div>
+              {%- when 'size_guide' -%}
+                {%- if block.settings.label != blank -%}
+                  <a class="cpn__size-guide" href="{{ block.settings.link | default: '#' }}" {% if block.settings.link == blank %}data-cpn-size-guide{% endif %} {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+                {%- endif -%}
+              {%- when 'buy_buttons' -%}
+                <div class="cpn__buy-buttons" {{ block.shopify_attributes }}>
+                  {% render 'buy-buttons', block: block, product: current_product, product_form_id: form_id, section_id: section.id, show_pickup_availability: false %}
+                </div>
+              {%- when 'custom_liquid' -%}
+                <div class="cpn__custom" {{ block.shopify_attributes }}>{{ block.settings.code }}</div>
+            {%- endcase -%}
+            {%- endunless -%}
+          {%- endfor -%}
+
+          {%- assign benefit_count = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'benefit' and block.settings.text != blank -%}
+              {%- assign benefit_count = benefit_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if benefit_count > 0 -%}
+            <ul class="cpn__benefits" role="list">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'benefit' and block.settings.text != blank -%}
+                  <li class="cpn__benefit" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'variant_picker' -%}
+                <div class="cpn__variant-picker" {{ block.shopify_attributes }}>
+                  {% render 'product-variant-picker', product: current_product, block: block, product_form_id: form_id %}
+                </div>
+              {%- when 'size_guide' -%}
+                {%- if block.settings.label != blank -%}
+                  <a class="cpn__size-guide" href="{{ block.settings.link | default: '#' }}" {% if block.settings.link == blank %}data-cpn-size-guide{% endif %} {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+                {%- endif -%}
+              {%- when 'buy_buttons' -%}
+                <div class="cpn__buy-buttons" {{ block.shopify_attributes }}>
+                  {% render 'buy-buttons', block: block, product: current_product, product_form_id: form_id, section_id: section.id, show_pickup_availability: false %}
+                </div>
+              {%- when 'custom_liquid' -%}
+                <div class="cpn__custom" {{ block.shopify_attributes }}>{{ block.settings.code }}</div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- else -%}
+      <p>{{ 'sections.featured_product.no_product' | t }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (() => {
+    const root = document.querySelector('#CProductNew-{{ section.id }}');
+    if (!root) return;
+    const thumbs = root.querySelectorAll('[data-cpn-thumb]');
+    const media = root.querySelectorAll('[data-cpn-media]');
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const id = thumb.dataset.cpnThumb;
+        thumbs.forEach((item) => item.setAttribute('aria-current', item === thumb ? 'true' : 'false'));
+        media.forEach((item) => item.classList.toggle('is-active', item.dataset.cpnMedia === id));
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "C - Product New",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo",
+      "min": 320,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1440
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Fondo de la sección",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "panel_background_color",
+      "label": "Fondo de imágenes",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color principal",
+      "default": "#0c1834"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Color secundario",
+      "default": "#26334d"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de acento",
+      "default": "#0c1834"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color de bordes",
+      "default": "#d8dde5"
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Tamaño título Desktop",
+      "min": 20,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Tamaño título Mobile",
+      "min": 18,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "body_size_desktop",
+      "label": "Tamaño texto Desktop",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Tamaño texto Mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "price_size_desktop",
+      "label": "Tamaño precio Desktop",
+      "min": 18,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "price_size_mobile",
+      "label": "Tamaño precio Mobile",
+      "min": 16,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "label_size_desktop",
+      "label": "Tamaño etiquetas Desktop",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "label_size_mobile",
+      "label": "Tamaño etiquetas Mobile",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Peso títulos",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "Peso textos",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "label_weight",
+      "label": "Peso etiquetas y botones",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "price_weight",
+      "label": "Peso precio",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_size",
+      "label": "Tamaño miniaturas Desktop/Mobile",
+      "min": 48,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "column_gap_desktop",
+      "label": "Separación columnas Desktop",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "Separación columnas Mobile",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "media_radius",
+      "label": "Radio imágenes",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Radio botones",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding superior Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding inferior Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_inline_desktop",
+      "label": "Padding lateral Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding superior Mobile",
+      "min": 0,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding inferior Mobile",
+      "min": 0,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_inline_mobile",
+      "label": "Padding lateral Mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margen superior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margen inferior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Etiqueta",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "New arrival" }
+      ]
+    },
+    { "type": "title", "name": "Título", "limit": 1 },
+    {
+      "type": "description",
+      "name": "Descripción",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_description", "label": "Mostrar descripción", "default": true }
+      ]
+    },
+    { "type": "price", "name": "Precio", "limit": 1 },
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Premium fabric" }
+      ]
+    },
+    {
+      "type": "variant_picker",
+      "name": "Selector de variantes",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "picker_type",
+          "label": "Tipo de selector",
+          "options": [
+            { "value": "button", "label": "Botones" },
+            { "value": "dropdown", "label": "Desplegable" }
+          ],
+          "default": "button"
+        },
+        {
+          "type": "select",
+          "id": "swatch_shape",
+          "label": "Forma de swatches",
+          "options": [
+            { "value": "circle", "label": "Círculo" },
+            { "value": "square", "label": "Cuadrado" },
+            { "value": "none", "label": "Sin swatch" }
+          ],
+          "default": "circle"
+        }
+      ]
+    },
+    {
+      "type": "size_guide",
+      "name": "Guía de tallas",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Texto", "default": "Size guide" },
+        { "type": "url", "id": "link", "label": "Enlace" }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Botones de compra",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Mostrar Buy it now", "default": true },
+        { "type": "checkbox", "id": "show_gift_card_recipient", "label": "Mostrar destinatario regalo", "default": false }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Liquid personalizado",
+      "settings": [
+        { "type": "liquid", "id": "code", "label": "Código Liquid" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "C - Product New",
+      "blocks": [
+        { "type": "badge" },
+        { "type": "title" },
+        { "type": "description" },
+        { "type": "price" },
+        { "type": "benefit", "settings": { "text": "Premium softshell fabric" } },
+        { "type": "benefit", "settings": { "text": "Wind & water resistant" } },
+        { "type": "benefit", "settings": { "text": "Breathable and lightweight" } },
+        { "type": "benefit", "settings": { "text": "Soft microfleece lining" } },
+        { "type": "variant_picker" },
+        { "type": "size_guide" },
+        { "type": "buy_buttons" }
+      ]
+    }
+  ]
+}
+{% endschema %}
