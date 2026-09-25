@@ -105,9 +105,23 @@
     --dev-header-background: {{ section.settings.header_background }};
     --dev-header-foreground: {{ section.settings.header_foreground }};
     --dev-header-border: {{ section.settings.header_border }};
-    --dev-header-icon-size: {{ section.settings.header_icon_size }}px;
-    --dev-header-menu-size: {{ section.settings.header_menu_size }}px;
-    --dev-header-logo-width: {{ section.settings.header_logo_width }}px;
+    --dev-header-max-width: {{ section.settings.max_width }}px;
+    --dev-header-icon-size-desktop: {{ section.settings.header_icon_size_desktop }}px;
+    --dev-header-icon-size-mobile: {{ section.settings.header_icon_size_mobile }}px;
+    --dev-header-menu-size-desktop: {{ section.settings.header_menu_size_desktop }}px;
+    --dev-header-menu-size-mobile: {{ section.settings.header_menu_size_mobile }}px;
+    --dev-header-logo-width-desktop: {{ section.settings.header_logo_width_desktop }}px;
+    --dev-header-logo-width-mobile: {{ section.settings.header_logo_width_mobile }}px;
+    --dev-header-padding-inline-desktop: {{ section.settings.padding_inline_desktop }}px;
+    --dev-header-padding-inline-mobile: {{ section.settings.padding_inline_mobile }}px;
+    --dev-header-padding-top-desktop: {{ section.settings.padding_top }}px;
+    --dev-header-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+    --dev-header-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --dev-header-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --dev-header-heading-weight: {{ section.settings.heading_weight }};
+    --dev-header-menu-weight: {{ section.settings.menu_weight }};
+    --dev-header-icon-weight: {{ section.settings.icon_weight }};
+    --dev-header-margin-bottom: {{ section.settings.margin_bottom }}px;
   }
 
   #DevHeader-{{ section.id }}.header-wrapper {
@@ -122,38 +136,68 @@
   }
 
   #DevHeader-{{ section.id }} .header__icon svg {
-    width: var(--dev-header-icon-size);
-    height: var(--dev-header-icon-size);
+    width: var(--dev-header-icon-size-mobile);
+    height: var(--dev-header-icon-size-mobile);
   }
 
   #DevHeader-{{ section.id }} .header__menu-item {
     color: var(--dev-header-foreground);
-    font-size: var(--dev-header-menu-size);
+    font-size: var(--dev-header-menu-size-mobile);
+    font-weight: var(--dev-header-menu-weight);
   }
 
   #DevHeader-{{ section.id }} .header__heading-logo {
-    width: var(--dev-header-logo-width);
+    width: var(--dev-header-logo-width-mobile);
   }
 
-  .header {
-    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
+  #DevHeader-{{ section.id }} .header__heading,
+  #DevHeader-{{ section.id }} .header__heading-link {
+    font-weight: var(--dev-header-heading-weight);
   }
 
-  .section-header {
+  #DevHeader-{{ section.id }} .header__icon {
+    font-weight: var(--dev-header-icon-weight);
+  }
+
+  #DevHeader-{{ section.id }} .header {
+    width: calc(100% - (var(--dev-header-padding-inline-mobile) * 2));
+    max-width: var(--dev-header-max-width);
+    margin-right: auto;
+    margin-left: auto;
+    padding: var(--dev-header-padding-top-mobile) var(--dev-header-padding-inline-mobile) var(--dev-header-padding-bottom-mobile);
+    box-sizing: border-box;
+  }
+
+  #DevHeader-{{ section.id }}.section-header {
     position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
-    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+    margin-bottom: var(--dev-header-margin-bottom);
   }
 
   @media screen and (min-width: 750px) {
-    .section-header {
-      margin-bottom: {{ section.settings.margin_bottom }}px;
+    #DevHeader-{{ section.id }} .header__icon svg {
+      width: var(--dev-header-icon-size-desktop);
+      height: var(--dev-header-icon-size-desktop);
+    }
+
+    #DevHeader-{{ section.id }} .header__menu-item {
+      font-size: var(--dev-header-menu-size-desktop);
+    }
+
+    #DevHeader-{{ section.id }} .header__heading-logo {
+      width: var(--dev-header-logo-width-desktop);
+    }
+
+    #DevHeader-{{ section.id }} .header {
+      width: calc(100% - (var(--dev-header-padding-inline-desktop) * 2));
+      padding-right: var(--dev-header-padding-inline-desktop);
+      padding-left: var(--dev-header-padding-inline-desktop);
     }
   }
 
   @media screen and (min-width: 990px) {
-    .header {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
+    #DevHeader-{{ section.id }} .header {
+      padding-top: var(--dev-header-padding-top-desktop);
+      padding-bottom: var(--dev-header-padding-bottom-desktop);
     }
   }
 {%- endstyle -%}
@@ -656,8 +700,18 @@
     },
     {
       "type": "range",
-      "id": "header_icon_size",
-      "label": "Tamaño de iconos",
+      "id": "max_width",
+      "label": "Ancho máximo del contenido",
+      "min": 320,
+      "max": 1440,
+      "step": 20,
+      "unit": "px",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "header_icon_size_desktop",
+      "label": "Tamaño de iconos Desktop",
       "min": 16,
       "max": 36,
       "step": 1,
@@ -666,8 +720,18 @@
     },
     {
       "type": "range",
-      "id": "header_menu_size",
-      "label": "Tamaño del menú",
+      "id": "header_icon_size_mobile",
+      "label": "Tamaño de iconos Mobile",
+      "min": 16,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "header_menu_size_desktop",
+      "label": "Tamaño del menú Desktop",
       "min": 10,
       "max": 20,
       "step": 1,
@@ -676,13 +740,70 @@
     },
     {
       "type": "range",
-      "id": "header_logo_width",
-      "label": "Ancho del logo",
+      "id": "header_menu_size_mobile",
+      "label": "Tamaño del menú Mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "header_logo_width_desktop",
+      "label": "Ancho del logo Desktop",
       "min": 80,
       "max": 320,
       "step": 5,
       "unit": "px",
       "default": 180
+    },
+    {
+      "type": "range",
+      "id": "header_logo_width_mobile",
+      "label": "Ancho del logo Mobile",
+      "min": 80,
+      "max": 280,
+      "step": 5,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Peso del logo/título",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "menu_weight",
+      "label": "Peso del menú",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "select",
+      "id": "icon_weight",
+      "label": "Peso de iconos",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
     },
     {
       "type": "header",
@@ -728,6 +849,26 @@
     },
     {
       "type": "range",
+      "id": "padding_inline_desktop",
+      "label": "Padding lateral Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_inline_mobile",
+      "label": "Padding lateral Mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
       "id": "margin_bottom",
       "min": 0,
       "max": 100,
@@ -759,6 +900,26 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding superior Mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferior Mobile",
+      "default": 12
     }
   ],
   "blocks": [
