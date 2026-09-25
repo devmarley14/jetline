@@ -1,0 +1,610 @@
+{%- style -%}
+  #DevProductFeature-{{ section.id }} {
+    --dev-feature-background: {{ section.settings.background_color }};
+    --dev-feature-text: {{ section.settings.text_color }};
+    --dev-feature-muted: {{ section.settings.description_color }};
+    --dev-feature-accent: {{ section.settings.accent_color }};
+    --dev-feature-button-background: {{ section.settings.button_background }};
+    --dev-feature-button-text: {{ section.settings.button_text_color }};
+    --dev-feature-button-border: {{ section.settings.button_border_color }};
+    --dev-feature-heading-desktop: {{ section.settings.heading_size_desktop }}px;
+    --dev-feature-heading-mobile: {{ section.settings.heading_size_mobile }}px;
+    --dev-feature-body-desktop: {{ section.settings.body_size_desktop }}px;
+    --dev-feature-body-mobile: {{ section.settings.body_size_mobile }}px;
+    --dev-feature-benefit-title-desktop: {{ section.settings.benefit_title_size_desktop }}px;
+    --dev-feature-benefit-title-mobile: {{ section.settings.benefit_title_size_mobile }}px;
+    --dev-feature-benefit-text-desktop: {{ section.settings.benefit_text_size_desktop }}px;
+    --dev-feature-benefit-text-mobile: {{ section.settings.benefit_text_size_mobile }}px;
+    --dev-feature-icon-desktop: {{ section.settings.icon_size_desktop }}px;
+    --dev-feature-icon-mobile: {{ section.settings.icon_size_mobile }}px;
+    --dev-feature-benefits-columns: {{ section.settings.columns_desktop }};
+    --dev-feature-gap: {{ section.settings.benefit_gap }}px;
+    --dev-feature-padding-top: {{ section.settings.padding_top }}px;
+    --dev-feature-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --dev-feature-radius: {{ section.settings.image_radius }}px;
+  }
+{%- endstyle -%}
+
+<section id="DevProductFeature-{{ section.id }}" class="dev-product-feature" aria-labelledby="DevProductFeatureHeading-{{ section.id }}">
+  <div class="dev-product-feature__inner{% if section.settings.full_width %} dev-product-feature__inner--full-width{% endif %}">
+    <div class="dev-product-feature__media{% if section.settings.image_position == 'right' %} dev-product-feature__media--right{% endif %}">
+      {%- if section.settings.product_image != blank -%}
+        {{
+          section.settings.product_image
+          | image_url: width: 1800
+          | image_tag:
+            widths: '480, 720, 960, 1200, 1500, 1800',
+            sizes: '(min-width: 990px) 50vw, 100vw',
+            loading: 'lazy',
+            alt: section.settings.image_alt
+        }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'dev-product-feature__placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="dev-product-feature__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dev-product-feature__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 id="DevProductFeatureHeading-{{ section.id }}" class="dev-product-feature__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="dev-product-feature__description rte">{{ section.settings.description }}</div>
+      {%- endif -%}
+
+      <ul class="dev-product-feature__benefits" role="list">
+        {%- for block in section.blocks -%}
+          <li class="dev-product-feature__benefit" {{ block.shopify_attributes }}>
+            <div class="dev-product-feature__icon" aria-hidden="true">
+              {%- if block.settings.svg_code != blank -%}
+                {{ block.settings.svg_code }}
+              {%- elsif block.settings.icon_image != blank -%}
+                {{ block.settings.icon_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: '' }}
+              {%- else -%}
+                {{ 'icon-star' | inline_asset_content }}
+              {%- endif -%}
+            </div>
+            <div class="dev-product-feature__benefit-copy">
+              {%- if block.settings.title != blank -%}
+                <h3>{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <div class="rte">{{ block.settings.description }}</div>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.button_label != blank -%}
+        <a class="dev-product-feature__button" href="{{ section.settings.button_link | default: '#' }}">
+          {{ section.settings.button_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  #DevProductFeature-{{ section.id }} .dev-product-feature {
+    overflow: hidden;
+    background: var(--dev-feature-background);
+    padding: var(--dev-feature-padding-top) 0 var(--dev-feature-padding-bottom);
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__inner {
+    display: grid;
+    width: min(100% - 3rem, var(--page-width));
+    margin: 0 auto;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__inner--full-width {
+    width: 100%;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__media {
+    overflow: hidden;
+    border-radius: var(--dev-feature-radius);
+    line-height: 0;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__media img,
+  #DevProductFeature-{{ section.id }} .dev-product-feature__placeholder {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 72rem;
+    object-fit: cover;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__content {
+    color: var(--dev-feature-text);
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__eyebrow {
+    margin: 0 0 1rem;
+    color: var(--dev-feature-text);
+    font-size: var(--dev-feature-body-mobile);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__heading {
+    margin: 0;
+    color: var(--dev-feature-text);
+    font-size: var(--dev-feature-heading-mobile);
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__description {
+    margin-top: 1.6rem;
+    color: var(--dev-feature-muted);
+    font-size: var(--dev-feature-body-mobile);
+    line-height: 1.5;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__description p {
+    margin: 0;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__benefits {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2.4rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__benefit {
+    display: flex;
+    width: 33.333%;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 0.6rem;
+    border-right: 1px solid color-mix(in srgb, var(--dev-feature-text) 18%, transparent);
+    text-align: center;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__benefit:nth-child(3n) {
+    border-right: 0;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__icon {
+    display: flex;
+    width: var(--dev-feature-icon-mobile);
+    height: var(--dev-feature-icon-mobile);
+    align-items: center;
+    justify-content: center;
+    color: var(--dev-feature-accent);
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__icon svg,
+  #DevProductFeature-{{ section.id }} .dev-product-feature__icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__benefit-copy h3 {
+    margin: 0;
+    color: var(--dev-feature-text);
+    font-size: var(--dev-feature-benefit-title-mobile);
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__benefit-copy .rte {
+    margin-top: 0.5rem;
+    color: var(--dev-feature-muted);
+    font-size: var(--dev-feature-benefit-text-mobile);
+    line-height: 1.35;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__benefit-copy .rte p {
+    margin: 0;
+  }
+
+  #DevProductFeature-{{ section.id }} .dev-product-feature__button {
+    display: inline-flex;
+    min-height: 4.8rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2.2rem;
+    padding: 1rem 2.2rem;
+    border: 1px solid var(--dev-feature-button-border);
+    border-radius: 0.3rem;
+    background: var(--dev-feature-button-background);
+    color: var(--dev-feature-button-text);
+    font-size: var(--dev-feature-body-mobile);
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 749px) {
+    #DevProductFeature-{{ section.id }} .dev-product-feature__benefit:nth-child(4) {
+      margin-left: 16.666%;
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__benefit:nth-child(5) {
+      border-right: 0;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #DevProductFeature-{{ section.id }} .dev-product-feature__inner {
+      width: min(100% - 10rem, var(--page-width));
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 5rem;
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__inner--full-width {
+      width: 100%;
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__media--right {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__media--right + .dev-product-feature__content {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__eyebrow {
+      font-size: var(--dev-feature-body-desktop);
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__heading {
+      font-size: var(--dev-feature-heading-desktop);
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__description {
+      font-size: var(--dev-feature-body-desktop);
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__benefit {
+      width: calc(100% / var(--dev-feature-benefits-columns));
+      gap: 1.2rem;
+      padding: 0 1.2rem;
+      border-right: 1px solid color-mix(in srgb, var(--dev-feature-text) 18%, transparent);
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__benefit:last-child {
+      border-right: 0;
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__icon {
+      width: var(--dev-feature-icon-desktop);
+      height: var(--dev-feature-icon-desktop);
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__benefit-copy h3 {
+      font-size: var(--dev-feature-benefit-title-desktop);
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__benefit-copy .rte {
+      font-size: var(--dev-feature-benefit-text-desktop);
+    }
+
+    #DevProductFeature-{{ section.id }} .dev-product-feature__button {
+      font-size: var(--dev-feature-body-desktop);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Dev - Product feature",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Imagen del producto"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Texto alternativo de la imagen",
+      "default": "Producto destacado"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Posición de la imagen Desktop",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta superior",
+      "default": "Best seller"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Performance pilot shirt"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Descripción",
+      "default": "<p>The lightest pilot shirt ever created.<br>Engineered for comfort. Built for performance.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columnas de beneficios Desktop",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" },
+        { "value": "6", "label": "6" }
+      ],
+      "default": "5"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Tamaño título Desktop",
+      "min": 20,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño título Mobile",
+      "min": 18,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "body_size_desktop",
+      "label": "Tamaño texto Desktop",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Tamaño texto Mobile",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "benefit_title_size_desktop",
+      "label": "Tamaño título beneficio Desktop",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "benefit_title_size_mobile",
+      "label": "Tamaño título beneficio Mobile",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "benefit_text_size_desktop",
+      "label": "Tamaño descripción beneficio Desktop",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "benefit_text_size_mobile",
+      "label": "Tamaño descripción beneficio Mobile",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "label": "Tamaño icono Desktop",
+      "min": 24,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Tamaño icono Mobile",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "benefit_gap",
+      "label": "Separación de beneficios",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Radio de imagen",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color principal",
+      "default": "#102443"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Color descripción",
+      "default": "#102443"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de iconos",
+      "default": "#102443"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Fondo botón",
+      "default": "#102443"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Texto botón",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Borde botón",
+      "default": "#102443"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "svg_code",
+          "label": "Código SVG del icono",
+          "info": "Pega el SVG completo. Si está vacío se usará la imagen."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Imagen del icono",
+          "info": "Se utiliza cuando no hay código SVG."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Ultra light fabric"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Descripción",
+          "default": "<p>Engineered for comfort.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dev - Product feature",
+      "blocks": [
+        { "type": "benefit", "settings": { "title": "Ultra light fabric", "description": "<p>Engineered for comfort.</p>" } },
+        { "type": "benefit", "settings": { "title": "Laser cut ventilation", "description": "<p>Built for performance.</p>" } },
+        { "type": "benefit", "settings": { "title": "Stain release technology", "description": "<p>Made for every journey.</p>" } },
+        { "type": "benefit", "settings": { "title": "UPF 40 protection", "description": "<p>Protection all day.</p>" } },
+        { "type": "benefit", "settings": { "title": "Wrinkle resistant", "description": "<p>Always ready to fly.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

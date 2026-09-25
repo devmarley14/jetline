@@ -2,27 +2,59 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "footer": {
-      "type": "footer",
-      "blocks": {},
-      "block_order": [],
+    "dev_footer": {
+      "type": "dev-footer",
+      "blocks": {
+        "brand_menu": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "footer"
+          }
+        },
+        "company_menu": {
+          "type": "menu",
+          "settings": {
+            "heading": "Company",
+            "menu": "footer"
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Stay connected",
+            "text": "<p>Be the first to know about new arrivals, exclusive offers, and more.</p>",
+            "placeholder": "Enter your email",
+            "button_label": "Subscribe"
+          }
+        }
+      },
+      "block_order": [
+        "brand_menu",
+        "company_menu",
+        "newsletter"
+      ],
       "settings": {
-        "color_scheme": "scheme-1",
-        "newsletter_enable": true,
-        "newsletter_heading": "Subscribe to our emails",
-        "enable_follow_on_shop": true,
-        "show_social": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "payment_enable": true,
-        "show_policy": true,
-        "margin_top": 0,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "logo_alt": "Jetline Apparel",
+        "description": "<p>Performance aviation apparel engineered for pilots, crew and aviation professionals around the world.</p>",
+        "copyright_text": "© [year] Jetline Apparel. All rights reserved.",
+        "full_width": true,
+        "logo_width_desktop": 190,
+        "logo_width_mobile": 160,
+        "heading_size_desktop": 14,
+        "heading_size_mobile": 13,
+        "body_size_desktop": 14,
+        "body_size_mobile": 12,
+        "background_color": "#021329",
+        "text_color": "#ffffff",
+        "muted_text_color": "#d8e0eb",
+        "border_color": "#29415e",
+        "padding_top": 28,
+        "padding_bottom": 18
       }
     }
   },
   "order": [
-    "footer"
+    "dev_footer"
   ]
 }

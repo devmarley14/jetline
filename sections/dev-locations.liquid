@@ -1,0 +1,488 @@
+{%- style -%}
+  #DevLocations-{{ section.id }} {
+    --dev-locations-background: {{ section.settings.background_color }};
+    --dev-locations-card-background: {{ section.settings.card_background_color }};
+    --dev-locations-text: {{ section.settings.text_color }};
+    --dev-locations-muted: {{ section.settings.muted_text_color }};
+    --dev-locations-accent: {{ section.settings.accent_color }};
+    --dev-locations-heading-desktop: {{ section.settings.heading_size_desktop }}px;
+    --dev-locations-heading-mobile: {{ section.settings.heading_size_mobile }}px;
+    --dev-locations-title-desktop: {{ section.settings.title_size_desktop }}px;
+    --dev-locations-title-mobile: {{ section.settings.title_size_mobile }}px;
+    --dev-locations-body-desktop: {{ section.settings.body_size_desktop }}px;
+    --dev-locations-body-mobile: {{ section.settings.body_size_mobile }}px;
+    --dev-locations-icon-desktop: {{ section.settings.icon_size_desktop }}px;
+    --dev-locations-icon-mobile: {{ section.settings.icon_size_mobile }}px;
+    --dev-locations-card-gap: {{ section.settings.card_gap }}px;
+    --dev-locations-card-padding: {{ section.settings.card_padding }}px;
+    --dev-locations-card-radius: {{ section.settings.card_radius }}px;
+    --dev-locations-padding-top: {{ section.settings.padding_top }}px;
+    --dev-locations-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section id="DevLocations-{{ section.id }}" class="dev-locations" aria-labelledby="DevLocationsHeading-{{ section.id }}">
+  <div class="dev-locations__inner{% if section.settings.full_width %} dev-locations__inner--full-width{% endif %}">
+    {%- if section.settings.heading != blank -%}
+      <h2 id="DevLocationsHeading-{{ section.id }}" class="dev-locations__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="dev-locations__grid">
+      {%- for block in section.blocks -%}
+        <article class="dev-locations__card" {{ block.shopify_attributes }}>
+          <div class="dev-locations__icon" aria-hidden="true">
+            {%- if block.settings.svg_code != blank -%}
+              {{ block.settings.svg_code }}
+            {%- elsif block.settings.icon_image != blank -%}
+              {{ block.settings.icon_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: '' }}
+            {%- else -%}
+              {{ 'icon-map-pin' | inline_asset_content }}
+            {%- endif -%}
+          </div>
+
+          <div class="dev-locations__details">
+            {%- if block.settings.title != blank -%}
+              <h3 class="dev-locations__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+
+            {%- if block.settings.address != blank -%}
+              <div class="dev-locations__address rte">{{ block.settings.address }}</div>
+            {%- endif -%}
+
+            {%- if block.settings.hours != blank -%}
+              <div class="dev-locations__hours rte">{{ block.settings.hours }}</div>
+            {%- endif -%}
+
+            {%- if block.settings.button_label != blank -%}
+              <a class="dev-locations__button" href="{{ block.settings.button_link | default: '#' }}">
+                {{ block.settings.button_label | escape }}
+              </a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  #DevLocations-{{ section.id }} .dev-locations {
+    overflow: hidden;
+    background: var(--dev-locations-background);
+    padding: var(--dev-locations-padding-top) 0 var(--dev-locations-padding-bottom);
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__inner {
+    width: min(100% - 3rem, var(--page-width));
+    margin: 0 auto;
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__inner--full-width {
+    width: 100%;
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__heading {
+    margin: 0 0 2.8rem;
+    color: var(--dev-locations-text);
+    font-size: var(--dev-locations-heading-mobile);
+    line-height: 1.15;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: var(--dev-locations-card-gap);
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__card {
+    display: grid;
+    grid-template-columns: var(--dev-locations-icon-mobile) minmax(0, 1fr);
+    gap: 1.8rem;
+    padding: var(--dev-locations-card-padding);
+    border-radius: var(--dev-locations-card-radius);
+    background: var(--dev-locations-card-background);
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__icon {
+    display: flex;
+    width: var(--dev-locations-icon-mobile);
+    height: var(--dev-locations-icon-mobile);
+    align-items: flex-start;
+    justify-content: center;
+    color: var(--dev-locations-accent);
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__icon svg,
+  #DevLocations-{{ section.id }} .dev-locations__icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__title {
+    margin: 0;
+    color: var(--dev-locations-text);
+    font-size: var(--dev-locations-title-mobile);
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__address,
+  #DevLocations-{{ section.id }} .dev-locations__hours {
+    color: var(--dev-locations-muted);
+    font-size: var(--dev-locations-body-mobile);
+    line-height: 1.45;
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__address {
+    margin-top: 1.2rem;
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__hours {
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid color-mix(in srgb, var(--dev-locations-text) 18%, transparent);
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__address p,
+  #DevLocations-{{ section.id }} .dev-locations__hours p {
+    margin: 0;
+  }
+
+  #DevLocations-{{ section.id }} .dev-locations__button {
+    display: inline-flex;
+    min-height: 4.2rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.4rem;
+    padding: 0.8rem 1.8rem;
+    border: 1px solid var(--dev-locations-accent);
+    border-radius: 0.3rem;
+    color: var(--dev-locations-accent);
+    font-size: var(--dev-locations-body-mobile);
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  @media screen and (min-width: 750px) {
+    #DevLocations-{{ section.id }} .dev-locations__inner {
+      width: min(100% - 10rem, var(--page-width));
+    }
+
+    #DevLocations-{{ section.id }} .dev-locations__inner--full-width {
+      width: 100%;
+    }
+
+    #DevLocations-{{ section.id }} .dev-locations__heading {
+      font-size: var(--dev-locations-heading-desktop);
+    }
+
+    #DevLocations-{{ section.id }} .dev-locations__grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    }
+
+    #DevLocations-{{ section.id }} .dev-locations__card {
+      grid-template-columns: var(--dev-locations-icon-desktop) minmax(0, 1fr);
+    }
+
+    #DevLocations-{{ section.id }} .dev-locations__icon {
+      width: var(--dev-locations-icon-desktop);
+      height: var(--dev-locations-icon-desktop);
+    }
+
+    #DevLocations-{{ section.id }} .dev-locations__title {
+      font-size: var(--dev-locations-title-desktop);
+    }
+
+    #DevLocations-{{ section.id }} .dev-locations__address,
+    #DevLocations-{{ section.id }} .dev-locations__hours,
+    #DevLocations-{{ section.id }} .dev-locations__button {
+      font-size: var(--dev-locations-body-desktop);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Dev - Locations",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Our locations"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columnas Desktop",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Tamaño título Desktop",
+      "min": 18,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño título Mobile",
+      "min": 16,
+      "max": 42,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Tamaño títulos Desktop",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Tamaño títulos Mobile",
+      "min": 12,
+      "max": 26,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "body_size_desktop",
+      "label": "Tamaño texto Desktop",
+      "min": 11,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Tamaño texto Mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "label": "Tamaño icono Desktop",
+      "min": 24,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Tamaño icono Mobile",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Separación entre tarjetas",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Padding de tarjetas",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Radio de tarjetas",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Fondo de tarjetas",
+      "default": "#fafafa"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color principal",
+      "default": "#102443"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Color de texto secundario",
+      "default": "#102443"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de iconos",
+      "default": "#102443"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Fondo de botón",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Texto de botón",
+      "default": "#102443"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Borde de botón",
+      "default": "#102443"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Ubicación",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "svg_code",
+          "label": "Código SVG del icono",
+          "info": "Pega el SVG completo. Si está vacío se usará la imagen."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Imagen del icono"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Jetline Apparel Headquarters"
+        },
+        {
+          "type": "richtext",
+          "id": "address",
+          "label": "Dirección",
+          "default": "<p>West Building<br>6355 NW 36th Street, Suite 506<br>Miami, Florida 33166<br>United States</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "hours",
+          "label": "Horarios",
+          "default": "<p>Monday - Friday<br>9:00 AM - 5:00 PM</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texto del botón",
+          "default": "Get directions"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Enlace del botón"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dev - Locations",
+      "blocks": [
+        {
+          "type": "location",
+          "settings": {
+            "title": "Jetline Apparel Headquarters"
+          }
+        },
+        {
+          "type": "location",
+          "settings": {
+            "title": "Pan Am Apparel & Accessories Showroom",
+            "address": "<p>Located inside the Pan Am Building<br>5000 NW 36th Street<br>Miami, Florida 33166<br>United States</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -101,6 +101,40 @@
 </style>
 
 {%- style -%}
+  #DevHeader-{{ section.id }} {
+    --dev-header-background: {{ section.settings.header_background }};
+    --dev-header-foreground: {{ section.settings.header_foreground }};
+    --dev-header-border: {{ section.settings.header_border }};
+    --dev-header-icon-size: {{ section.settings.header_icon_size }}px;
+    --dev-header-menu-size: {{ section.settings.header_menu_size }}px;
+    --dev-header-logo-width: {{ section.settings.header_logo_width }}px;
+  }
+
+  #DevHeader-{{ section.id }}.header-wrapper {
+    background: var(--dev-header-background);
+    color: var(--dev-header-foreground);
+    border-color: var(--dev-header-border);
+  }
+
+  #DevHeader-{{ section.id }} .header__icon,
+  #DevHeader-{{ section.id }} .header__icon svg {
+    color: var(--dev-header-foreground);
+  }
+
+  #DevHeader-{{ section.id }} .header__icon svg {
+    width: var(--dev-header-icon-size);
+    height: var(--dev-header-icon-size);
+  }
+
+  #DevHeader-{{ section.id }} .header__menu-item {
+    color: var(--dev-header-foreground);
+    font-size: var(--dev-header-menu-size);
+  }
+
+  #DevHeader-{{ section.id }} .header__heading-logo {
+    width: var(--dev-header-logo-width);
+  }
+
   .header {
     padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
   }
@@ -146,6 +180,7 @@
   {% if header_tag == 'sticky-header' %}
     data-sticky-type="{{ section.settings.sticky_header_type }}"
   {% endif %}
+  id="DevHeader-{{ section.id }}"
   class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
 >
   {%- liquid
@@ -500,7 +535,7 @@
 
 {% schema %}
 {
-  "name": "t:sections.header.name",
+  "name": "Dev - Header",
   "class": "section-header",
   "max_blocks": 3,
   "settings": [
@@ -600,6 +635,54 @@
       "id": "show_line_separator",
       "default": true,
       "label": "t:sections.header.settings.show_line_separator.label"
+    },
+    {
+      "type": "color",
+      "id": "header_background",
+      "label": "Color de fondo del header",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "header_foreground",
+      "label": "Color de iconos y menú",
+      "default": "#102443"
+    },
+    {
+      "type": "color",
+      "id": "header_border",
+      "label": "Color del borde",
+      "default": "#e5e8ed"
+    },
+    {
+      "type": "range",
+      "id": "header_icon_size",
+      "label": "Tamaño de iconos",
+      "min": 16,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "header_menu_size",
+      "label": "Tamaño del menú",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "header_logo_width",
+      "label": "Ancho del logo",
+      "min": 80,
+      "max": 320,
+      "step": 5,
+      "unit": "px",
+      "default": 180
     },
     {
       "type": "header",

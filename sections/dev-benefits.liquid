@@ -1,0 +1,329 @@
+{%- style -%}
+  #DevBenefits-{{ section.id }} {
+    --dev-benefits-bg: {{ section.settings.background_color }};
+    --dev-benefits-text: {{ section.settings.text_color }};
+    --dev-benefits-accent: {{ section.settings.accent_color }};
+    --dev-benefits-icon-size: {{ section.settings.icon_size }}px;
+    --dev-benefits-title-size: {{ section.settings.title_size }}px;
+    --dev-benefits-description-size: {{ section.settings.description_size }}px;
+    --dev-benefits-gap: {{ section.settings.column_gap }}px;
+    --dev-benefits-padding-top: {{ section.settings.padding_top }}px;
+    --dev-benefits-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --dev-benefits-card-padding: {{ section.settings.card_padding }}px;
+    --dev-benefits-radius: {{ section.settings.card_radius }}px;
+  }
+{%- endstyle -%}
+
+<section id="DevBenefits-{{ section.id }}" class="dev-benefits" aria-labelledby="DevBenefitsHeading-{{ section.id }}">
+  <div class="dev-benefits__inner{% if section.settings.full_width %} dev-benefits__inner--full-width{% endif %}">
+    {%- if section.settings.heading != blank -%}
+      <h2 id="DevBenefitsHeading-{{ section.id }}" class="dev-benefits__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <ul class="dev-benefits__grid" role="list">
+      {%- for block in section.blocks -%}
+        <li class="dev-benefits__item" {{ block.shopify_attributes }}>
+          <div class="dev-benefits__icon" aria-hidden="true">
+            {%- if block.settings.svg_code != blank -%}
+              {{ block.settings.svg_code }}
+            {%- elsif block.settings.icon_image != blank -%}
+              {{ block.settings.icon_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: '' }}
+            {%- else -%}
+              {{ 'icon-star' | inline_asset_content }}
+            {%- endif -%}
+          </div>
+          <div class="dev-benefits__content">
+            {%- if block.settings.title != blank -%}
+              <h3 class="dev-benefits__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <div class="dev-benefits__description rte">{{ block.settings.description }}</div>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% stylesheet %}
+  #DevBenefits-{{ section.id }} .dev-benefits {
+    overflow: hidden;
+    background: var(--dev-benefits-bg);
+    padding: var(--dev-benefits-padding-top) 0 var(--dev-benefits-padding-bottom);
+  }
+
+  #DevBenefits-{{ section.id }} .dev-benefits__inner {
+    width: min(100% - 3rem, var(--page-width));
+    margin: 0 auto;
+  }
+
+  #DevBenefits-{{ section.id }} .dev-benefits__inner--full-width {
+    width: 100%;
+  }
+
+  #DevBenefits-{{ section.id }} .dev-benefits__heading {
+    margin: 0 0 2.8rem;
+    color: var(--dev-benefits-text);
+    font-size: var(--dev-benefits-title-size);
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  #DevBenefits-{{ section.id }} .dev-benefits__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--dev-benefits-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #DevBenefits-{{ section.id }} .dev-benefits__item {
+    display: flex;
+    min-width: 0;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding: var(--dev-benefits-card-padding);
+    border-radius: var(--dev-benefits-radius);
+  }
+
+  #DevBenefits-{{ section.id }} .dev-benefits__icon {
+    display: flex;
+    width: var(--dev-benefits-icon-size);
+    min-width: var(--dev-benefits-icon-size);
+    height: var(--dev-benefits-icon-size);
+    align-items: center;
+    justify-content: center;
+    color: var(--dev-benefits-accent);
+  }
+
+  #DevBenefits-{{ section.id }} .dev-benefits__icon svg,
+  #DevBenefits-{{ section.id }} .dev-benefits__icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  #DevBenefits-{{ section.id }} .dev-benefits__title {
+    margin: 0;
+    color: var(--dev-benefits-text);
+    font-size: var(--dev-benefits-title-size);
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+
+  #DevBenefits-{{ section.id }} .dev-benefits__description {
+    margin-top: 0.8rem;
+    color: var(--dev-benefits-text);
+    font-size: var(--dev-benefits-description-size);
+    line-height: 1.5;
+  }
+
+  #DevBenefits-{{ section.id }} .dev-benefits__description p {
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    #DevBenefits-{{ section.id }} .dev-benefits__inner {
+      width: min(100% - 10rem, var(--page-width));
+    }
+
+    #DevBenefits-{{ section.id }} .dev-benefits__inner--full-width {
+      width: 100%;
+    }
+
+    #DevBenefits-{{ section.id }} .dev-benefits__grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #DevBenefits-{{ section.id }} .dev-benefits__item {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    #DevBenefits-{{ section.id }} .dev-benefits__description {
+      font-size: calc(var(--dev-benefits-description-size) - 1px);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Dev - Benefits",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Why choose us"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columnas Desktop",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamaño de iconos",
+      "min": 24,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño de títulos",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Tamaño de descripciones",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Separación entre columnas",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Padding de tarjetas",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Radio de tarjetas",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de texto",
+      "default": "#102443"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de iconos",
+      "default": "#102443"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "svg_code",
+          "label": "Código SVG del icono",
+          "info": "Pega aquí el código SVG completo. Si se deja vacío se usará la imagen."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Imagen del icono",
+          "info": "Se utiliza si no se ha pegado código SVG."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Performance"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Descripción",
+          "default": "<p>Engineered for all-day comfort.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dev - Benefits",
+      "blocks": [
+        { "type": "benefit", "settings": { "title": "Performance", "description": "<p>Engineered for all-day comfort.</p>" } },
+        { "type": "benefit", "settings": { "title": "Premium materials", "description": "<p>High quality fabrics designed to last.</p>" } },
+        { "type": "benefit", "settings": { "title": "Modern design", "description": "<p>Professional aviation styling and fit.</p>" } },
+        { "type": "benefit", "settings": { "title": "Trusted worldwide", "description": "<p>Used by aviation professionals globally.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
