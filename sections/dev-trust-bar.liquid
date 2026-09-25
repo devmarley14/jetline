@@ -11,6 +11,7 @@
     --dtb-text-size: {{ section.settings.text_size_mobile }}px;
     --dtb-star-size: {{ section.settings.star_size_mobile }}px;
     --dtb-text-weight: {{ section.settings.text_weight }};
+    --dtb-loop-duration: {{ section.settings.loop_duration }}s;
     margin-top: {{ section.settings.margin_top }}px;
     margin-bottom: {{ section.settings.margin_bottom }}px;
     background: var(--dtb-background);
@@ -32,6 +33,15 @@
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__list.is-looping {
+    width: max-content;
+  }
+
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__item.is-clone,
+  #DevTrustBar-{{ section.id }} .dev-trust-bar__divider.is-clone {
+    display: none;
   }
 
   #DevTrustBar-{{ section.id }} .dev-trust-bar__item {
@@ -75,21 +85,22 @@
     background: var(--dtb-divider);
   }
 
-  #DevTrustBar-{{ section.id }} .dev-trust-bar__controls {
-    display: none;
-  }
-
   @media screen and (max-width: 749px) {
+    #DevTrustBar-{{ section.id }} .dev-trust-bar__inner {
+      overflow: hidden;
+    }
+
     #DevTrustBar-{{ section.id }} .dev-trust-bar__list {
       justify-content: flex-start;
       flex-wrap: nowrap;
       gap: 0;
       width: 100%;
       overflow-x: auto;
-      overscroll-behavior-inline: contain;
-      scroll-snap-type: x mandatory;
+      overflow-y: hidden;
+      overscroll-behavior: none;
       scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
+      animation: dev-trust-bar-loop-{{ section.id }} var(--dtb-loop-duration) linear infinite;
+      -webkit-animation: dev-trust-bar-loop-{{ section.id }} var(--dtb-loop-duration) linear infinite;
     }
 
     #DevTrustBar-{{ section.id }} .dev-trust-bar__list::-webkit-scrollbar {
@@ -97,42 +108,45 @@
     }
 
     #DevTrustBar-{{ section.id }} .dev-trust-bar__item {
-      flex: 0 0 calc(100% - 3.2rem);
-      max-width: calc(100% - 3.2rem);
-      min-height: 2.4rem;
+      flex: 0 0 auto;
+      max-width: none;
       padding: 0 1.6rem;
-      scroll-snap-align: center;
     }
 
     #DevTrustBar-{{ section.id }} .dev-trust-bar__divider {
-      display: none;
+      flex: 0 0 auto;
+      display: inline-block;
     }
 
-    #DevTrustBar-{{ section.id }} .dev-trust-bar__controls {
-      display: flex;
-      justify-content: center;
-      gap: 0.6rem;
-      margin-top: 0.8rem;
-    }
-
-    #DevTrustBar-{{ section.id }} .dev-trust-bar__control {
+    #DevTrustBar-{{ section.id }} .dev-trust-bar__item.is-clone,
+    #DevTrustBar-{{ section.id }} .dev-trust-bar__divider.is-clone {
       display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.8rem;
-      height: 2.8rem;
-      padding: 0;
-      border: 1px solid var(--dtb-divider);
-      border-radius: 50%;
-      background: transparent;
-      color: var(--dtb-text);
-      font-size: 1.8rem;
-      line-height: 1;
-      cursor: pointer;
     }
 
-    #DevTrustBar-{{ section.id }} .dev-trust-bar__divider {
-      height: {{ section.settings.divider_height_mobile }}px;
+    @keyframes dev-trust-bar-loop-{{ section.id }} {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @-webkit-keyframes dev-trust-bar-loop-{{ section.id }} {
+      from {
+        -webkit-transform: translateX(0);
+      }
+      to {
+        -webkit-transform: translateX(-50%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #DevTrustBar-{{ section.id }} .dev-trust-bar__list {
+        animation: none;
+        -webkit-animation: none;
+        transform: none;
+      }
     }
   }
 
@@ -175,12 +189,6 @@
           {%- endunless -%}
         {%- endfor -%}
       </ul>
-      {%- if section.blocks.size > 1 -%}
-        <div class="dev-trust-bar__controls" aria-label="Navegación de mensajes">
-          <button class="dev-trust-bar__control" type="button" data-trust-previous aria-label="Mensaje anterior">&#8249;</button>
-          <button class="dev-trust-bar__control" type="button" data-trust-next aria-label="Mensaje siguiente">&#8250;</button>
-        </div>
-      {%- endif -%}
     {%- endif -%}
   </div>
 </section>
@@ -190,26 +198,15 @@
     const section = document.querySelector('#DevTrustBar-{{ section.id }}');
     if (!section) return;
     const list = section.querySelector('.dev-trust-bar__list');
-    const items = Array.from(section.querySelectorAll('.dev-trust-bar__item'));
-    const previous = section.querySelector('[data-trust-previous]');
-    const next = section.querySelector('[data-trust-next]');
-    if (!list || !previous || !next || items.length < 2) return;
-
-    const moveToItem = (direction) => {
-      const currentIndex = Math.max(
-        0,
-        items.findIndex((item) => {
-          const itemCenter = item.offsetLeft + item.offsetWidth / 2;
-          const listCenter = list.scrollLeft + list.clientWidth / 2;
-          return Math.abs(itemCenter - listCenter) < item.offsetWidth / 2;
-        })
-      );
-      const nextIndex = (currentIndex + direction + items.length) % items.length;
-      list.scrollTo({ left: items[nextIndex].offsetLeft - (list.clientWidth - items[nextIndex].offsetWidth) / 2, behavior: 'smooth' });
-    };
-
-    previous.addEventListener('click', () => moveToItem(-1));
-    next.addEventListener('click', () => moveToItem(1));
+    if (!list || list.dataset.loopInitialized === 'true' || list.children.length < 2) return;
+    Array.from(list.children).forEach((child) => {
+      const clone = child.cloneNode(true);
+      clone.classList.add('is-clone');
+      clone.setAttribute('aria-hidden', 'true');
+      list.appendChild(clone);
+    });
+    list.classList.add('is-looping');
+    list.dataset.loopInitialized = 'true';
   })();
 </script>
 
@@ -348,6 +345,16 @@
       "step": 2,
       "unit": "px",
       "default": 10
+    },
+    {
+      "type": "range",
+      "id": "loop_duration",
+      "label": "Velocidad del carrusel Mobile",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "default": 25
     },
     {
       "type": "range",
