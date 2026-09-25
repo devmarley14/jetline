@@ -120,6 +120,7 @@
     --dev-header-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
     --dev-header-heading-weight: {{ section.settings.heading_weight }};
     --dev-header-menu-weight: {{ section.settings.menu_weight }};
+    --dev-header-menu-transform: {% if section.settings.menu_uppercase %}uppercase{% else %}none{% endif %};
     --dev-header-icon-weight: {{ section.settings.icon_weight }};
     --dev-header-margin-bottom: {{ section.settings.margin_bottom }}px;
   }
@@ -135,15 +136,28 @@
     color: var(--dev-header-foreground);
   }
 
+  #DevHeader-{{ section.id }} .header__icon .svg-wrapper {
+    display: inline-flex;
+    width: var(--dev-header-icon-size-mobile);
+    min-width: var(--dev-header-icon-size-mobile);
+    height: var(--dev-header-icon-size-mobile);
+    align-items: center;
+    justify-content: center;
+  }
+
   #DevHeader-{{ section.id }} .header__icon svg {
+    display: block;
     width: var(--dev-header-icon-size-mobile);
     height: var(--dev-header-icon-size-mobile);
+    max-width: none;
+    max-height: none;
   }
 
   #DevHeader-{{ section.id }} .header__menu-item {
     color: var(--dev-header-foreground);
     font-size: var(--dev-header-menu-size-mobile);
     font-weight: var(--dev-header-menu-weight);
+    text-transform: var(--dev-header-menu-transform);
   }
 
   #DevHeader-{{ section.id }} .header__heading-logo {
@@ -176,6 +190,12 @@
   @media screen and (min-width: 750px) {
     #DevHeader-{{ section.id }} .header__icon svg {
       width: var(--dev-header-icon-size-desktop);
+      height: var(--dev-header-icon-size-desktop);
+    }
+
+    #DevHeader-{{ section.id }} .header__icon .svg-wrapper {
+      width: var(--dev-header-icon-size-desktop);
+      min-width: var(--dev-header-icon-size-desktop);
       height: var(--dev-header-icon-size-desktop);
     }
 
@@ -703,7 +723,7 @@
       "id": "max_width",
       "label": "Ancho máximo del contenido",
       "min": 320,
-      "max": 1800,
+      "max": 1440,
       "step": 20,
       "unit": "px",
       "default": 1440
@@ -792,6 +812,12 @@
         { "value": "700", "label": "Bold" }
       ],
       "default": "500"
+    },
+    {
+      "type": "checkbox",
+      "id": "menu_uppercase",
+      "label": "Mostrar menú en mayúsculas",
+      "default": false
     },
     {
       "type": "select",
